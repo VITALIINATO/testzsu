@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Application</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .quiz-container {
+            /* text-align: center;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; */
+
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .question {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .options {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .option {
+            background-color: #007bff;
+            color: white;
+            padding: 15px 30px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .option:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+        .restart-button {
+            display: none;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .restart-button:hover {
+            background-color: #218838;
+        }
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="background-image" id="backgroundImage"></div>
+        <div class="question" id="question"></div>
+        <div class="options" id="options"></div>
+        <div class="result" id="result"></div>
+        <button class="restart-button" id="restartButton">Начать заново</button>
+    </div>
+
+    <script>
+        // Quiz class to handle quiz functionality
+        class Quiz {
+            constructor(questions) {
+                this.questions = questions;
+                this.currentQuestionIndex = 0;
+                this.score = 0;
+                this.shuffleQuestions();
+                this.showQuestion();
+            }
+
+            // Shuffle the questions array
+            shuffleQuestions() {
+                for (let i = this.questions.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [this.questions[i], this.questions[j]] = [this.questions[j], this.questions[i]];
+                }
+            }
+
+            // Show the current question and options
+            showQuestion() {
+                const currentQuestion = this.questions[this.currentQuestionIndex];
+                document.getElementById('question').innerText = currentQuestion.question;
+                this.showOptions(currentQuestion.options);
+                this.setBackgroundImage(currentQuestion.image);
+                document.getElementById('result').innerText = '';
+                document.getElementById('restartButton').style.display = 'none';
+            }
+
+            // Display options for the current question
+            showOptions(options) {
+                const optionsContainer = document.getElementById('options');
+                optionsContainer.innerHTML = '';
+                this.shuffleOptions(options);
+                options.forEach(option => {
+                    const button = document.createElement('button');
+                    button.innerText = option.text;
+                    button.className = 'option';
+                    button.onclick = () => this.checkAnswer(option);
+                    optionsContainer.appendChild(button);
+                });
+            }
+
+            // Shuffle the options array
+            shuffleOptions(options) {
+                for (let i = options.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [options[i], options[j]] = [options[j], options[i]];
+                }
+            }
+
+            // Check the selected answer
+            checkAnswer(selectedOption) {
+                const currentQuestion = this.questions[this.currentQuestionIndex];
+                if (selectedOption.correct) {
+                    this.score++;
+                    document.getElementById('result').innerText = 'Правильно!';
+                } else {
+                    document.getElementById('result').innerText = `Неправильно! Правильный ответ: ${currentQuestion.options.find(option => option.correct).text}`;
+                }
+                this.currentQuestionIndex++;
+                if (this.currentQuestionIndex < this.questions.length) {
+                    setTimeout(() => this.showQuestion(), 500);
+                } else {
+                    setTimeout(() => this.showResult(), 500);
+                }
+            }
+
+            // Show the final result
+            showResult() {
+                document.getElementById('question').innerText = `Вы завершили викторину! Ваш результат: ${this.score} из ${this.questions.length}`;
+                document.getElementById('options').innerHTML = '';
+                document.getElementById('restartButton').style.display = 'block';
+            }
+
+            // Set background image for the current question
+            setBackgroundImage(imageUrl) {
+                document.getElementById('backgroundImage').style.backgroundImage = `url(${imageUrl})`;
+            }
+        }
+
+        // Sample questions for the quiz
+        const questions = [
+            {
+                question: "Какой язык используется для веб-разработки?",
+                options: [
+                    { text: "Python", correct: false },
+                    { text: "JavaScript", correct: true },
+                    { text: "Java", correct: false },
+                    { text: "C++", correct: false }
+                ],
+                image: "background1.jpg"
+            },
+            {
+                question: "Что такое HTML?",
+                options: [
+                    { text: "Язык программирования", correct: false },
+                    { text: "Язык разметки", correct: true },
+                    { text: "Система управления базами данных", correct: false },
+                    { text: "Фреймворк", correct: false }
+                ],
+                image: "background2.jpg"
+            },
+            {
+                question: "Что такое CSS?",
+                options: [
+                    { text: "Язык стилей", correct: true },
+                    { text: "Язык программирования", correct: false },
+                    { text: "Система управления базами данных", correct: false },
+                    { text: "Фреймворк", correct: false }
+                ],
+                image: "background3.jpg"
+            },
+            {
+                question: "Какой язык используется для создания серверной части?",
+                options: [
+                    { text: "JavaScript", correct: false },
+                    { text: "PHP", correct: true },
+                    { text: "HTML", correct: false },
+                    { text: "CSS", correct: false }
+                ],
+                image: "background4.jpg"
+            }
+        ];
+
+        // Initialize the quiz
+        const quiz = new Quiz(questions);
+
+        // Restart the quiz when the button is clicked
+        document.getElementById('restartButton').onclick = () => {
+            quiz.currentQuestionIndex = 0;
+            quiz.score = 0;
+            quiz.shuffleQuestions();
+            quiz.showQuestion();
+        };
+    </script>
+</body>
+</html>
