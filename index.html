@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Application</title>
+    <title>Test</title>
     <style>
         body {
             margin: 0;
@@ -32,8 +32,9 @@
             text-align: center;
         }
         .question {
-            font-size: 24px;
+            font-size: 30px;
             margin-bottom: 20px;
+            color: rgb(0, 0, 0);
         }
         .options {
             display: flex;
@@ -42,7 +43,8 @@
         }
         .option {
             background-color: #007bff;
-            color: white;
+            color: rgb(250, 246, 246);
+            font-size: 24px;
             padding: 15px 30px;
             margin: 10px;
             border: none;
@@ -55,7 +57,8 @@
         }
         .result {
             margin-top: 20px;
-            font-size: 20px;
+            font-size: 28px;
+            color: rgb(255, 0, 0);
         }
         .restart-button {
             display: none;
@@ -89,7 +92,7 @@
         <div class="question" id="question"></div>
         <div class="options" id="options"></div>
         <div class="result" id="result"></div>
-        <button class="restart-button" id="restartButton">Начать заново</button>
+        <button class="restart-button" id="restartButton">Почати знову</button>
     </div>
 
     <script>
@@ -148,21 +151,21 @@
                 const currentQuestion = this.questions[this.currentQuestionIndex];
                 if (selectedOption.correct) {
                     this.score++;
-                    document.getElementById('result').innerText = 'Правильно!';
+                    document.getElementById('result').innerText = 'Вірно!';
                 } else {
-                    document.getElementById('result').innerText = `Неправильно! Правильный ответ: ${currentQuestion.options.find(option => option.correct).text}`;
+                    document.getElementById('result').innerText = `Невірно. Правильна відповідь: ${currentQuestion.options.find(option => option.correct).text}`;
                 }
                 this.currentQuestionIndex++;
                 if (this.currentQuestionIndex < this.questions.length) {
-                    setTimeout(() => this.showQuestion(), 500);
+                    setTimeout(() => this.showQuestion(), 1500);
                 } else {
-                    setTimeout(() => this.showResult(), 500);
+                    setTimeout(() => this.showResult(), 1500);
                 }
             }
 
             // Show the final result
             showResult() {
-                document.getElementById('question').innerText = `Вы завершили викторину! Ваш результат: ${this.score} из ${this.questions.length}`;
+                document.getElementById('question').innerText = `Тест завершено! Ваш результат: ${this.score} из ${this.questions.length}`;
                 document.getElementById('options').innerHTML = '';
                 document.getElementById('restartButton').style.display = 'block';
             }
@@ -176,44 +179,44 @@
         // Sample questions for the quiz
         const questions = [
             {
-                question: "Какой язык используется для веб-разработки?",
+                question: "Максимальна дальність ураження цілей ПЗРК Piorun навздогін?",
                 options: [
-                    { text: "Python", correct: false },
-                    { text: "JavaScript", correct: true },
-                    { text: "Java", correct: false },
-                    { text: "C++", correct: false }
+                    { text: "8000", correct: false },
+                    { text: "6500", correct: true },
+                    { text: "5000", correct: false },
+                    { text: "4200", correct: false }
                 ],
-                image: "background1.jpg"
+                image: "Piorun01.jpg"
             },
             {
-                question: "Что такое HTML?",
+                question: "Максимальна дальність ураження цілей ПЗРК Stinger навздогін?",
                 options: [
-                    { text: "Язык программирования", correct: false },
-                    { text: "Язык разметки", correct: true },
-                    { text: "Система управления базами данных", correct: false },
-                    { text: "Фреймворк", correct: false }
+                    { text: "6400", correct: false },
+                    { text: "5000", correct: true },
+                    { text: "5200", correct: false },
+                    { text: "7000", correct: false }
                 ],
-                image: "background2.jpg"
+                image: "Stinger01.jpg"
             },
             {
-                question: "Что такое CSS?",
+                question: "Максимальна дальність ураження цілей ПЗРК Ігла навздогін?",
                 options: [
-                    { text: "Язык стилей", correct: true },
-                    { text: "Язык программирования", correct: false },
-                    { text: "Система управления базами данных", correct: false },
-                    { text: "Фреймворк", correct: false }
+                    { text: "5200", correct: true },
+                    { text: "4000", correct: false },
+                    { text: "6500", correct: false },
+                    { text: "5000", correct: false }
                 ],
-                image: "background3.jpg"
+                image: "Igla01.jpg"
             },
             {
-                question: "Какой язык используется для создания серверной части?",
+                question: "Максимальна дальність ураження цілей ПЗРК Стріла-3 навздогін?",
                 options: [
-                    { text: "JavaScript", correct: false },
-                    { text: "PHP", correct: true },
-                    { text: "HTML", correct: false },
-                    { text: "CSS", correct: false }
+                    { text: "5000", correct: false },
+                    { text: "4200", correct: true },
+                    { text: "3500", correct: false },
+                    { text: "2500", correct: false }
                 ],
-                image: "background4.jpg"
+                image: "Strela01.jpg"
             }
         ];
 
