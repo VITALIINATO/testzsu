@@ -6,30 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Military Quiz</title>
     <style>
-
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    min-height: 100vh;
-    background: #234b30; /* Резервный базовый цвет */
-    background-image:
-        repeating-linear-gradient(
-            45deg,
-            rgba(255, 255, 255, 0.02) 0px,
-            rgba(255, 255, 255, 0.02) 1px,
-            transparent 1px,
-            transparent 20px
-        ),
-        linear-gradient(to bottom right, #2e5a3f, #1f442c);
-    background-size: 100% 100%, cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            background: #234b30;
+            /* Резервный базовый цвет */
+            background-image:
+                repeating-linear-gradient(45deg,
+                    rgba(255, 255, 255, 0.02) 0px,
+                    rgba(255, 255, 255, 0.02) 1px,
+                    transparent 1px,
+                    transparent 20px),
+                linear-gradient(to bottom right, #2e5a3f, #1f442c);
+            background-size: 100% 100%, cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
 
         .quiz-container {
-            
+
             position: relative;
             width: 100%;
             max-width: 600px;
@@ -96,7 +94,7 @@ body {
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-            
+
         }
 
         .options {
@@ -139,12 +137,12 @@ body {
             border: 1px solid rgba(34, 139, 34, 0.5);
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
             font-weight: bold;
-             /* Фиксируем высоту */
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
+            /* Фиксируем высоту */
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
 
         }
 
@@ -208,27 +206,27 @@ body {
         }
 
         .record-display {
-    font-size: 18px;
-    font-weight: bold;
-    color: #ffd700; /* Золотой цвет */
-    margin-bottom: 15px;
-    text-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
-    background-color: rgba(0, 0, 0, 0.3);
-    padding: 8px 16px;
-    border-radius: 12px;
-    display: inline-block;
-    min-width: 200px;
-}
-
+            font-size: 12px;
+            font-weight: bold;
+            color: #ffd700;
+            /* Золотой цвет */
+            margin-bottom: 15px;
+            text-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
+            /* background-color: rgba(0, 0, 0, 0.3); */
+            padding: 8px 16px;
+            border-radius: 12px;
+            display: inline-block;
+            min-width: 200px;
+        }
     </style>
 </head>
 
 <body>
     <div class="quiz-container">
         <div class="background-image" id="backgroundImage"></div>
-         <div class="record-display" id="recordDisplay"></div>
+        <div class="record-display" id="recordDisplay"></div>
         <div class="progress-bar">
-           
+
             <div class="progress-fill" id="progressFill"></div>
             <div class="progress-text" id="progressText">1 з 10</div>
         </div>
@@ -244,24 +242,24 @@ body {
 
     <script>
         class Quiz {
-          constructor(questions) {
-    this.questions = questions;
-    this.currentQuestionIndex = 0;
-    this.score = 0;
-    this.shuffleQuestions();
-    this.showQuestion();
+            constructor(questions) {
+                this.questions = questions;
+                this.currentQuestionIndex = 0;
+                this.score = 0;
+                this.shuffleQuestions();
+                this.showQuestion();
 
-    // Показываем рекорд при запуске
-    const recordDisplay = document.getElementById('recordDisplay');
-    const savedRecord = localStorage.getItem('quizRecordCount');
-    const total = this.questions.length;
+                // Показываем рекорд при запуске
+                const recordDisplay = document.getElementById('recordDisplay');
+                const savedRecord = localStorage.getItem('quizRecordCount');
+                const total = this.questions.length;
 
-    if (savedRecord && total) {
-        recordDisplay.innerText = `РЕКОРД: ${savedRecord} з ${total}`;
-    } else {
-        recordDisplay.innerText = `РЕКОРД: 0 з ${total || 10}`;
-    }
-}
+                if (savedRecord && total) {
+                    recordDisplay.innerText = `РЕКОРД: ${savedRecord} з ${total}`;
+                } else {
+                    recordDisplay.innerText = `РЕКОРД: 0 з ${total || 10}`;
+                }
+            }
 
             shuffleQuestions() {
                 for (let i = this.questions.length - 1; i > 0; i--) {
@@ -299,69 +297,69 @@ body {
                 }
             }
 
-          checkAnswer(selectedOption) {
-    const soundRight = document.getElementById("soundRight");
-    const soundWrong = document.getElementById("soundWrong");
+            checkAnswer(selectedOption) {
+                const soundRight = document.getElementById("soundRight");
+                const soundWrong = document.getElementById("soundWrong");
 
-    const currentQuestion = this.questions[this.currentQuestionIndex];
-    if (selectedOption.correct) {
-        this.score++;
-        document.getElementById('result').innerText = 'Вірно!';
-        document.getElementById('result').className = 'result correct';
-        soundRight.currentTime = 0; // Сброс чтобы можно было повторно проиграть
-        soundRight.play();
-    } else {
-        document.getElementById('result').innerText = `Невірно. Правильна відповідь: ${currentQuestion.options.find(option => option.correct).text}`;
-        document.getElementById('result').className = 'result incorrect';
-        soundWrong.currentTime = 0;
-        soundWrong.play();
-    }
+                const currentQuestion = this.questions[this.currentQuestionIndex];
+                if (selectedOption.correct) {
+                    this.score++;
+                    document.getElementById('result').innerText = 'Вірно!';
+                    document.getElementById('result').className = 'result correct';
+                    soundRight.currentTime = 0; // Сброс чтобы можно было повторно проиграть
+                    soundRight.play();
+                } else {
+                    document.getElementById('result').innerText = `Невірно. Правильна відповідь: ${currentQuestion.options.find(option => option.correct).text}`;
+                    document.getElementById('result').className = 'result incorrect';
+                    soundWrong.currentTime = 0;
+                    soundWrong.play();
+                }
 
-    this.currentQuestionIndex++;
-    if (this.currentQuestionIndex < this.questions.length) {
-        setTimeout(() => this.showQuestion(), 1200);
-    } else {
-        setTimeout(() => this.showResult(), 200);
-    }
-    this.updateProgress();
-}
+                this.currentQuestionIndex++;
+                if (this.currentQuestionIndex < this.questions.length) {
+                    setTimeout(() => this.showQuestion(), 1200);
+                } else {
+                    setTimeout(() => this.showResult(), 200);
+                }
+                this.updateProgress();
+            }
 
             showResult() {
-    const total = this.questions.length;
-    const score = this.score;
+                const total = this.questions.length;
+                const score = this.score;
 
-    document.getElementById('question').innerText = `Ваш результат: ${score} з ${total}`;
-    document.getElementById('options').innerHTML = '';
-    document.getElementById('result').style.display = 'none';
-    document.getElementById('progressText').innerText = '';
-    document.getElementById('progressFill').style.width = '100%';
-    document.getElementById('restartButton').style.display = 'block';
+                document.getElementById('question').innerText = `Ваш результат: ${score} з ${total}`;
+                document.getElementById('options').innerHTML = '';
+                document.getElementById('result').style.display = 'none';
+                document.getElementById('progressText').innerText = '';
+                document.getElementById('progressFill').style.width = '100%';
+                document.getElementById('restartButton').style.display = 'block';
 
-    // Работа с рекордом
-    let record = localStorage.getItem('quizRecord');
-    let recordCount = localStorage.getItem('quizRecordCount');
+                // Работа с рекордом
+                let record = localStorage.getItem('quizRecord');
+                let recordCount = localStorage.getItem('quizRecordCount');
 
-    if (!record || !recordCount) {
-        record = 0;
-        recordCount = 0;
-    } else {
-        record = parseInt(record);
-        recordCount = parseInt(recordCount);
-    }
+                if (!record || !recordCount) {
+                    record = 0;
+                    recordCount = 0;
+                } else {
+                    record = parseInt(record);
+                    recordCount = parseInt(recordCount);
+                }
 
-    const currentScore = score;
+                const currentScore = score;
 
-    const recordDisplay = document.getElementById('recordDisplay');
+                const recordDisplay = document.getElementById('recordDisplay');
 
-    if (currentScore > record) {
-        // Новый рекорд!
-        localStorage.setItem('quizRecord', currentScore);
-        localStorage.setItem('quizRecordCount', currentScore);
-        recordDisplay.innerText = `РЕКОРД: ${currentScore} з ${total}`;
-    } else {
-        recordDisplay.innerText = `РЕКОРД: ${recordCount} з ${total}`;
-    }
-}
+                if (currentScore > record) {
+                    // Новый рекорд!
+                    localStorage.setItem('quizRecord', currentScore);
+                    localStorage.setItem('quizRecordCount', currentScore);
+                    recordDisplay.innerText = `РЕКОРД: ${currentScore} з ${total}`;
+                } else {
+                    recordDisplay.innerText = `РЕКОРД: ${recordCount} з ${total}`;
+                }
+            }
 
             updateProgress() {
                 const totalQuestions = this.questions.length;
@@ -380,7 +378,7 @@ body {
         }
         const questions = [
 
-           
+
             {
                 question: "Прицільна дальність АК-74",
                 options: [
@@ -509,7 +507,7 @@ body {
                 ]
             },
 
-             {
+            {
                 question: "Швидкість КР Калібр?",
                 options: [
                     { text: "240 м/с", correct: false },
@@ -528,7 +526,7 @@ body {
                 ]
             },
 
-             {
+            {
                 question: "Швидкість КР Х-55?",
                 options: [
                     { text: "360 м/с", correct: false },
@@ -538,7 +536,7 @@ body {
                 ]
             },
 
-             {
+            {
                 question: "Максимальна вага бойової частини КР Калібр?",
                 options: [
                     { text: "500 кг", correct: false },
@@ -548,7 +546,7 @@ body {
                 ]
             },
 
-             {
+            {
                 question: "Максимальна вага бойової частини КР Калібр?",
                 options: [
                     { text: "500 кг", correct: false },
@@ -558,7 +556,7 @@ body {
                 ]
             },
 
-             {
+            {
                 question: "Вага бойової частини КР Х-101?",
                 options: [
                     { text: "290 кг", correct: false },
@@ -568,7 +566,7 @@ body {
                 ]
             },
 
-             {
+            {
                 question: "Вага бойової частини КР Х-59?",
                 options: [
                     { text: "290 кг", correct: false },
@@ -578,7 +576,7 @@ body {
                 ]
             },
 
-             {
+            {
                 question: "Вага бойової частини КР Х-55?",
                 options: [
                     { text: "290 кг", correct: false },
@@ -587,10 +585,10 @@ body {
                     { text: "500 кг", correct: false }
                 ]
             },
-        
+
             ///////////////////////////////////
 
-             {
+            {
                 question: "Довжина БпЛА Шахед-136?",
                 options: [
                     { text: "2,5 м", correct: false },
@@ -640,17 +638,17 @@ body {
                 ]
             },
 
-            
-            
-           
+
+
+
         ];
 
 
         const quiz = new Quiz(questions);
 
-       document.getElementById('restartButton').onclick = () => {
-    location.reload(); // Полностью перезагружает страницу
-};
+        document.getElementById('restartButton').onclick = () => {
+            location.reload(); // Полностью перезагружает страницу
+        };
     </script>
 </body>
 
