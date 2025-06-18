@@ -206,13 +206,29 @@ body {
                 border-radius: 15px;
             }
         }
+
+        .record-display {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffd700; /* Золотой цвет */
+    margin-bottom: 15px;
+    text-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 8px 16px;
+    border-radius: 12px;
+    display: inline-block;
+    min-width: 200px;
+}
+
     </style>
 </head>
 
 <body>
     <div class="quiz-container">
         <div class="background-image" id="backgroundImage"></div>
+         <div class="record-display" id="recordDisplay"></div>
         <div class="progress-bar">
+           
             <div class="progress-fill" id="progressFill"></div>
             <div class="progress-text" id="progressText">1 з 10</div>
         </div>
@@ -228,13 +244,24 @@ body {
 
     <script>
         class Quiz {
-            constructor(questions) {
-                this.questions = questions;
-                this.currentQuestionIndex = 0;
-                this.score = 0;
-                this.shuffleQuestions();
-                this.showQuestion();
-            }
+          constructor(questions) {
+    this.questions = questions;
+    this.currentQuestionIndex = 0;
+    this.score = 0;
+    this.shuffleQuestions();
+    this.showQuestion();
+
+    // Показываем рекорд при запуске
+    const recordDisplay = document.getElementById('recordDisplay');
+    const savedRecord = localStorage.getItem('quizRecordCount');
+    const total = this.questions.length;
+
+    if (savedRecord && total) {
+        recordDisplay.innerText = `РЕКОРД: ${savedRecord} з ${total}`;
+    } else {
+        recordDisplay.innerText = `РЕКОРД: 0 з ${total || 10}`;
+    }
+}
 
             shuffleQuestions() {
                 for (let i = this.questions.length - 1; i > 0; i--) {
@@ -300,13 +327,41 @@ body {
 }
 
             showResult() {
-                document.getElementById('question').innerText = `Ваш результат: ${this.score} з ${this.questions.length}`;
-                document.getElementById('options').innerHTML = '';
-                document.getElementById('result').style.display = 'none';
-                document.getElementById('progressText').innerText = '';
-                document.getElementById('progressFill').style.width = '100%';
-                document.getElementById('restartButton').style.display = 'block';
-            }
+    const total = this.questions.length;
+    const score = this.score;
+
+    document.getElementById('question').innerText = `Ваш результат: ${score} з ${total}`;
+    document.getElementById('options').innerHTML = '';
+    document.getElementById('result').style.display = 'none';
+    document.getElementById('progressText').innerText = '';
+    document.getElementById('progressFill').style.width = '100%';
+    document.getElementById('restartButton').style.display = 'block';
+
+    // Работа с рекордом
+    let record = localStorage.getItem('quizRecord');
+    let recordCount = localStorage.getItem('quizRecordCount');
+
+    if (!record || !recordCount) {
+        record = 0;
+        recordCount = 0;
+    } else {
+        record = parseInt(record);
+        recordCount = parseInt(recordCount);
+    }
+
+    const currentScore = score;
+
+    const recordDisplay = document.getElementById('recordDisplay');
+
+    if (currentScore > record) {
+        // Новый рекорд!
+        localStorage.setItem('quizRecord', currentScore);
+        localStorage.setItem('quizRecordCount', currentScore);
+        recordDisplay.innerText = `РЕКОРД: ${currentScore} з ${total}`;
+    } else {
+        recordDisplay.innerText = `РЕКОРД: ${recordCount} з ${total}`;
+    }
+}
 
             updateProgress() {
                 const totalQuestions = this.questions.length;
