@@ -1,6 +1,6 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,6 @@
             font-family: Arial, sans-serif;
             min-height: 100vh;
             background: #234b30;
-            /* Резервный базовый цвет */
             background-image:
                 repeating-linear-gradient(45deg,
                     rgba(255, 255, 255, 0.02) 0px,
@@ -25,14 +24,11 @@
             justify-content: center;
             padding: 20px;
         }
-
         .quiz-container {
-
             position: relative;
             width: 100%;
             max-width: 600px;
             text-align: center;
-            /* Центрирование содержимого */
             padding: 25px;
             border: 3px solid #228B22;
             background: rgba(0, 50, 0, 0.85);
@@ -40,7 +36,6 @@
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(5px);
         }
-
         .background-image {
             position: absolute;
             top: 0;
@@ -53,7 +48,6 @@
             opacity: 0.1;
             filter: grayscale(0.7);
         }
-
         .progress-bar {
             width: 100%;
             height: 25px;
@@ -64,7 +58,6 @@
             position: relative;
             box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
         }
-
         .progress-fill {
             height: 100%;
             width: 0%;
@@ -72,7 +65,6 @@
             transition: width 0.3s ease;
             box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
         }
-
         .progress-text {
             position: absolute;
             width: 100%;
@@ -83,7 +75,6 @@
             color: #fff;
             text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
         }
-
         .question {
             font-size: 26px;
             margin-bottom: 20px;
@@ -94,9 +85,7 @@
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-
         }
-
         .options {
             display: flex;
             flex-wrap: wrap;
@@ -104,7 +93,6 @@
             gap: 12px;
             margin-bottom: 20px;
         }
-
         .option {
             background-color: #228B22;
             color: #fff;
@@ -120,13 +108,11 @@
             font-weight: bold;
             text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
         }
-
         .option:hover {
             background-color: #1e701e;
             transform: translateY(-3px);
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
         }
-
         .result {
             font-size: 22px;
             background-color: rgba(0, 50, 0, 0.95);
@@ -137,15 +123,12 @@
             border: 1px solid rgba(34, 139, 34, 0.5);
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
             font-weight: bold;
-            /* Фиксируем высоту */
             height: 48px;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-
         }
-
         .restart-button {
             display: none;
             padding: 14px 35px;
@@ -159,108 +142,111 @@
             transition: all 0.3s ease;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
             margin: 0 auto;
-            /* Центрирование кнопки */
         }
-
         .restart-button:hover {
             background-color: #226633;
             transform: scale(1.05);
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
         }
-
         .result.correct {
             background-color: rgba(46, 139, 87, 0.9);
-            /* SeaGreen */
             color: #e0ffe0;
             border: 1px solid rgba(46, 139, 87, 0.7);
         }
-
         .result.incorrect {
             background-color: rgba(178, 34, 34, 0.9);
-            /* FireBrick */
             color: #ffe0e0;
             border: 1px solid rgba(178, 34, 34, 0.7);
         }
-
         @media (max-width: 600px) {
             .question {
                 font-size: 22px;
                 padding: 10px 12px;
             }
-
             .option {
                 font-size: 16px;
                 padding: 12px 18px;
                 flex: 1 1 100%;
             }
-
             .result {
                 font-size: 18px;
             }
-
             .restart-button {
                 padding: 12px 25px;
                 font-size: 16px;
                 border-radius: 15px;
             }
         }
-
         .record-display {
             font-size: 12px;
             font-weight: bold;
             color: #ffd700;
-            /* Золотой цвет */
             margin-bottom: 15px;
             text-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
-            /* background-color: rgba(0, 0, 0, 0.3); */
             padding: 8px 16px;
             border-radius: 12px;
             display: inline-block;
             min-width: 200px;
         }
-    </style>
+        /* .errors-list {
+            text-align: left;
+            color: #fff;
+            font-size: 16px;
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        } */
+.errors-list {
+        text-align: left;
+        color: #fff;
+        font-size: 16px;
+        margin-top: 20px;
+        background: rgba(0, 0, 0, 0.3);
+        padding: 10px;
+        border-radius: 12px;
+        max-height: 300px;
+        overflow-y: auto;
+        display: none; /* Скрываем по умолчанию */
+    }
+</style>
 </head>
-
 <body>
-    <div class="quiz-container">
-        <div class="background-image" id="backgroundImage"></div>
-        <div class="record-display" id="recordDisplay"></div>
-        <div class="progress-bar">
-
-            <div class="progress-fill" id="progressFill"></div>
-            <div class="progress-text" id="progressText">1 з 10</div>
-        </div>
-        <div class="question" id="question"></div>
-        <div class="options" id="options"></div>
-        <div class="result" id="result"></div>
-        <button class="restart-button" id="restartButton">Почати знову</button>
-
-        <!-- Аудиофайлы -->
-        <audio id="soundRight" src="right.mp3"></audio>
-        <audio id="soundWrong" src="wrong.mp3"></audio>
+   <div class="quiz-container">
+    <div class="background-image" id="backgroundImage"></div>
+    <div class="record-display" id="recordDisplay"></div>
+    <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+        <div class="progress-text" id="progressText">1 з 10</div>
     </div>
-
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <div class="result" id="result"></div>
+    <div class="errors-list" id="errorsList"></div> <!-- Теперь невидим -->
+    <button class="restart-button" id="restartButton">Почати знову</button>
+    <audio id="soundRight" src="right.mp3"></audio>
+    <audio id="soundWrong" src="wrong.mp3"></audio>
+</div>
     <script>
         class Quiz {
             constructor(questions) {
                 this.questions = questions;
                 this.currentQuestionIndex = 0;
                 this.score = 0;
+                this.errors = [];
                 this.shuffleQuestions();
                 this.showQuestion();
-
-                // Показываем рекорд при запуске
                 const recordDisplay = document.getElementById('recordDisplay');
                 const savedRecord = localStorage.getItem('quizRecordCount');
                 const total = this.questions.length;
-
                 if (savedRecord && total) {
                     recordDisplay.innerText = `РЕКОРД: ${savedRecord} з ${total}`;
                 } else {
                     recordDisplay.innerText = `РЕКОРД: 0 з ${total || 10}`;
                 }
             }
-
             shuffleQuestions() {
                 for (let i = this.questions.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
@@ -273,8 +259,9 @@
                 this.showOptions(currentQuestion.options);
                 this.setBackgroundImage(currentQuestion.image);
                 document.getElementById('result').innerText = '';
-                document.getElementById('result').className = 'result'; // Сброс стиля
+                document.getElementById('result').className = 'result';
                 document.getElementById('restartButton').style.display = 'none';
+                document.getElementById('errorsList').innerHTML = '';
                 this.updateProgress();
             }
             showOptions(options) {
@@ -289,27 +276,29 @@
                     optionsContainer.appendChild(button);
                 });
             }
-
             shuffleOptions(options) {
                 for (let i = options.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
                     [options[i], options[j]] = [options[j], options[i]];
                 }
             }
-
             checkAnswer(selectedOption) {
                 const soundRight = document.getElementById("soundRight");
                 const soundWrong = document.getElementById("soundWrong");
-
                 const currentQuestion = this.questions[this.currentQuestionIndex];
+                const selectedText = selectedOption.text;
+                const correctOption = currentQuestion.options.find(option => option.correct);
+                const correctText = correctOption.text;
+
                 if (selectedOption.correct) {
                     this.score++;
                     document.getElementById('result').innerText = 'Вірно!';
                     document.getElementById('result').className = 'result correct';
-                    soundRight.currentTime = 0; // Сброс чтобы можно было повторно проиграть
+                    soundRight.currentTime = 0;
                     soundRight.play();
                 } else {
-                    document.getElementById('result').innerText = `Невірно. Правильна відповідь: ${currentQuestion.options.find(option => option.correct).text}`;
+                    this.errors.push({ question: currentQuestion.question, user: selectedText, correct: correctText });
+                    document.getElementById('result').innerText = `Невірно. Правильна відповідь: ${correctText}`;
                     document.getElementById('result').className = 'result incorrect';
                     soundWrong.currentTime = 0;
                     soundWrong.play();
@@ -323,59 +312,67 @@
                 }
                 this.updateProgress();
             }
-
+          
+            
             showResult() {
-                const total = this.questions.length;
-                const score = this.score;
+    const total = this.questions.length;
+    const score = this.score;
+    document.getElementById('question').innerText = `Ваш результат: ${score} з ${total}`;
+    document.getElementById('options').innerHTML = '';
+    document.getElementById('result').style.display = 'none';
 
-                document.getElementById('question').innerText = `Ваш результат: ${score} з ${total}`;
-                document.getElementById('options').innerHTML = '';
-                document.getElementById('result').style.display = 'none';
-                document.getElementById('progressText').innerText = '';
-                document.getElementById('progressFill').style.width = '100%';
-                document.getElementById('restartButton').style.display = 'block';
+    // Показываем список ошибок
+    const errorsList = document.getElementById('errorsList');
+    errorsList.style.display = 'block'; // Делаем блок видимым
 
-                // Работа с рекордом
-                let record = localStorage.getItem('quizRecord');
-                let recordCount = localStorage.getItem('quizRecordCount');
+    errorsList.innerHTML = '<strong>Совершені помилки:</strong><br>';
+    if (this.errors.length === 0) {
+        errorsList.innerHTML += '<br>Усі відповіді правильні!';
+    } else {
+        this.errors.forEach(err => {
+            errorsList.innerHTML += `<br>Питання: "${err.question}"<br>Ваша відповідь: "${err.user}" — Правильна відповідь: "${err.correct}"<br>`;
+        });
+    }
 
-                if (!record || !recordCount) {
-                    record = 0;
-                    recordCount = 0;
-                } else {
-                    record = parseInt(record);
-                    recordCount = parseInt(recordCount);
-                }
+    document.getElementById('progressText').innerText = '';
+    document.getElementById('progressFill').style.width = '100%';
+    document.getElementById('restartButton').style.display = 'block';
 
-                const currentScore = score;
+    let record = localStorage.getItem('quizRecord');
+    let recordCount = localStorage.getItem('quizRecordCount');
+    if (!record || !recordCount) {
+        record = 0;
+        recordCount = 0;
+    } else {
+        record = parseInt(record);
+        recordCount = parseInt(recordCount);
+    }
+    const currentScore = score;
+    const recordDisplay = document.getElementById('recordDisplay');
+    if (currentScore > record) {
+        localStorage.setItem('quizRecord', currentScore);
+        localStorage.setItem('quizRecordCount', currentScore);
+        recordDisplay.innerText = `РЕКОРД: ${currentScore} з ${total}`;
+    } else {
+        recordDisplay.innerText = `РЕКОРД: ${recordCount} з ${total}`;
+    }
+}
 
-                const recordDisplay = document.getElementById('recordDisplay');
-
-                if (currentScore > record) {
-                    // Новый рекорд!
-                    localStorage.setItem('quizRecord', currentScore);
-                    localStorage.setItem('quizRecordCount', currentScore);
-                    recordDisplay.innerText = `РЕКОРД: ${currentScore} з ${total}`;
-                } else {
-                    recordDisplay.innerText = `РЕКОРД: ${recordCount} з ${total}`;
-                }
-            }
 
             updateProgress() {
                 const totalQuestions = this.questions.length;
                 const currentQuestionNum = this.currentQuestionIndex;
-                const displayedQuestion = currentQuestionNum === 0 ? 0 : currentQuestionNum;
                 const progressPercent = totalQuestions === 0 ? 0 : (currentQuestionNum / totalQuestions) * 100;
-                document.getElementById('progressText').innerText = `${displayedQuestion + 1} з ${totalQuestions}`;
+                document.getElementById('progressText').innerText = `${currentQuestionNum + 1} з ${totalQuestions}`;
                 document.getElementById('progressFill').style.width = `${progressPercent}%`;
             }
-
             setBackgroundImage(imageUrl) {
                 const bgImage = document.getElementById('backgroundImage');
                 bgImage.style.backgroundImage = `url(${imageUrl})`;
                 bgImage.style.opacity = imageUrl ? '0.15' : '0';
             }
         }
+
         const questions = [
 
 
@@ -691,9 +688,8 @@
         const quiz = new Quiz(questions);
 
         document.getElementById('restartButton').onclick = () => {
-            location.reload(); // Полностью перезагружает страницу
+            location.reload();
         };
     </script>
 </body>
-
 </html>
