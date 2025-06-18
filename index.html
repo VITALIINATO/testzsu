@@ -1,100 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test</title>
+    <title>Military Quiz</title>
     <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            /* background-color: #f0f0f0; */
-        }
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    background: #234b30; /* Резервный базовый цвет */
+    background-image:
+        repeating-linear-gradient(
+            45deg,
+            rgba(255, 255, 255, 0.02) 0px,
+            rgba(255, 255, 255, 0.02) 1px,
+            transparent 1px,
+            transparent 20px
+        ),
+        linear-gradient(to bottom right, #2e5a3f, #1f442c);
+    background-size: 100% 100%, cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
         .quiz-container {
-            /* text-align: center;
+            
             position: relative;
             width: 100%;
-            height: 100%;
-            overflow: hidden; */
-
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            max-width: 600px;
             text-align: center;
+            /* Центрирование содержимого */
+            padding: 25px;
+            border: 3px solid #228B22;
+            background: rgba(0, 50, 0, 0.85);
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
         }
-        .question {
-            font-size: 32px;
-            margin-bottom: 20px;
-            font-weight: bold;
 
-            background-color: rgba(255, 255, 255, 0.5); /* Полупрозрачный белый фон */
-            color: #000000; /* Черный текст */
-            padding: 4px; /* Отступы для текста */
-            border-radius: 7px; /* Скругленные углы фона (по желанию) */
-
-
-
-
-
-
-
-
-
-
-        }
-        .options {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .option {
-            background-color: #007bff;
-            color: rgb(61, 25, 25);
-            font-size: 24px;
-            padding: 15px 30px;
-            margin: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .option:hover {
-            background-color: #05b64f;
-        }
-        .result {
-            margin-top: 20px;
-            font-size: 24px;
-            background-color: rgba(8, 8, 8, 0.493); /* Полупрозрачный белый фон */
-            color: #f4f5f8; /* Черный текст */
-            padding: 4px; /* Отступы для текста */
-            border-radius: 8px; /* Скругленные углы фона (по желанию) */
-            font-weight: bold;
-
-        }
-        .restart-button {
-            display: none;
-            margin-top: 40px;
-            padding: 10px 40px;
-            font-size: 18px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .restart-button:hover {
-            background-color: #218838;
-        }
         .background-image {
             position: absolute;
             top: 0;
@@ -104,21 +52,181 @@
             background-size: cover;
             background-position: center;
             z-index: -1;
-            opacity: 1;  /* прозрачность */
+            opacity: 0.1;
+            filter: grayscale(0.7);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            position: relative;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #2d88b3, #1e4d5b);
+            transition: width 0.3s ease;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .progress-text {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 3px 0;
+            color: #fff;
+            text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
+        }
+
+        .question {
+            font-size: 26px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            padding: 12px 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            
+        }
+
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option {
+            background-color: #228B22;
+            color: #fff;
+            font-size: 18px;
+            padding: 14px 25px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1 1 45%;
+            min-width: 130px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            font-weight: bold;
+            text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .option:hover {
+            background-color: #1e701e;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+        }
+
+        .result {
+            font-size: 22px;
+            background-color: rgba(0, 50, 0, 0.95);
+            color: #f0f0f0;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(34, 139, 34, 0.5);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+            font-weight: bold;
+             /* Фиксируем высоту */
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+        }
+
+        .restart-button {
+            display: none;
+            padding: 14px 35px;
+            font-size: 18px;
+            background-color: #2e8b57;
+            color: white;
+            border: none;
+            border-radius: 18px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            margin: 0 auto;
+            /* Центрирование кнопки */
+        }
+
+        .restart-button:hover {
+            background-color: #226633;
+            transform: scale(1.05);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
+        }
+
+        .result.correct {
+            background-color: rgba(46, 139, 87, 0.9);
+            /* SeaGreen */
+            color: #e0ffe0;
+            border: 1px solid rgba(46, 139, 87, 0.7);
+        }
+
+        .result.incorrect {
+            background-color: rgba(178, 34, 34, 0.9);
+            /* FireBrick */
+            color: #ffe0e0;
+            border: 1px solid rgba(178, 34, 34, 0.7);
+        }
+
+        @media (max-width: 600px) {
+            .question {
+                font-size: 22px;
+                padding: 10px 12px;
+            }
+
+            .option {
+                font-size: 16px;
+                padding: 12px 18px;
+                flex: 1 1 100%;
+            }
+
+            .result {
+                font-size: 18px;
+            }
+
+            .restart-button {
+                padding: 12px 25px;
+                font-size: 16px;
+                border-radius: 15px;
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="quiz-container">
         <div class="background-image" id="backgroundImage"></div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+            <div class="progress-text" id="progressText">1 з 10</div>
+        </div>
         <div class="question" id="question"></div>
         <div class="options" id="options"></div>
         <div class="result" id="result"></div>
         <button class="restart-button" id="restartButton">Почати знову</button>
+
+        <!-- Аудиофайлы -->
+        <audio id="soundRight" src="right.mp3"></audio>
+        <audio id="soundWrong" src="wrong.mp3"></audio>
     </div>
 
     <script>
-        // Quiz class to handle quiz functionality
         class Quiz {
             constructor(questions) {
                 this.questions = questions;
@@ -128,25 +236,22 @@
                 this.showQuestion();
             }
 
-            // Shuffle the questions array
             shuffleQuestions() {
                 for (let i = this.questions.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
                     [this.questions[i], this.questions[j]] = [this.questions[j], this.questions[i]];
                 }
             }
-
-            // Show the current question and options
             showQuestion() {
                 const currentQuestion = this.questions[this.currentQuestionIndex];
                 document.getElementById('question').innerText = currentQuestion.question;
                 this.showOptions(currentQuestion.options);
                 this.setBackgroundImage(currentQuestion.image);
                 document.getElementById('result').innerText = '';
+                document.getElementById('result').className = 'result'; // Сброс стиля
                 document.getElementById('restartButton').style.display = 'none';
+                this.updateProgress();
             }
-
-            // Display options for the current question
             showOptions(options) {
                 const optionsContainer = document.getElementById('options');
                 optionsContainer.innerHTML = '';
@@ -160,7 +265,6 @@
                 });
             }
 
-            // Shuffle the options array
             shuffleOptions(options) {
                 for (let i = options.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
@@ -168,107 +272,223 @@
                 }
             }
 
-            // Check the selected answer
-            checkAnswer(selectedOption) {
-                const currentQuestion = this.questions[this.currentQuestionIndex];
-                if (selectedOption.correct) {
-                    this.score++;
-                    document.getElementById('result').innerText = 'Вірно!';
-                } else {
-                    document.getElementById('result').innerText = `Невірно. Правильна відповідь: ${currentQuestion.options.find(option => option.correct).text}`;
-                }
-                this.currentQuestionIndex++;
-                if (this.currentQuestionIndex < this.questions.length) {
-                    setTimeout(() => this.showQuestion(), 2000);
-                } else {
-                    setTimeout(() => this.showResult(), 2000);
-                }
-            }
+          checkAnswer(selectedOption) {
+    const soundRight = document.getElementById("soundRight");
+    const soundWrong = document.getElementById("soundWrong");
 
-            // Show the final result
+    const currentQuestion = this.questions[this.currentQuestionIndex];
+    if (selectedOption.correct) {
+        this.score++;
+        document.getElementById('result').innerText = 'Вірно!';
+        document.getElementById('result').className = 'result correct';
+        soundRight.currentTime = 0; // Сброс чтобы можно было повторно проиграть
+        soundRight.play();
+    } else {
+        document.getElementById('result').innerText = `Невірно. Правильна відповідь: ${currentQuestion.options.find(option => option.correct).text}`;
+        document.getElementById('result').className = 'result incorrect';
+        soundWrong.currentTime = 0;
+        soundWrong.play();
+    }
+
+    this.currentQuestionIndex++;
+    if (this.currentQuestionIndex < this.questions.length) {
+        setTimeout(() => this.showQuestion(), 1200);
+    } else {
+        setTimeout(() => this.showResult(), 200);
+    }
+    this.updateProgress();
+}
+
             showResult() {
                 document.getElementById('question').innerText = `Ваш результат: ${this.score} з ${this.questions.length}`;
                 document.getElementById('options').innerHTML = '';
+                document.getElementById('result').style.display = 'none';
+                document.getElementById('progressText').innerText = '';
+                document.getElementById('progressFill').style.width = '100%';
                 document.getElementById('restartButton').style.display = 'block';
             }
 
-            // Set background image for the current question
+            updateProgress() {
+                const totalQuestions = this.questions.length;
+                const currentQuestionNum = this.currentQuestionIndex;
+                const displayedQuestion = currentQuestionNum === 0 ? 0 : currentQuestionNum;
+                const progressPercent = totalQuestions === 0 ? 0 : (currentQuestionNum / totalQuestions) * 100;
+                document.getElementById('progressText').innerText = `${displayedQuestion + 1} з ${totalQuestions}`;
+                document.getElementById('progressFill').style.width = `${progressPercent}%`;
+            }
+
             setBackgroundImage(imageUrl) {
-                document.getElementById('backgroundImage').style.backgroundImage = `url(${imageUrl})`;
+                const bgImage = document.getElementById('backgroundImage');
+                bgImage.style.backgroundImage = `url(${imageUrl})`;
+                bgImage.style.opacity = imageUrl ? '0.15' : '0';
             }
         }
-
-        // Sample questions for the quiz
         const questions = [
+
             {
-                question: " Максимальна дальність ураження цілей ПЗРК Piorun навздогін?",
+                question: "Довжина БпЛА Шахед-136?",
                 options: [
-                    { text: "8000 м", correct: false },
-                    { text: "6500 м", correct: true },
-                    { text: "5000 м", correct: false },
-                    { text: "4200 м", correct: false }
-                ],
-                image: "Piorun01.jpg"
+                    { text: "2,5 м", correct: false },
+                    { text: "3,5 м", correct: true },
+                    { text: "2 м", correct: false },
+                    { text: "4 м", correct: false }
+                ]
+            },
+
+
+            {
+                question: "Розмах крил БпЛА Шахед-136?",
+                options: [
+                    { text: "3,5 м", correct: false },
+                    { text: "2,5 м", correct: true },
+                    { text: "2 м", correct: false },
+                    { text: "4 м", correct: false }
+                ]
+            },
+
+            {
+                question: "Середня швидкість БпЛА Шахед-136?",
+                options: [
+                    { text: "180 м/хв", correct: false },
+                    { text: "50 м/хв", correct: true },
+                    { text: "75 м/хв", correct: false },
+                    { text: "220 м/хв", correct: false }
+                ]
             },
             {
-                question: " Максимальна дальність ураження цілей ПЗРК Stinger навздогін?",
+                question: "Середня швидкість БпЛА Шахед-136?",
+                options: [
+                    { text: "300 км/г", correct: false },
+                    { text: "180 км/г", correct: true },
+                    { text: "120 км/г", correct: false },
+                    { text: "150 км/г", correct: false }
+                ]
+            },
+
+
+
+
+
+
+
+            {
+                question: "Прицільна дальність АК-74",
+                options: [
+                    { text: "1350 м", correct: false },
+                    { text: "1000 м", correct: true },
+                    { text: "440 м", correct: false },
+                    { text: "600 м", correct: false }
+                ]
+            },
+
+            {
+                question: "Дальність прямого пострілу АК-74 по грудній фігурі?",
+                options: [
+                    { text: "625 м", correct: false },
+                    { text: "440 м", correct: true },
+                    { text: "900 м", correct: false },
+                    { text: "600 м", correct: false }
+                ]
+            },
+
+
+            {
+                question: "Темп стрільби АК-74, пострілів за хвилину?",
+                options: [
+                    { text: "900 п/х", correct: false },
+                    { text: "600 п/х", correct: true },
+                    { text: "400 п/х", correct: false },
+                    { text: "500 п/х", correct: false }
+                ]
+            },
+
+
+            {
+                question: "Бойова швидкострільність АК-74 чергами, пострілів за хвилину ?",
+                options: [
+                    { text: "75 п/х", correct: false },
+                    { text: "40 п/х", correct: true },
+                    { text: "90 п/х", correct: false },
+                    { text: "100 п/х", correct: false }
+                ]
+            },
+
+            {
+                question: "Початкова швидкість кулі АК-74?",
+                options: [
+                    { text: "1250 м/c", correct: false },
+                    { text: "900 м/c", correct: true },
+                    { text: "650 м/c", correct: false },
+                    { text: "625 м/c", correct: false }
+                ]
+            },
+
+            {
+                question: "Дальність на якій зберігається убійна дія кулі АК-74?",
+                options: [
+                    { text: "1500 м", correct: false },
+                    { text: "1350 м", correct: true },
+                    { text: "1000 м", correct: false },
+                    { text: "600 м", correct: false }
+                ]
+            },
+
+            {
+                question: "Вага автомата АК-74 без багнета з магазином?",
+                options: [
+                    { text: "3,06 кг", correct: false },
+                    { text: "3,6 кг", correct: true },
+                    { text: "4,16 кг", correct: false },
+                    { text: "3,96 кг", correct: false }
+                ]
+            },
+            //////////////////////////////////////////
+
+            {
+                question: "Максимальна дальність ураження цілей ПЗРК Stinger навздогін?",
                 options: [
                     { text: "6400 м", correct: false },
                     { text: "5000 м", correct: true },
                     { text: "5200 м", correct: false },
                     { text: "7000 м", correct: false }
-                ],
-                image: "Stinger01.jpg"
+                ]
             },
             {
-                question: " Максимальна дальність ураження цілей ПЗРК Ігла навздогін?",
+                question: "Максимальна дальність ураження цілей ПЗРК Ігла навздогін?",
                 options: [
                     { text: "5200 м", correct: true },
                     { text: "4000 м", correct: false },
                     { text: "6500 м", correct: false },
                     { text: "5000 м", correct: false }
-                ],
-                image: "Igla01.jpg"
+                ]
             },
-            
-                // SPEEDs
-
             {
-                question: " Маршева швидкість ЗКР Piorun?",
+                question: "Маршева швидкість ЗКР Piorun?",
                 options: [
                     { text: "570 м/с", correct: false },
                     { text: "660 м/с", correct: true },
                     { text: "600 м/с", correct: false },
                     { text: ">750 м/с", correct: false }
-                ],
-                image: "Piorun02.jpg"
+                ]
             },
             {
-                question: " Маршева швидкість ЗКР Stinger?",
+                question: "Маршева швидкість ЗКР Stinger?",
                 options: [
                     { text: "570 м/с", correct: false },
                     { text: ">700 м/с", correct: true },
                     { text: "660 м/с", correct: false },
                     { text: "400 м/с", correct: false }
-                ],
-                image: "Stinger02.jpg"
+                ]
             },
             {
-                question: " Маршева швидкість ЗКР Ігла?",
+                question: "Маршева швидкість ЗКР Ігла?",
                 options: [
                     { text: "360 м/с", correct: false },
                     { text: "570 м/с", correct: true },
                     { text: "420 м/с", correct: false },
                     { text: "4000 м/с", correct: false }
-                ],
-                image: "Igla02.jpg"
+                ]
             },
-           
-
-
-
-                            // all other
-
             {
                 question: "Швидкість КР Х-101?",
                 options: [
@@ -276,8 +496,7 @@
                     { text: "200 м/с", correct: true },
                     { text: "290 м/с", correct: false },
                     { text: "1050 м/с", correct: false }
-                ],
-                image: "X101_01.jpg"
+                ]
             },
             {
                 question: "Швидкість КР Х-59?",
@@ -286,8 +505,7 @@
                     { text: "290 м/с", correct: true },
                     { text: "400 м/с", correct: false },
                     { text: "200 м/с", correct: false }
-                ],
-                image: "X59_01.jpg"
+                ]
             },
             {
                 question: "Швидкість КР Х-22?",
@@ -296,29 +514,22 @@
                     { text: "4000 км/г", correct: true },
                     { text: "12000 км/г", correct: false },
                     { text: "970 км/г", correct: false }
-                ],
-                image: "X22_01.jpg"
+                ]
             },
             {
-                question: " Швидкість ракети Х-47 Кинжал?",
+                question: "Швидкість ракети Х-47 Кинжал?",
                 options: [
                     { text: "8800 км/г", correct: false },
                     { text: "12000 км/г", correct: true },
                     { text: "6500 км/г", correct: false },
                     { text: "4000 км/г", correct: false }
-                ],
-                image: "X47_01.jpg"
-            },
-
-            
-
-
+                ]
+            }
         ];
 
-        // Initialize the quiz
+
         const quiz = new Quiz(questions);
 
-        // Restart the quiz when the button is clicked
         document.getElementById('restartButton').onclick = () => {
             quiz.currentQuestionIndex = 0;
             quiz.score = 0;
@@ -327,4 +538,5 @@
         };
     </script>
 </body>
+
 </html>
