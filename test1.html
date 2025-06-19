@@ -1,34 +1,34 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-      <link rel="icon" href="icon.png" type="image/png">
+    <link rel="icon" href="icon.png" type="image/png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Тест ППО</title>
-     
+
     <style>
-       body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    min-height: 100vh;
-    background: #234b30;
-    background-image:
-        repeating-linear-gradient(45deg,
-            rgba(255, 255, 255, 0.02) 0px,
-            rgba(255, 255, 255, 0.02) 1px,
-            transparent 1px,
-            transparent 20px),
-        linear-gradient(to bottom right, #2e5a3f, #1f442c);
-    background-size: 100% 100%, cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            background: #234b30;
+            background-image:
+                repeating-linear-gradient(45deg,
+                    rgba(255, 255, 255, 0.02) 0px,
+                    rgba(255, 255, 255, 0.02) 1px,
+                    transparent 1px,
+                    transparent 20px),
+                linear-gradient(to bottom right, #2e5a3f, #1f442c);
+            background-size: 100% 100%, cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
 
         .quiz-container {
-             box-sizing: border-box;
+            box-sizing: border-box;
             margin-top: 0px;
             position: relative;
             width: 100%;
@@ -40,8 +40,9 @@
             border-radius: 20px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(5px);
-          margin: 10px;
+            margin: 10px;
         }
+
         .background-image {
             position: absolute;
             top: 0;
@@ -54,6 +55,7 @@
             opacity: 0.1;
             filter: grayscale(0.7);
         }
+
         .progress-bar {
             width: 100%;
             height: 25px;
@@ -64,6 +66,7 @@
             position: relative;
             box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
         }
+
         .progress-fill {
             height: 100%;
             width: 0%;
@@ -71,6 +74,7 @@
             transition: width 0.3s ease;
             box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
         }
+
         .progress-text {
             position: absolute;
             width: 100%;
@@ -81,6 +85,7 @@
             color: #fff;
             text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
         }
+
         .question {
             font-size: 26px;
             margin-bottom: 20px;
@@ -92,11 +97,12 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
             min-height: 90px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
         }
+
         .options {
             display: flex;
             flex-wrap: wrap;
@@ -104,6 +110,7 @@
             gap: 12px;
             margin-bottom: 20px;
         }
+
         .option {
             background-color: #228B22;
             color: #fff;
@@ -119,11 +126,13 @@
             font-weight: bold;
             text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
         }
+
         .option:hover {
             background-color: #1e701e;
             transform: translateY(-3px);
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
         }
+
         .result {
             font-size: 22px;
             background-color: rgba(0, 50, 0, 0.95);
@@ -140,6 +149,7 @@
             justify-content: center;
             overflow: hidden;
         }
+
         .restart-button {
             display: none;
             padding: 14px 35px;
@@ -154,46 +164,54 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
             margin: 0 auto;
         }
+
         .restart-button:hover {
             background-color: #226633;
             transform: scale(1.05);
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
         }
-        
+
         footer {
             margin-top: 25px;
             font-size: 13px;
             color: #aaa;
         }
+
         .result.correct {
             background-color: rgba(46, 139, 87, 0.9);
             color: #e0ffe0;
             border: 1px solid rgba(46, 139, 87, 0.7);
         }
+
         .result.incorrect {
             background-color: rgba(178, 34, 34, 0.9);
             color: #ffe0e0;
             border: 1px solid rgba(178, 34, 34, 0.7);
         }
+
         @media (max-width: 600px) {
             .question {
-        min-height: 90px;
-        font-size: 20px;
-        padding: 10px 12px;
-    }
-           .option {
-        font-size: 16px;
-        padding: 12px 18px;
-    }
+                min-height: 90px;
+                font-size: 20px;
+                padding: 10px 12px;
+            }
+
+            .option {
+                font-size: 16px;
+                padding: 12px 18px;
+            }
+
             .result {
                 font-size: 18px;
             }
+
             .restart-button {
                 padding: 12px 25px;
                 font-size: 16px;
                 border-radius: 15px;
             }
         }
+
         .record-display {
             font-size: 12px;
             font-weight: bold;
@@ -205,6 +223,7 @@
             display: inline-block;
             min-width: 200px;
         }
+
         /* .errors-list {
             text-align: left;
             color: #fff;
@@ -216,39 +235,41 @@
             max-height: 300px;
             overflow-y: auto;
         } */
-.errors-list {
-        text-align: left;
-        color: #fff;
-        font-size: 16px;
-        margin-top: 20px;
-        background: rgba(0, 0, 0, 0.3);
-        padding: 10px;
-        border-radius: 12px;
-        max-height: 300px;
-        overflow-y: auto;
-        display: none; /* Скрываем по умолчанию */
-    }
-</style>
+        .errors-list {
+            text-align: left;
+            color: #fff;
+            font-size: 16px;
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+            /* Скрываем по умолчанию */
+        }
+    </style>
 </head>
+
 <body>
-   <div class="quiz-container">
-    <div class="background-image" id="backgroundImage"></div>
-    <div class="record-display" id="recordDisplay"></div>
-    <div class="progress-bar">
-        <div class="progress-fill" id="progressFill"></div>
-        <div class="progress-text" id="progressText">1 з 10</div>
+    <div class="quiz-container">
+        <div class="background-image" id="backgroundImage"></div>
+        <div class="record-display" id="recordDisplay"></div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+            <div class="progress-text" id="progressText">1 з 10</div>
+        </div>
+        <div class="question" id="question"></div>
+        <div class="options" id="options"></div>
+        <div class="result" id="result"></div>
+        <div class="errors-list" id="errorsList"></div> <!-- Теперь невидим -->
+        <button class="restart-button" id="restartButton">Почати знову</button>
+        <audio id="soundRight" src="right.mp3"></audio>
+        <audio id="soundWrong" src="wrong.mp3"></audio>
+        <footer>
+            <a href="index.html" style="color: #aaa; text-decoration: none;">&copy; 2025 NATO</a>
+        </footer>
     </div>
-    <div class="question" id="question"></div>
-    <div class="options" id="options"></div>
-    <div class="result" id="result"></div>
-    <div class="errors-list" id="errorsList"></div> <!-- Теперь невидим -->
-    <button class="restart-button" id="restartButton">Почати знову</button>
-    <audio id="soundRight" src="right.mp3"></audio>
-    <audio id="soundWrong" src="wrong.mp3"></audio>
-    <footer>
-    <a href="index.html" style="color: #aaa; text-decoration: none;">&copy; 2025 NATO</a>
-</footer>
-</div>
     <script>
         class Quiz {
             constructor(questions) {
@@ -332,51 +353,51 @@
                 }
                 this.updateProgress();
             }
-          
-            
+
+
             showResult() {
-    const total = this.questions.length;
-    const score = this.score;
-    document.getElementById('question').innerText = `Ваш результат: ${score} з ${total}`;
-    document.getElementById('options').innerHTML = '';
-    document.getElementById('result').style.display = 'none';
+                const total = this.questions.length;
+                const score = this.score;
+                document.getElementById('question').innerText = `Ваш результат: ${score} з ${total}`;
+                document.getElementById('options').innerHTML = '';
+                document.getElementById('result').style.display = 'none';
 
-    // Показываем список ошибок
-    const errorsList = document.getElementById('errorsList');
-    errorsList.style.display = 'block'; // Делаем блок видимым
+                // Показываем список ошибок
+                const errorsList = document.getElementById('errorsList');
+                errorsList.style.display = 'block'; // Делаем блок видимым
 
-    errorsList.innerHTML = '<strong>Помилки:</strong><br>';
-    if (this.errors.length === 0) {
-        errorsList.innerHTML += '<br>Усі відповіді правильні!';
-    } else {
-        this.errors.forEach(err => {
-            errorsList.innerHTML += `<br>Питання: "${err.question}"<br>Ваша відповідь: "${err.user}" — Правильна відповідь: "${err.correct}"<br>`;
-        });
-    }
+                errorsList.innerHTML = '<strong>Помилки:</strong><br>';
+                if (this.errors.length === 0) {
+                    errorsList.innerHTML += '<br>Усі відповіді правильні!';
+                } else {
+                    this.errors.forEach(err => {
+                        errorsList.innerHTML += `<br>Питання: "${err.question}"<br>Ваша відповідь: "${err.user}" — Правильна відповідь: "${err.correct}"<br>`;
+                    });
+                }
 
-    document.getElementById('progressText').innerText = '';
-    document.getElementById('progressFill').style.width = '100%';
-    document.getElementById('restartButton').style.display = 'block';
+                document.getElementById('progressText').innerText = '';
+                document.getElementById('progressFill').style.width = '100%';
+                document.getElementById('restartButton').style.display = 'block';
 
-    let record = localStorage.getItem('quizRecord');
-    let recordCount = localStorage.getItem('quizRecordCount');
-    if (!record || !recordCount) {
-        record = 0;
-        recordCount = 0;
-    } else {
-        record = parseInt(record);
-        recordCount = parseInt(recordCount);
-    }
-    const currentScore = score;
-    const recordDisplay = document.getElementById('recordDisplay');
-    if (currentScore > record) {
-        localStorage.setItem('quizRecord', currentScore);
-        localStorage.setItem('quizRecordCount', currentScore);
-        recordDisplay.innerText = `Рекорд ${currentScore} з ${total}`;
-    } else {
-        recordDisplay.innerText = `Рекорд: ${recordCount} з ${total}`;
-    }
-}
+                let record = localStorage.getItem('quizRecord');
+                let recordCount = localStorage.getItem('quizRecordCount');
+                if (!record || !recordCount) {
+                    record = 0;
+                    recordCount = 0;
+                } else {
+                    record = parseInt(record);
+                    recordCount = parseInt(recordCount);
+                }
+                const currentScore = score;
+                const recordDisplay = document.getElementById('recordDisplay');
+                if (currentScore > record) {
+                    localStorage.setItem('quizRecord', currentScore);
+                    localStorage.setItem('quizRecordCount', currentScore);
+                    recordDisplay.innerText = `Рекорд ${currentScore} з ${total}`;
+                } else {
+                    recordDisplay.innerText = `Рекорд: ${recordCount} з ${total}`;
+                }
+            }
 
 
             updateProgress() {
@@ -396,7 +417,7 @@
         const questions = [
 
 
-              {
+            {
                 question: "Прицільна дальність АК-74",
                 options: [
                     { text: "1350 м", correct: false },
@@ -438,7 +459,7 @@
                 ]
             },
 
-             {
+            {
                 question: "Бойова швидкострільність АК-74 чергами, пострілів за хвилину ?",
                 options: [
                     { text: "75 п/х", correct: false },
@@ -468,7 +489,7 @@
                 ]
             },
 
-             {
+            {
                 question: "Максимальна дальність польоту кулі АК-74?",
                 options: [
                     { text: "1350 м", correct: false },
@@ -498,9 +519,9 @@
                 ]
             },
 
-         
+
             ////////////////
-              {
+            {
                 question: "Максимальна дальність ураження цілей ПЗРК Stinger навздогін?",
                 options: [
                     { text: "6400 м", correct: false },
@@ -510,7 +531,7 @@
                 ]
             },
 
-             {
+            {
                 question: "Максимальна дальність ураження цілей ПЗРК Piorun навздогін?",
                 options: [
                     { text: "5600 м", correct: false },
@@ -556,7 +577,7 @@
                 ]
             },
 
-             {
+            {
                 question: "Швидкість вражаємих цілей ПЗРК Stinger на зустрічних курсах?",
                 options: [
                     { text: "320 м/с", correct: false },
@@ -566,7 +587,7 @@
                 ]
             },
 
-             {
+            {
                 question: "Швидкість вражаємих цілей ПЗРК Piorun на зустрічних курсах?",
                 options: [
                     { text: "320 м/с", correct: false },
@@ -576,7 +597,7 @@
                 ]
             },
 
-              {
+            {
                 question: "Швидкість вражаємих цілей ПЗРК Ігла на зустрічних курсах?",
                 options: [
                     { text: "320 м/с", correct: false },
@@ -586,7 +607,7 @@
                 ]
             },
 
-             {
+            {
                 question: "Швидкість вражаємих цілей ПЗРК Stinger на догонних курсах?",
                 options: [
                     { text: "430 м/с", correct: false },
@@ -596,7 +617,7 @@
                 ]
             },
 
-             {
+            {
                 question: "Швидкість вражаємих цілей ПЗРК Piorun на догонних курсах?",
                 options: [
                     { text: "400 м/с", correct: false },
@@ -606,17 +627,17 @@
                 ]
             },
 
-              {
+            {
                 question: "Швидкість вражаємих цілей ПЗРК Ігла на догонних курсах?",
                 options: [
-                   { text: "400 м/с", correct: false },
+                    { text: "400 м/с", correct: false },
                     { text: "320 м/с", correct: true },
                     { text: "360 м/с", correct: false },
                     { text: "450 м/с", correct: false }
                 ]
             },
 
-             {
+            {
                 question: "Маса бойової частини ПЗРК Stinger?",
                 options: [
                     { text: "4 кг", correct: false },
@@ -626,7 +647,7 @@
                 ]
             },
 
-           {
+            {
                 question: "Маса бойової частини ПЗРК Piorun?",
                 options: [
                     { text: "3 кг", correct: false },
@@ -646,7 +667,7 @@
             },
             // //////////////////////////
 
-         
+
             {
                 question: "Швидкість КР Х-101?",
                 options: [
@@ -696,8 +717,8 @@
                 ]
             },
 
-            
-             {
+
+            {
                 question: "Максимальна швидкість КР Іскандер-К?",
                 options: [
                     { text: "360 м/с", correct: false },
@@ -707,7 +728,7 @@
                 ]
             },
 
-             {
+            {
                 question: "Максимальна вага бойової частини КР Іскандер-К?",
                 options: [
                     { text: "400 кг", correct: false },
@@ -809,7 +830,7 @@
                 ]
             },
 
-             {
+            {
                 question: "Крейсерська швидкість БпЛА Орлан-10",
                 options: [
                     { text: "150 км/г", correct: false },
@@ -819,7 +840,7 @@
                 ]
             },
 
-             {
+            {
                 question: "Розмах крил БпЛА Орлан-10 ",
                 options: [
                     { text: "2,3 м", correct: false },
@@ -829,7 +850,7 @@
                 ]
             },
 
-             {
+            {
                 question: "Довжина БпЛА Орлан-10 ",
                 options: [
                     { text: "2,3 м", correct: false },
@@ -839,8 +860,8 @@
                 ]
             },
 
-            
-             {
+
+            {
                 question: "Довжина КР Х-101 ",
                 options: [
                     { text: "5,7 м", correct: false },
@@ -850,8 +871,118 @@
                 ]
             },
 
+            ///////
 
             
+
+
+            {
+                question: "Довжина гармати Oerlikon в похідному положенні ?",
+                options: [
+                    { text: "3510 мм", correct: false },
+                    { text: "4100 мм", correct: true },
+                    { text: "4400 мм", correct: false },
+                    { text: "5100 мм", correct: false }
+                ]
+            },
+
+
+           {
+                question: "Ширина гармати Oerlikon в похідному положенні ?",
+                options: [
+                    { text: "1300 мм", correct: false },
+                    { text: "1500 мм", correct: true },
+                    { text: "1400 мм", correct: false },
+                    { text: "1800 мм", correct: false }
+                ]
+            },
+
+ {
+                question: "Висота гармати Oerlikon в похідному положенні ?",
+                options: [
+                    { text: "1800 мм", correct: false },
+                    { text: "1600 мм", correct: true },
+                    { text: "1400 мм", correct: false },
+                    { text: "1900 мм", correct: false }
+                ]
+            },
+
+            {
+                question: "Середня дальність срільби Oerlikon?",
+                options: [
+                    { text: "1000 м", correct: false },
+                    { text: "800 м", correct: true },
+                    { text: "600 м", correct: false },
+                    { text: "900 м", correct: false }
+                ]
+            },
+
+            {
+                question: "Початкова швидкість снаряда Oerlikon?",
+                options: [
+                    { text: "1200 м/c", correct: false },
+                    { text: "850 м/c", correct: true },
+                    { text: "750 м/c", correct: false },
+                    { text: "950 м/c", correct: false }
+                ]
+            },
+
+            {
+                question: "Скорострільність Oerlikon?",
+                options: [
+                    { text: "800-1000 п/х", correct: false },
+                    { text: "650-750 п/х", correct: true },
+                    { text: "900-100 п/х", correct: false },
+                    { text: "500-600 п/х", correct: false }
+                ]
+            },
+
+
+            {
+                question: "Максимальна дальність по горизонталі для Oerlikon?",
+                options: [
+                    { text: "4500 м", correct: false },
+                    { text: "5500 м", correct: true },
+                    { text: "4000 м", correct: false },
+                    { text: "3500 м", correct: false }
+                ]
+            },
+
+            {
+                question: "Максимальна вертикальна дальність для Oerlikon?",
+                options: [
+                    { text: "5500 м", correct: false },
+                    { text: "4000 м", correct: true },
+                    { text: "3500 м", correct: false },
+                    { text: "5000 м", correct: false }
+                ]
+            },
+
+            {
+                question: "Дальність успішної стрільби по цілі в повітрі для Oerlikon?",
+                options: [
+                    { text: "2000 м", correct: false },
+                    { text: "1500 м", correct: true },
+                    { text: "2500 м", correct: false },
+                    { text: "1900 м", correct: false }
+                ]
+            },
+
+            {
+                question: "Висота успішної стрільби по цілі по повітряних цілях для Oerlikon?",
+                options: [
+                    { text: "2000 м", correct: false },
+                    { text: "1000 м", correct: true },
+                    { text: "1500 м", correct: false },
+                    { text: "2500 м", correct: false }
+                ]
+            },
+
+       
+
+
+
+
 
 
 
@@ -866,4 +997,5 @@
         };
     </script>
 </body>
+
 </html>
