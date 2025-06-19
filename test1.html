@@ -8,30 +8,41 @@
     <title>Тест ППО</title>
      
     <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            min-height: 100vh;
-            background: #234b30;
-            background-image:
-                repeating-linear-gradient(45deg,
-                    rgba(255, 255, 255, 0.02) 0px,
-                    rgba(255, 255, 255, 0.02) 1px,
-                    transparent 1px,
-                    transparent 20px),
-                linear-gradient(to bottom right, #2e5a3f, #1f442c);
-            background-size: 100% 100%, cover;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
+       body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    background: #234b30;
+    background-image:
+        repeating-linear-gradient(45deg,
+            rgba(255, 255, 255, 0.02) 0px,
+            rgba(255, 255, 255, 0.02) 1px,
+            transparent 1px,
+            transparent 20px),
+        linear-gradient(to bottom right, #2e5a3f, #1f442c);
+    background-size: 100% 100%, cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quiz-container {
+    padding: 20px;
+}
+
+@media (max-width: 600px) {
+    .quiz-container {
+        padding: 15px;
+    }
+}
         .quiz-container {
+             box-sizing: border-box;
+            margin-top: 0px;
             position: relative;
             width: 100%;
             max-width: 600px;
             text-align: center;
-            padding: 25px;
+            padding: 20px;
             border: 3px solid #228B22;
             background: rgba(0, 50, 0, 0.85);
             border-radius: 20px;
@@ -87,6 +98,11 @@
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
         }
         .options {
             display: flex;
@@ -168,14 +184,14 @@
         }
         @media (max-width: 600px) {
             .question {
-                font-size: 22px;
-                padding: 10px 12px;
-            }
-            .option {
-                font-size: 16px;
-                padding: 12px 18px;
-                flex: 1 1 100%;
-            }
+        min-height: 60px;
+        font-size: 20px;
+        padding: 10px 12px;
+    }
+           .option {
+        font-size: 16px;
+        padding: 12px 18px;
+    }
             .result {
                 font-size: 18px;
             }
@@ -462,8 +478,8 @@
              {
                 question: "Максимальна дальність польоту кулі АК-74?",
                 options: [
-                    { text: "3150 м", correct: false },
-                    { text: "1350 м", correct: true },
+                    { text: "1350 м", correct: false },
+                    { text: "3150 м", correct: true },
                     { text: "4400 м", correct: false },
                     { text: "2400 м", correct: false }
                 ]
@@ -612,7 +628,7 @@
                 options: [
                     { text: "4 кг", correct: false },
                     { text: "3 кг", correct: true },
-                    { text: "2,37", correct: false },
+                    { text: "2,37 кг", correct: false },
                     { text: "1,27 м", correct: false }
                 ]
             },
@@ -622,8 +638,8 @@
                 options: [
                     { text: "3 кг", correct: false },
                     { text: "1,82 кг", correct: true },
-                    { text: "2,37", correct: false },
-                    { text: "1,27 м", correct: false }
+                    { text: "2,33 кг", correct: false },
+                    { text: "1,27 кг", correct: false }
                 ]
             },
             {
@@ -631,7 +647,7 @@
                 options: [
                     { text: "4 кг", correct: false },
                     { text: "1,27 кг", correct: true },
-                    { text: "1,82", correct: false },
+                    { text: "1,82 кг", correct: false },
                     { text: "1,17 м", correct: false }
                 ]
             },
@@ -774,10 +790,10 @@
             {
                 question: "Крейсерська швидкість БпЛА Шахед-136?",
                 options: [
-                    { text: "180 м/хв", correct: false },
-                    { text: "50 м/хв", correct: true },
-                    { text: "75 м/хв", correct: false },
-                    { text: "220 м/хв", correct: false }
+                    { text: "180 м/с", correct: false },
+                    { text: "50 м/с", correct: true },
+                    { text: "75 м/с", correct: false },
+                    { text: "220 м/с", correct: false }
                 ]
             },
             {
