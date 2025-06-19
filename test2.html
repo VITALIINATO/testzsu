@@ -1,11 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>АК-74</title>
-         <link rel="icon" href="icon.png" type="image/png">
+    <link rel="icon" href="icon.png" type="image/png">
     <style>
         body {
             margin: 0;
@@ -23,8 +23,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 10px;
         }
+
         .quiz-container {
             position: relative;
             width: 100%;
@@ -36,7 +36,9 @@
             border-radius: 20px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(5px);
+            margin: 10px;
         }
+
         .background-image {
             position: absolute;
             top: 0;
@@ -49,6 +51,7 @@
             opacity: 0.1;
             filter: grayscale(0.7);
         }
+
         .progress-bar {
             width: 100%;
             height: 25px;
@@ -59,6 +62,7 @@
             position: relative;
             box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
         }
+
         .progress-fill {
             height: 100%;
             width: 0%;
@@ -66,6 +70,7 @@
             transition: width 0.3s ease;
             box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
         }
+
         .progress-text {
             position: absolute;
             width: 100%;
@@ -76,6 +81,7 @@
             color: #fff;
             text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
         }
+
         .question {
             font-size: 26px;
             margin-bottom: 20px;
@@ -86,7 +92,13 @@
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
         }
+
         .options {
             display: flex;
             flex-wrap: wrap;
@@ -94,6 +106,7 @@
             gap: 12px;
             margin-bottom: 20px;
         }
+
         .option {
             background-color: #228B22;
             color: #fff;
@@ -109,11 +122,13 @@
             font-weight: bold;
             text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
         }
+
         .option:hover {
             background-color: #1e701e;
             transform: translateY(-3px);
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
         }
+
         .result {
             font-size: 22px;
             background-color: rgba(0, 50, 0, 0.95);
@@ -130,6 +145,7 @@
             justify-content: center;
             overflow: hidden;
         }
+
         .restart-button {
             display: none;
             padding: 14px 35px;
@@ -144,40 +160,48 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
             margin: 0 auto;
         }
+
         .restart-button:hover {
             background-color: #226633;
             transform: scale(1.05);
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
         }
+
         .result.correct {
             background-color: rgba(46, 139, 87, 0.9);
             color: #e0ffe0;
             border: 1px solid rgba(46, 139, 87, 0.7);
         }
+
         .result.incorrect {
             background-color: rgba(178, 34, 34, 0.9);
             color: #ffe0e0;
             border: 1px solid rgba(178, 34, 34, 0.7);
         }
+
         @media (max-width: 600px) {
             .question {
                 font-size: 22px;
                 padding: 10px 12px;
             }
+
             .option {
                 font-size: 16px;
                 padding: 12px 18px;
                 flex: 1 1 100%;
             }
+
             .result {
                 font-size: 18px;
             }
+
             .restart-button {
                 padding: 12px 25px;
                 font-size: 16px;
                 border-radius: 15px;
             }
         }
+
         .record-display {
             font-size: 12px;
             font-weight: bold;
@@ -190,46 +214,48 @@
             min-width: 200px;
         }
 
-        
+
         footer {
             margin-top: 25px;
             font-size: 13px;
             color: #aaa;
         }
-       
-.errors-list {
-        text-align: left;
-        color: #fff;
-        font-size: 16px;
-        margin-top: 20px;
-        background: rgba(0, 0, 0, 0.3);
-        padding: 10px;
-        border-radius: 12px;
-        max-height: 300px;
-        overflow-y: auto;
-        display: none; /* Скрываем по умолчанию */
-    }
-</style>
+
+        .errors-list {
+            text-align: left;
+            color: #fff;
+            font-size: 16px;
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+            /* Скрываем по умолчанию */
+        }
+    </style>
 </head>
+
 <body>
-   <div class="quiz-container">
-    <div class="background-image" id="backgroundImage"></div>
-    <!-- <div class="record-display" id="recordDisplay"></div> -->
-    <div class="progress-bar">
-        <div class="progress-fill" id="progressFill"></div>
-        <div class="progress-text" id="progressText">1 з 10</div>
+    <div class="quiz-container">
+        <div class="background-image" id="backgroundImage"></div>
+        <!-- <div class="record-display" id="recordDisplay"></div> -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+            <div class="progress-text" id="progressText">1 з 10</div>
+        </div>
+        <div class="question" id="question"></div>
+        <div class="options" id="options"></div>
+        <div class="result" id="result"></div>
+        <div class="errors-list" id="errorsList"></div> <!-- Теперь невидим -->
+        <button class="restart-button" id="restartButton">Почати знову</button>
+        <audio id="soundRight" src="right.mp3"></audio>
+        <audio id="soundWrong" src="wrong.mp3"></audio>
+        <footer>
+            <a href="index.html" style="color: #aaa; text-decoration: none;">&copy; 2025 NATO</a>
+        </footer>
     </div>
-    <div class="question" id="question"></div>
-    <div class="options" id="options"></div>
-    <div class="result" id="result"></div>
-    <div class="errors-list" id="errorsList"></div> <!-- Теперь невидим -->
-    <button class="restart-button" id="restartButton">Почати знову</button>
-    <audio id="soundRight" src="right.mp3"></audio>
-    <audio id="soundWrong" src="wrong.mp3"></audio>
-    <footer>
-    <a href="index.html" style="color: #aaa; text-decoration: none;">&copy; 2025 NATO</a>
-</footer>
-</div>
     <script>
         class Quiz {
             constructor(questions) {
@@ -313,51 +339,51 @@
                 }
                 this.updateProgress();
             }
-          
-            
+
+
             showResult() {
-    const total = this.questions.length;
-    const score = this.score;
-    document.getElementById('question').innerText = `Ваш результат: ${score} з ${total}`;
-    document.getElementById('options').innerHTML = '';
-    document.getElementById('result').style.display = 'none';
+                const total = this.questions.length;
+                const score = this.score;
+                document.getElementById('question').innerText = `Ваш результат: ${score} з ${total}`;
+                document.getElementById('options').innerHTML = '';
+                document.getElementById('result').style.display = 'none';
 
-    // Показываем список ошибок
-    const errorsList = document.getElementById('errorsList');
-    errorsList.style.display = 'block'; // Делаем блок видимым
+                // Показываем список ошибок
+                const errorsList = document.getElementById('errorsList');
+                errorsList.style.display = 'block'; // Делаем блок видимым
 
-    errorsList.innerHTML = '<strong>Помилки:</strong><br>';
-    if (this.errors.length === 0) {
-        errorsList.innerHTML += '<br>Усі відповіді правильні!';
-    } else {
-        this.errors.forEach(err => {
-            errorsList.innerHTML += `<br>Питання: "${err.question}"<br>Ваша відповідь: "${err.user}" — Правильна відповідь: "${err.correct}"<br>`;
-        });
-    }
+                errorsList.innerHTML = '<strong>Помилки:</strong><br>';
+                if (this.errors.length === 0) {
+                    errorsList.innerHTML += '<br>Усі відповіді правильні!';
+                } else {
+                    this.errors.forEach(err => {
+                        errorsList.innerHTML += `<br>Питання: "${err.question}"<br>Ваша відповідь: "${err.user}" — Правильна відповідь: "${err.correct}"<br>`;
+                    });
+                }
 
-    document.getElementById('progressText').innerText = '';
-    document.getElementById('progressFill').style.width = '100%';
-    document.getElementById('restartButton').style.display = 'block';
+                document.getElementById('progressText').innerText = '';
+                document.getElementById('progressFill').style.width = '100%';
+                document.getElementById('restartButton').style.display = 'block';
 
-    // let record = localStorage.getItem('quizRecord');
-    // let recordCount = localStorage.getItem('quizRecordCount');
-    // if (!record || !recordCount) {
-    //     record = 0;
-    //     recordCount = 0;
-    // } else {
-    //     record = parseInt(record);
-    //     recordCount = parseInt(recordCount);
-    // }
-    // const currentScore = score;
-    // const recordDisplay = document.getElementById('recordDisplay');
-    // if (currentScore > record) {
-    //     localStorage.setItem('quizRecord', currentScore);
-    //     localStorage.setItem('quizRecordCount', currentScore);
-    //     recordDisplay.innerText = `РЕКОРД: ${currentScore} з ${total}`;
-    // } else {
-    //     recordDisplay.innerText = `РЕКОРД: ${recordCount} з ${total}`;
-    // }
-}
+                // let record = localStorage.getItem('quizRecord');
+                // let recordCount = localStorage.getItem('quizRecordCount');
+                // if (!record || !recordCount) {
+                //     record = 0;
+                //     recordCount = 0;
+                // } else {
+                //     record = parseInt(record);
+                //     recordCount = parseInt(recordCount);
+                // }
+                // const currentScore = score;
+                // const recordDisplay = document.getElementById('recordDisplay');
+                // if (currentScore > record) {
+                //     localStorage.setItem('quizRecord', currentScore);
+                //     localStorage.setItem('quizRecordCount', currentScore);
+                //     recordDisplay.innerText = `РЕКОРД: ${currentScore} з ${total}`;
+                // } else {
+                //     recordDisplay.innerText = `РЕКОРД: ${recordCount} з ${total}`;
+                // }
+            }
 
 
             updateProgress() {
@@ -419,7 +445,7 @@
                 ]
             },
 
-             {
+            {
                 question: "Бойова швидкострільність АК-74 чергами, пострілів за хвилину ?",
                 options: [
                     { text: "75 п/х", correct: false },
@@ -449,8 +475,8 @@
                 ]
             },
 
-            
-             {
+
+            {
                 question: "Максимальна дальність польоту кулі АК-74?",
                 options: [
                     { text: "1350 м", correct: false },
@@ -490,4 +516,5 @@
         };
     </script>
 </body>
+
 </html>

@@ -26,15 +26,7 @@
     justify-content: center;
 }
 
-.quiz-container {
-    padding: 20px;
-}
 
-@media (max-width: 600px) {
-    .quiz-container {
-        padding: 15px;
-    }
-}
         .quiz-container {
              box-sizing: border-box;
             margin-top: 0px;
@@ -48,6 +40,7 @@
             border-radius: 20px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(5px);
+          margin: 10px;
         }
         .background-image {
             position: absolute;
@@ -269,9 +262,9 @@
                 const savedRecord = localStorage.getItem('quizRecordCount');
                 const total = this.questions.length;
                 if (savedRecord && total) {
-                    recordDisplay.innerText = `РЕКОРД: ${savedRecord} з ${total}`;
+                    recordDisplay.innerText = `Рекорд: ${savedRecord} з ${total}`;
                 } else {
-                    recordDisplay.innerText = `РЕКОРД: 0 з ${total || 10}`;
+                    recordDisplay.innerText = `Рекорд: 0 з ${total || 10}`;
                 }
             }
             shuffleQuestions() {
@@ -379,9 +372,9 @@
     if (currentScore > record) {
         localStorage.setItem('quizRecord', currentScore);
         localStorage.setItem('quizRecordCount', currentScore);
-        recordDisplay.innerText = `РЕКОРД: ${currentScore} з ${total}`;
+        recordDisplay.innerText = `Рекорд ${currentScore} з ${total}`;
     } else {
-        recordDisplay.innerText = `РЕКОРД: ${recordCount} з ${total}`;
+        recordDisplay.innerText = `Рекорд: ${recordCount} з ${total}`;
     }
 }
 
