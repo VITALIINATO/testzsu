@@ -242,14 +242,14 @@
                 this.errors = [];
                 this.shuffleQuestions();
                 this.showQuestion();
-                const recordDisplay = document.getElementById('recordDisplay');
-                const savedRecord = localStorage.getItem('quizRecordCount');
-                const total = this.questions.length;
-                if (savedRecord && total) {
-                    recordDisplay.innerText = `РЕКОРД: ${savedRecord} з ${total}`;
-                } else {
-                    recordDisplay.innerText = `РЕКОРД: 0 з ${total || 10}`;
-                }
+                // const recordDisplay = document.getElementById('recordDisplay');
+                // const savedRecord = localStorage.getItem('quizRecordCount');
+                // const total = this.questions.length;
+                // if (savedRecord && total) {
+                //     recordDisplay.innerText = `РЕКОРД: ${savedRecord} з ${total}`;
+                // } else {
+                //     recordDisplay.innerText = `РЕКОРД: 0 з ${total || 10}`;
+                // }
             }
             shuffleQuestions() {
                 for (let i = this.questions.length - 1; i > 0; i--) {
@@ -342,24 +342,24 @@
     document.getElementById('progressFill').style.width = '100%';
     document.getElementById('restartButton').style.display = 'block';
 
-    let record = localStorage.getItem('quizRecord');
-    let recordCount = localStorage.getItem('quizRecordCount');
-    if (!record || !recordCount) {
-        record = 0;
-        recordCount = 0;
-    } else {
-        record = parseInt(record);
-        recordCount = parseInt(recordCount);
-    }
-    const currentScore = score;
-    const recordDisplay = document.getElementById('recordDisplay');
-    if (currentScore > record) {
-        localStorage.setItem('quizRecord', currentScore);
-        localStorage.setItem('quizRecordCount', currentScore);
-        recordDisplay.innerText = `РЕКОРД: ${currentScore} з ${total}`;
-    } else {
-        recordDisplay.innerText = `РЕКОРД: ${recordCount} з ${total}`;
-    }
+    // let record = localStorage.getItem('quizRecord');
+    // let recordCount = localStorage.getItem('quizRecordCount');
+    // if (!record || !recordCount) {
+    //     record = 0;
+    //     recordCount = 0;
+    // } else {
+    //     record = parseInt(record);
+    //     recordCount = parseInt(recordCount);
+    // }
+    // const currentScore = score;
+    // const recordDisplay = document.getElementById('recordDisplay');
+    // if (currentScore > record) {
+    //     localStorage.setItem('quizRecord', currentScore);
+    //     localStorage.setItem('quizRecordCount', currentScore);
+    //     recordDisplay.innerText = `РЕКОРД: ${currentScore} з ${total}`;
+    // } else {
+    //     recordDisplay.innerText = `РЕКОРД: ${recordCount} з ${total}`;
+    // }
 }
 
 
