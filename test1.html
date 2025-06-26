@@ -404,7 +404,7 @@
                 const totalQuestions = this.questions.length;
                 const currentQuestionNum = this.currentQuestionIndex;
                 const progressPercent = totalQuestions === 0 ? 0 : (currentQuestionNum / totalQuestions) * 100;
-                document.getElementById('progressText').innerText = `${currentQuestionNum + 1} з ${totalQuestions}`;
+                document.getElementById('progressText').innerText = `${this.currentQuestionIndex} з ${totalQuestions}`;
                 document.getElementById('progressFill').style.width = `${progressPercent}%`;
             }
             setBackgroundImage(imageUrl) {
@@ -500,7 +500,7 @@
             },
 
             {
-                question: "Вага автомата АК-74 без багнета з магазином?",
+                question: "Вага автомата АК-74 без багнета зі споряжденим магазином?",
                 options: [
                     { text: "3,06 кг", correct: false },
                     { text: "3,6 кг", correct: true },
@@ -873,166 +873,6 @@
 
             ///////
 
-            
-
-
-            {
-                question: "Довжина гармати Oerlikon в похідному положенні ?",
-                options: [
-                    { text: "3510 мм", correct: false },
-                    { text: "4100 мм", correct: true },
-                    { text: "4400 мм", correct: false },
-                    { text: "5100 мм", correct: false }
-                ]
-            },
-
-
-           {
-                question: "Ширина гармати Oerlikon в похідному положенні ?",
-                options: [
-                    { text: "1300 мм", correct: false },
-                    { text: "1500 мм", correct: true },
-                    { text: "1400 мм", correct: false },
-                    { text: "1800 мм", correct: false }
-                ]
-            },
-
- {
-                question: "Висота гармати Oerlikon в похідному положенні ?",
-                options: [
-                    { text: "1800 мм", correct: false },
-                    { text: "1600 мм", correct: true },
-                    { text: "1400 мм", correct: false },
-                    { text: "1900 мм", correct: false }
-                ]
-            },
-
-            {
-                question: "Середня дальність срільби Oerlikon?",
-                options: [
-                    { text: "1000 м", correct: false },
-                    { text: "800 м", correct: true },
-                    { text: "600 м", correct: false },
-                    { text: "900 м", correct: false }
-                ]
-            },
-
-            {
-                question: "Початкова швидкість снаряда Oerlikon?",
-                options: [
-                    { text: "1200 м/c", correct: false },
-                    { text: "850 м/c", correct: true },
-                    { text: "750 м/c", correct: false },
-                    { text: "950 м/c", correct: false }
-                ]
-            },
-
-            {
-                question: "Скорострільність Oerlikon?",
-                options: [
-                    { text: "800-1000 п/х", correct: false },
-                    { text: "650-750 п/х", correct: true },
-                    { text: "900-100 п/х", correct: false },
-                    { text: "500-600 п/х", correct: false }
-                ]
-            },
-
-
-            {
-                question: "Максимальна дальність по горизонталі для Oerlikon?",
-                options: [
-                    { text: "4500 м", correct: false },
-                    { text: "5500 м", correct: true },
-                    { text: "4000 м", correct: false },
-                    { text: "3500 м", correct: false }
-                ]
-            },
-
-            {
-                question: "Максимальна вертикальна дальність для Oerlikon?",
-                options: [
-                    { text: "5500 м", correct: false },
-                    { text: "4000 м", correct: true },
-                    { text: "3500 м", correct: false },
-                    { text: "5000 м", correct: false }
-                ]
-            },
-
-            {
-                question: "Дальність успішної стрільби по цілі в повітрі для Oerlikon?",
-                options: [
-                    { text: "2000 м", correct: false },
-                    { text: "1500 м", correct: true },
-                    { text: "2500 м", correct: false },
-                    { text: "1900 м", correct: false }
-                ]
-            },
-
-            {
-                question: "Висота успішної стрільби по цілі по повітряних цілях для Oerlikon?",
-                options: [
-                    { text: "2000 м", correct: false },
-                    { text: "1000 м", correct: true },
-                    { text: "1500 м", correct: false },
-                    { text: "2500 м", correct: false }
-                ]
-            },
-
-            ////
-            ////
-
-            
-            {
-                question: "Початкова швидкість кулі кулемета Максим?",
-                options: [
-                    { text: "690 м/c", correct: false },
-                    { text: "740 м/c", correct: true },
-                    { text: "800 м/c", correct: false },
-                    { text: "920 м/c", correct: false }
-                ]
-            },
-
-            {
-                question: "Швидкострильність кулемета Максим?",
-                options: [
-                    { text: "800 п/х", correct: false },
-                    { text: "600 п/х", correct: true },
-                    { text: "900 п/х", correct: false },
-                    { text: "700 п/х", correct: false }
-                ]
-            },
-
-            
-             {
-                question: "Вага кулемета Максим?",
-                options: [
-                    { text: "24,7 кг", correct: false },
-                    { text: "27,2 кг", correct: true },
-                    { text: "25,3 кг", correct: false },
-                    { text: "29,4 кг", correct: false }
-                ]
-            },
-
-             {
-                question: "Довжина ствола кулемета Максим?",
-                options: [
-                    { text: "754 мм", correct: false },
-                    { text: "721 мм", correct: true },
-                    { text: "692 мм", correct: false },
-                    { text: "774 мм", correct: false }
-                ]
-            },
-
-            
-             {
-                question: "Довжина кулемета Максим?",
-                options: [
-                    { text: "998 мм", correct: false },
-                    { text: "1067 мм", correct: true },
-                    { text: "1102 мм", correct: false },
-                    { text: "1206 мм", correct: false }
-                ]
-            },
 
        
 

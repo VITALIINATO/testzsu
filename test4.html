@@ -381,7 +381,7 @@
                 const totalQuestions = this.questions.length;
                 const currentQuestionNum = this.currentQuestionIndex;
                 const progressPercent = totalQuestions === 0 ? 0 : (currentQuestionNum / totalQuestions) * 100;
-                document.getElementById('progressText').innerText = `${currentQuestionNum + 1} з ${totalQuestions}`;
+                document.getElementById('progressText').innerText = `${this.currentQuestionIndex} з ${totalQuestions}`;
                 document.getElementById('progressFill').style.width = `${progressPercent}%`;
             }
             setBackgroundImage(imageUrl) {

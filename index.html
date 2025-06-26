@@ -17,7 +17,7 @@
             font-family: Arial, sans-serif;
             background-image:
                 linear-gradient(45deg, rgba(139, 69, 19, 0.05) 0%, rgba(245, 222, 179, 0.05) 10%, transparent 90%),
-                linear-gradient(to bottom right, #1a4b1a, #1f1309);
+                linear-gradient(to bottom right, #2c6d2c, #001400);
             background-size: 20px 20px, cover;
             color: #f0f0f0;
             display: flex;
@@ -31,10 +31,16 @@
             width: 100%;
             max-width: 600px;
             text-align: center;
-            background: rgba(0, 50, 0, 0.9);
+            background: rgba(0, 50, 0, 0.85) url('https://www.transparenttextures.com/patterns/dark-leather.png ');
+            /* Текстура кожи */
+            background-blend-mode: multiply;
+            /* Смешивание цвета и текстуры */
             border: 3px solid #2e8b57;
             border-radius: 20px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+            box-shadow:
+                0 8px 25px rgba(0, 0, 0, 0.6),
+                inset 0 0 10px rgba(0, 0, 0, 0.4);
+            /* Внутренняя тень для имитации рельефа */
             backdrop-filter: blur(5px);
             padding: 25px 16px;
         }
@@ -43,7 +49,7 @@
             font-size: 26px;
             margin-bottom: 25px;
             font-weight: bold;
-            color: #ffffff;
+            color: #919291;
             text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
         }
 
@@ -52,8 +58,16 @@
             width: 100%;
             padding: 14px 16px;
             margin-bottom: 12px;
-            background-color: #2e8b57;
-            color: white;
+            /* background: #207444; */
+            background-image:
+                repeating-linear-gradient(180deg,
+                    rgba(255, 255, 255, 0.02) 0px,
+                    rgba(255, 255, 255, 0.02) 1px,
+                    transparent 1px,
+                    transparent 20px),
+                linear-gradient(to bottom right, #0b4122, #16633a);
+            transition: all 0.3s ease;
+            color: rgb(8, 8, 8);
             font-size: 16px;
             font-weight: bold;
             text-decoration: none;
@@ -64,9 +78,41 @@
         }
 
         .test-button:hover {
-            background-color: #226633;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+            background: #2e8b57;
+            box-shadow:
+                0 6px 15px rgba(4, 136, 4, 0.5),
+                0 0 10px rgba(55, 221, 127, 0.4);
+        }
+
+        .test-button2 {
+            display: block;
+            width: 100%;
+            padding: 14px 16px;
+            margin-bottom: 12px;
+            /* background: linear-gradient(145deg, #073019, #16633a); */
+            background-image:
+                repeating-linear-gradient(180deg,
+                    rgba(255, 255, 255, 0.02) 0px,
+                    rgba(255, 255, 255, 0.02) 1px,
+                    transparent 1px,
+                    transparent 20px),
+                linear-gradient(to bottom right, #2e5a30, #1f442b);
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .test-button2:hover {
+            background: #2e8b57;
+            box-shadow:
+                0 6px 15px rgba(4, 136, 4, 0.5),
+                0 0 10px rgba(55, 221, 127, 0.4);
         }
 
         footer {
@@ -102,14 +148,15 @@
 
 <body>
     <div class="home-container">
-        <h1>Оберіть тест</h1>
-
-        <a href="test1.html" class="test-button">Повний тест</a>
+        <h1>Обрати тест:</h1>
+  <a href="test1.html" class="test-button2">ПЗРК + Ак-74 + Повітряні цілі</a>
+         <a href="test7.html" class="test-button2">Oerlikon + Максим + Ак-74 + Повітряні цілі.</a>
+         <a href="test4.html" class="test-button">Повітряні цілі</a>
         <a href="test2.html" class="test-button">АК-74</a>
-        <a href="test3.html" class="test-button">ПЗРК</a>
-        <a href="test4.html" class="test-button">Повітрянні цілі</a>
+        <a href="test3.html" class="test-button">ПЗРК</a>   
         <a href="test5.html" class="test-button">Oerlikon</a>
         <a href="test6.html" class="test-button">Максим</a>
+      
 
 
         <footer>
