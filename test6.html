@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>АК-74</title>
+    <link rel="icon" href="icon.png" type="image/png">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            background: #234b30;
+            background-image:
+                repeating-linear-gradient(45deg,
+                    rgba(255, 255, 255, 0.02) 0px,
+                    rgba(255, 255, 255, 0.02) 1px,
+                    transparent 1px,
+                    transparent 20px),
+                linear-gradient(to bottom right, #2e5a3f, #1f442c);
+            background-size: 100% 100%, cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quiz-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            padding: 25px;
+            border: 3px solid #228B22;
+            background: rgba(0, 50, 0, 0.85);
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            margin: 10px;
+        }
+
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            opacity: 0.1;
+            filter: grayscale(0.7);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            position: relative;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #2d88b3, #1e4d5b);
+            transition: width 0.3s ease;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .progress-text {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 3px 0;
+            color: #fff;
+            text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
+        }
+
+        .question {
+            font-size: 26px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            padding: 12px 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option {
+            background-color: #228B22;
+            color: #fff;
+            font-size: 18px;
+            padding: 14px 25px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1 1 45%;
+            min-width: 130px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            font-weight: bold;
+            text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .option:hover {
+            background-color: #1e701e;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+        }
+
+        .result {
+            font-size: 22px;
+            background-color: rgba(0, 50, 0, 0.95);
+            color: #f0f0f0;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(34, 139, 34, 0.5);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+            font-weight: bold;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .restart-button {
+            display: none;
+            padding: 14px 35px;
+            font-size: 18px;
+            background-color: #2e8b57;
+            color: white;
+            border: none;
+            border-radius: 18px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            margin: 0 auto;
+        }
+
+        .restart-button:hover {
+            background-color: #226633;
+            transform: scale(1.05);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
+        }
+
+        .result.correct {
+            background-color: rgba(46, 139, 87, 0.9);
+            color: #e0ffe0;
+            border: 1px solid rgba(46, 139, 87, 0.7);
+        }
+
+        .result.incorrect {
+            background-color: rgba(178, 34, 34, 0.9);
+            color: #ffe0e0;
+            border: 1px solid rgba(178, 34, 34, 0.7);
+        }
+
+        @media (max-width: 600px) {
+            .question {
+                font-size: 22px;
+                padding: 10px 12px;
+                 min-height: 90px;
+            }
+
+            .option {
+                font-size: 16px;
+                padding: 12px 18px;
+                flex: 1 1 100%;
+            }
+
+            .result {
+                font-size: 18px;
+            }
+
+            .restart-button {
+                padding: 12px 25px;
+                font-size: 16px;
+                border-radius: 15px;
+            }
+        }
+
+        .record-display {
+            font-size: 12px;
+            font-weight: bold;
+            color: #ffd700;
+            margin-bottom: 15px;
+            text-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
+            padding: 8px 16px;
+            border-radius: 12px;
+            display: inline-block;
+            min-width: 200px;
+        }
+
+
+        footer {
+            margin-top: 25px;
+            font-size: 13px;
+            color: #aaa;
+        }
+
+        .errors-list {
+            text-align: left;
+            color: #fff;
+            font-size: 16px;
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+            /* Скрываем по умолчанию */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="quiz-container">
+        <div class="background-image" id="backgroundImage"></div>
+        <!-- <div class="record-display" id="recordDisplay"></div> -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+            <div class="progress-text" id="progressText">1 з 10</div>
+        </div>
+        <div class="question" id="question"></div>
+        <div class="options" id="options"></div>
+        <div class="result" id="result"></div>
+        <div class="errors-list" id="errorsList"></div> <!-- Теперь невидим -->
+        <button class="restart-button" id="restartButton">Почати знову</button>
+        <audio id="soundRight" src="right.mp3"></audio>
+        <audio id="soundWrong" src="wrong.mp3"></audio>
+        <footer>
+            <a href="index.html" style="color: #aaa; text-decoration: none;">&copy; 2025 NATO</a>
+        </footer>
+    </div>
+    <script>
+        class Quiz {
+            constructor(questions) {
+                this.questions = questions;
+                this.currentQuestionIndex = 0;
+                this.score = 0;
+                this.errors = [];
+                this.shuffleQuestions();
+                this.showQuestion();
+                // const recordDisplay = document.getElementById('recordDisplay');
+                // const savedRecord = localStorage.getItem('quizRecordCount');
+                // const total = this.questions.length;
+                // if (savedRecord && total) {
+                //     recordDisplay.innerText = `РЕКОРД: ${savedRecord} з ${total}`;
+                // } else {
+                //     recordDisplay.innerText = `РЕКОРД: 0 з ${total || 10}`;
+                // }
+            }
+            shuffleQuestions() {
+                for (let i = this.questions.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [this.questions[i], this.questions[j]] = [this.questions[j], this.questions[i]];
+                }
+            }
+            showQuestion() {
+                const currentQuestion = this.questions[this.currentQuestionIndex];
+                document.getElementById('question').innerText = currentQuestion.question;
+                this.showOptions(currentQuestion.options);
+                this.setBackgroundImage(currentQuestion.image);
+                document.getElementById('result').innerText = '';
+                document.getElementById('result').className = 'result';
+                document.getElementById('restartButton').style.display = 'none';
+                document.getElementById('errorsList').innerHTML = '';
+                this.updateProgress();
+            }
+            showOptions(options) {
+                const optionsContainer = document.getElementById('options');
+                optionsContainer.innerHTML = '';
+                this.shuffleOptions(options);
+                options.forEach(option => {
+                    const button = document.createElement('button');
+                    button.innerText = option.text;
+                    button.className = 'option';
+                    button.onclick = () => this.checkAnswer(option);
+                    optionsContainer.appendChild(button);
+                });
+            }
+            shuffleOptions(options) {
+                for (let i = options.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [options[i], options[j]] = [options[j], options[i]];
+                }
+            }
+            checkAnswer(selectedOption) {
+                const soundRight = document.getElementById("soundRight");
+                const soundWrong = document.getElementById("soundWrong");
+                const currentQuestion = this.questions[this.currentQuestionIndex];
+                const selectedText = selectedOption.text;
+                const correctOption = currentQuestion.options.find(option => option.correct);
+                const correctText = correctOption.text;
+
+                if (selectedOption.correct) {
+                    this.score++;
+                    document.getElementById('result').innerText = 'Вірно!';
+                    document.getElementById('result').className = 'result correct';
+                    soundRight.currentTime = 0;
+                    soundRight.play();
+                } else {
+                    this.errors.push({ question: currentQuestion.question, user: selectedText, correct: correctText });
+                    document.getElementById('result').innerText = `Невірно. Правильна відповідь: ${correctText}`;
+                    document.getElementById('result').className = 'result incorrect';
+                    soundWrong.currentTime = 0;
+                    soundWrong.play();
+                }
+
+                this.currentQuestionIndex++;
+                if (this.currentQuestionIndex < this.questions.length) {
+                    setTimeout(() => this.showQuestion(), 1200);
+                } else {
+                    setTimeout(() => this.showResult(), 200);
+                }
+                this.updateProgress();
+            }
+
+
+            showResult() {
+                const total = this.questions.length;
+                const score = this.score;
+                document.getElementById('question').innerText = `Ваш результат: ${score} з ${total}`;
+                document.getElementById('options').innerHTML = '';
+                document.getElementById('result').style.display = 'none';
+
+                // Показываем список ошибок
+                const errorsList = document.getElementById('errorsList');
+                errorsList.style.display = 'block'; // Делаем блок видимым
+
+                errorsList.innerHTML = '<strong>Помилки:</strong><br>';
+                if (this.errors.length === 0) {
+                    errorsList.innerHTML += '<br>Усі відповіді правильні!';
+                } else {
+                    this.errors.forEach(err => {
+                        errorsList.innerHTML += `<br>Питання: "${err.question}"<br>Ваша відповідь: "${err.user}" — Правильна відповідь: "${err.correct}"<br>`;
+                    });
+                }
+
+                document.getElementById('progressText').innerText = '';
+                document.getElementById('progressFill').style.width = '100%';
+                document.getElementById('restartButton').style.display = 'block';
+
+                // let record = localStorage.getItem('quizRecord');
+                // let recordCount = localStorage.getItem('quizRecordCount');
+                // if (!record || !recordCount) {
+                //     record = 0;
+                //     recordCount = 0;
+                // } else {
+                //     record = parseInt(record);
+                //     recordCount = parseInt(recordCount);
+                // }
+                // const currentScore = score;
+                // const recordDisplay = document.getElementById('recordDisplay');
+                // if (currentScore > record) {
+                //     localStorage.setItem('quizRecord', currentScore);
+                //     localStorage.setItem('quizRecordCount', currentScore);
+                //     recordDisplay.innerText = `РЕКОРД: ${currentScore} з ${total}`;
+                // } else {
+                //     recordDisplay.innerText = `РЕКОРД: ${recordCount} з ${total}`;
+                // }
+            }
+
+
+            updateProgress() {
+                const totalQuestions = this.questions.length;
+                const currentQuestionNum = this.currentQuestionIndex;
+                const progressPercent = totalQuestions === 0 ? 0 : (currentQuestionNum / totalQuestions) * 100;
+                document.getElementById('progressText').innerText = `${currentQuestionNum + 1} з ${totalQuestions}`;
+                document.getElementById('progressFill').style.width = `${progressPercent}%`;
+            }
+            setBackgroundImage(imageUrl) {
+                const bgImage = document.getElementById('backgroundImage');
+                bgImage.style.backgroundImage = `url(${imageUrl})`;
+                bgImage.style.opacity = imageUrl ? '0.15' : '0';
+            }
+        }
+
+        const questions = [
+
+
+
+            {
+                question: "Початкова швидкість кулі кулемета Максим?",
+                options: [
+                    { text: "690 м/c", correct: false },
+                    { text: "740 м/c", correct: true },
+                    { text: "800 м/c", correct: false },
+                    { text: "920 м/c", correct: false }
+                ]
+            },
+
+            {
+                question: "Швидкострильність кулемета Максим?",
+                options: [
+                    { text: "800 п/х", correct: false },
+                    { text: "600 п/х", correct: true },
+                    { text: "900 п/х", correct: false },
+                    { text: "700 п/х", correct: false }
+                ]
+            },
+
+            
+             {
+                question: "Вага кулемета Максим?",
+                options: [
+                    { text: "24,7 кг", correct: false },
+                    { text: "27,2 кг", correct: true },
+                    { text: "25,3 кг", correct: false },
+                    { text: "29,4 кг", correct: false }
+                ]
+            },
+
+             {
+                question: "Довжина ствола кулемета Максим?",
+                options: [
+                    { text: "754 мм", correct: false },
+                    { text: "721 мм", correct: true },
+                    { text: "692 мм", correct: false },
+                    { text: "774 мм", correct: false }
+                ]
+            },
+
+            
+             {
+                question: "Довжина кулемета Максим?",
+                options: [
+                    { text: "998 мм", correct: false },
+                    { text: "1067 мм", correct: true },
+                    { text: "1102 мм", correct: false },
+                    { text: "1206 мм", correct: false }
+                ]
+            },
+
+       
+
+        ];
+
+
+        const quiz = new Quiz(questions);
+
+        document.getElementById('restartButton').onclick = () => {
+            location.reload();
+        };
+    </script>
+</body>
+
+</html>
