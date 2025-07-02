@@ -374,38 +374,28 @@
                 document.getElementById('errorsList').innerHTML = '';
                 this.updateProgress();
             }
-
 showOptions(options) {
   const optionsContainer = document.getElementById("options");
   optionsContainer.innerHTML = "";
+  
   if (this.mode === "numeric-input") {
+    // Код для числового ввода (сложный уровень)
     const input = document.createElement("input");
-    input.type = "tel"; // Используем тип tel для лучшей поддержки мобильных клавиатур
+    input.type = "tel";
     input.inputMode = "decimal";
     input.placeholder = "Введіть число (наприклад, 3,5)";
     input.className = "option-input";
     
-    // Новый обработчик ввода
     input.addEventListener("input", function() {
-      // Сохраняем позицию курсора
       const cursorPos = this.selectionStart;
-      
-      // Заменяем точки на запятые
       let value = this.value.replace(/\./g, ',');
-      
-      // Удаляем все символы, кроме цифр и запятых
       value = value.replace(/[^0-9,]/g, '');
-      
-      // Разрешаем только одну запятую
       const commaIndex = value.indexOf(',');
       if (commaIndex !== -1) {
         value = value.substring(0, commaIndex + 1) + 
                 value.substring(commaIndex + 1).replace(/,/g, '');
       }
-      
       this.value = value;
-      
-      // Восстанавливаем позицию курсора
       this.setSelectionRange(cursorPos, cursorPos);
     });
 
@@ -420,9 +410,21 @@ showOptions(options) {
     submitBtn.className = "option";
     submitBtn.onclick = () => this.checkAnswerInput(input.value);
     optionsContainer.appendChild(submitBtn);
+    
+  } else {
+    // Код для множественного выбора (легкий уровень)
+    this.shuffleOptions(options);
+    options.forEach(option => {
+      const button = document.createElement("button");
+      button.className = "option";
+      button.innerHTML = option.text;
+      button.onclick = () => this.checkAnswer(option);
+      optionsContainer.appendChild(button);
+    });
   }
 }
-            shuffleOptions(options) {
+
+shuffleOptions(options) {
                 for (let i = options.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
                     [options[i], options[j]] = [options[j], options[i]];
@@ -547,8 +549,9 @@ showOptions(options) {
        const questions = [
 
 
+
             {
-                question: "Прицільна дальність АК-74",
+                question: "Прицільна дальність АК-74?",
                 options: [
                     { text: "1350 м", correct: false },
                     { text: "1000 м", correct: true },
@@ -600,7 +603,7 @@ showOptions(options) {
             },
 
             {
-                question: "Початкова швидкість кулі АК-74?",
+                question: "Початкова швидкість кулі АК-74, в м/с?",
                 options: [
                     { text: "1250 м/c", correct: false },
                     { text: "900 м/c", correct: true },
@@ -648,11 +651,11 @@ showOptions(options) {
                     { text: "250 м", correct: false }
                 ]
             },
+//
 
 
-            ////////////////
-            {
-                question: "Максимальна дальність ураження цілей ПЗРК Stinger навздогін?",
+ {
+                question: "Максимальна дальність ураження цілей ПЗРК Stinger навздогін, в метрах?",
                 options: [
                     { text: "6400 м", correct: false },
                     { text: "8000 м", correct: true },
@@ -662,7 +665,7 @@ showOptions(options) {
             },
 
             {
-                question: "Максимальна дальність ураження цілей ПЗРК Piorun навздогін?",
+                question: "Максимальна дальність ураження цілей ПЗРК Piorun навздогін, в метрах?",
                 options: [
                     { text: "5600 м", correct: false },
                     { text: "6500 м", correct: true },
@@ -671,7 +674,7 @@ showOptions(options) {
                 ]
             },
             {
-                question: "Максимальна дальність ураження цілей ПЗРК Ігла навздогін?",
+                question: "Максимальна дальність ураження цілей ПЗРК Ігла навздогін, в метрах?",
                 options: [
                     { text: "5000 м", correct: true },
                     { text: "4000 м", correct: false },
@@ -680,7 +683,7 @@ showOptions(options) {
                 ]
             },
             {
-                question: "Маршева швидкість ЗКР Piorun?",
+                question: "Маршева швидкість ЗКР Piorun, в м/с?",
                 options: [
                     { text: "570 м/с", correct: false },
                     { text: "660 м/с", correct: true },
@@ -689,7 +692,7 @@ showOptions(options) {
                 ]
             },
             {
-                question: "Маршева швидкість ЗКР Stinger?",
+                question: "Маршева швидкість ЗКР Stinger, в м/с?",
                 options: [
                     { text: "570 м/с", correct: false },
                     { text: ">700 м/с", correct: true },
@@ -698,7 +701,7 @@ showOptions(options) {
                 ]
             },
             {
-                question: "Маршева швидкість ЗКР Ігла?",
+                question: "Маршева швидкість ЗКР Ігла, в м/с?",
                 options: [
                     { text: "360 м/с", correct: false },
                     { text: "570 м/с", correct: true },
@@ -708,7 +711,7 @@ showOptions(options) {
             },
 
             {
-                question: "Швидкість вражаємих цілей ПЗРК Stinger на зустрічних курсах?",
+                question: "Швидкість вражаємих цілей ПЗРК Stinger на зустрічних курсах, в м/с?",
                 options: [
                     { text: "320 м/с", correct: false },
                     { text: "400 м/с", correct: true },
@@ -718,7 +721,7 @@ showOptions(options) {
             },
 
             {
-                question: "Швидкість вражаємих цілей ПЗРК Piorun на зустрічних курсах?",
+                question: "Швидкість вражаємих цілей ПЗРК Piorun на зустрічних курсах, в м/с?",
                 options: [
                     { text: "320 м/с", correct: false },
                     { text: "400 м/с", correct: true },
@@ -728,7 +731,7 @@ showOptions(options) {
             },
 
             {
-                question: "Швидкість вражаємих цілей ПЗРК Ігла на зустрічних курсах?",
+                question: "Швидкість вражаємих цілей ПЗРК Ігла на зустрічних курсах, в м/с?",
                 options: [
                     { text: "320 м/с", correct: false },
                     { text: "360 м/с", correct: true },
@@ -738,7 +741,7 @@ showOptions(options) {
             },
 
             {
-                question: "Швидкість вражаємих цілей ПЗРК Stinger на догонних курсах?",
+                question: "Швидкість вражаємих цілей ПЗРК Stinger на догонних курсах, в м/с?",
                 options: [
                     { text: "430 м/с", correct: false },
                     { text: "340 м/с", correct: true },
@@ -748,7 +751,7 @@ showOptions(options) {
             },
 
             {
-                question: "Швидкість вражаємих цілей ПЗРК Piorun на догонних курсах?",
+                question: "Швидкість вражаємих цілей ПЗРК Piorun на догонних курсах, в м/с?",
                 options: [
                     { text: "400 м/с", correct: false },
                     { text: "320 м/с", correct: true },
@@ -758,7 +761,7 @@ showOptions(options) {
             },
 
             {
-                question: "Швидкість вражаємих цілей ПЗРК Ігла на догонних курсах?",
+                question: "Швидкість вражаємих цілей ПЗРК Ігла на догонних курсах, в м/с?",
                 options: [
                     { text: "400 м/с", correct: false },
                     { text: "320 м/с", correct: true },
@@ -768,7 +771,7 @@ showOptions(options) {
             },
 
             {
-                question: "Маса бойової частини ПЗРК Stinger?",
+                question: "Маса бойової частини ПЗРК Stinger, в кг?",
                 options: [
                     { text: "4 кг", correct: false },
                     { text: "3 кг", correct: true },
@@ -778,7 +781,7 @@ showOptions(options) {
             },
 
             {
-                question: "Маса бойової частини ПЗРК Piorun?",
+                question: "Маса бойової частини ПЗРК Piorun, в кг?",
                 options: [
                     { text: "3 кг", correct: false },
                     { text: "1,82 кг", correct: true },
@@ -787,7 +790,7 @@ showOptions(options) {
                 ]
             },
             {
-                question: "Маса бойової частини ПЗРК Ігла?",
+                question: "Маса бойової частини ПЗРК Ігла, в кг?",
                 options: [
                     { text: "4 кг", correct: false },
                     { text: "1,27 кг", correct: true },
@@ -795,11 +798,11 @@ showOptions(options) {
                     { text: "1,17 м", correct: false }
                 ]
             },
-            // //////////////////////////
+//
 
 
             {
-                question: "Швидкість КР Х-101?",
+                question: "Швидкість КР Х-101, в м/с?",
                 options: [
                     { text: "700 м/с", correct: false },
                     { text: "200 м/с", correct: true },
@@ -809,7 +812,7 @@ showOptions(options) {
             },
 
             {
-                question: "Швидкість КР Калібр?",
+                question: "Швидкість КР Калібр, в м/с?",
                 options: [
                     { text: "420 м/с", correct: false },
                     { text: "240 м/с", correct: true },
@@ -818,7 +821,7 @@ showOptions(options) {
                 ]
             },
             {
-                question: "Швидкість КР Х-59?",
+                question: "Швидкість КР Х-59, в м/с?",
                 options: [
                     { text: "360 м/с", correct: false },
                     { text: "290 м/с", correct: true },
@@ -828,7 +831,7 @@ showOptions(options) {
             },
 
             {
-                question: "Швидкість КР Х-55?",
+                question: "Швидкість КР Х-55, в м/с?",
                 options: [
                     { text: "360 м/с", correct: false },
                     { text: "230 м/с", correct: true },
@@ -849,7 +852,7 @@ showOptions(options) {
 
 
             {
-                question: "Максимальна швидкість КР Іскандер-К?",
+                question: "Максимальна швидкість КР Іскандер-К в м/с?",
                 options: [
                     { text: "360 м/с", correct: false },
                     { text: "260 м/с", correct: true },
@@ -908,10 +911,31 @@ showOptions(options) {
                 ]
             },
 
+            
+            {
+                question: "Вага бойової частини Іскандер-М?", 
+                options: [
+                    { text: "750 кг", correct: false },
+                    { text: "480 кг", correct: true },
+                    { text: "400 кг", correct: false },
+                    { text: "580 кг", correct: false }
+                ]
+            },
+
+             {
+                question: "Максимальна швидкість Іскандер-М в м/с?",
+                options: [
+                    { text: "1540 м/с", correct: false },
+                    { text: "2450 м/с", correct: true },
+                    { text: "2000 м/с", correct: false },
+                    { text: "3300 м/с", correct: false }
+                ]
+            },
+
             ///////////////////////////////////
 
             {
-                question: "Довжина БпЛА Шахед-136?",
+                question: "Довжина БпЛА Шахед-136, в метрах?",
                 options: [
                     { text: "2,5 м", correct: false },
                     { text: "3,5 м", correct: true },
@@ -922,7 +946,7 @@ showOptions(options) {
 
 
             {
-                question: "Розмах крил БпЛА Шахед-136?",
+                question: "Розмах крил БпЛА Шахед-136, в метрах?",
                 options: [
                     { text: "3,5 м", correct: false },
                     { text: "2,5 м", correct: true },
@@ -932,7 +956,7 @@ showOptions(options) {
             },
 
             {
-                question: "Крейсерська швидкість БпЛА Шахед-136 в м/с?",
+                question: "Крейсерська швидкість БпЛА Шахед-136, в м/с?",
                 options: [
                     { text: "180 м/с", correct: false },
                     { text: "50 м/с", correct: true },
@@ -951,7 +975,7 @@ showOptions(options) {
             },
 
             {
-                question: "Вага бойової частини БпЛА Шахед-136?",
+                question: "Вага бойової частини БпЛА Шахед-136 в кг?",
                 options: [
                     { text: "100 кг", correct: false },
                     { text: "50 кг", correct: true },
@@ -971,7 +995,7 @@ showOptions(options) {
             },
 
             {
-                question: "Розмах крил БпЛА Орлан-10 ",
+                question: "Розмах крил БпЛА Орлан-10 в м?",
                 options: [
                     { text: "2,3 м", correct: false },
                     { text: "3,1 м", correct: true },
@@ -981,7 +1005,7 @@ showOptions(options) {
             },
 
             {
-                question: "Довжина БпЛА Орлан-10 ",
+                question: "Довжина БпЛА Орлан-10 в м?",
                 options: [
                     { text: "2,3 м", correct: false },
                     { text: "1,8 м", correct: true },
@@ -990,18 +1014,49 @@ showOptions(options) {
                 ]
             },
 
-
-            {
-                question: "Довжина КР Х-101 ",
+             {
+                question: "Довжина БпЛА Гербера?",
                 options: [
-                    { text: "5,7 м", correct: false },
-                    { text: "7,5 м", correct: true },
-                    { text: "6 м", correct: false },
-                    { text: "8 м", correct: false }
+                    { text: "2,5 м", correct: false },
+                    { text: "2 м", correct: true },
+                    { text: "3 м", correct: false },
+                    { text: "1,5 м", correct: false }
                 ]
             },
 
-            ///////
+             {
+                question: "Розмах крил БпЛА Гербера?",
+                options: [
+                    { text: "2 м", correct: false },
+                    { text: "2,5 м", correct: true },
+                    { text: "3 м", correct: false },
+                    { text: "1,5 м", correct: false }
+                ]
+            },
+
+             {
+                question: "Максимальна швидкість БпЛА Гербера, в км/г?",
+                options: [
+                    { text: "140 км/г", correct: false },
+                    { text: "160 км/г", correct: true },
+                    { text: "180 км/г", correct: false },
+                    { text: "200 км/г", correct: false }
+                ]
+            },
+
+            {
+                question: "Максимальна швидкість БпЛА Гербера, в м/с?",
+                options: [
+                    { text: "55 км/г", correct: false },
+                    { text: "45 км/г", correct: true },
+                    { text: "65 км/г", correct: false },
+                    { text: "35 км/г", correct: false }
+                ]
+            },
+
+//
+
+
 
 
        

@@ -1,41 +1,41 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" href="icon.png" type="image/png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ПЗРК</title>
-       <link rel="icon" href="icon.png" type="image/png">
+    <title>Тест ППО</title>
     <style>
         body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    min-height: 100vh;
-    background: #234b30;
-    background-image:
-        repeating-linear-gradient(45deg,
-            rgba(255, 255, 255, 0.02) 0px,
-            rgba(255, 255, 255, 0.02) 1px,
-            transparent 1px,
-            transparent 20px),
-        linear-gradient(to bottom right, #2e5a3f, #1f442c);
-    background-size: 100% 100%, cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+            margin: 0;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            background: #234b30;
+            background-image:
+                repeating-linear-gradient(45deg,
+                    rgba(255, 255, 255, 0.02) 0px,
+                    rgba(255, 255, 255, 0.02) 1px,
+                    transparent 1px,
+                    transparent 20px),
+                linear-gradient(to bottom right, #2e5a3f, #1f442c);
+            background-size: 100% 100%, cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
         .quiz-container {
+            box-sizing: border-box;
             position: relative;
             width: 100%;
             max-width: 600px;
             text-align: center;
-            padding: 25px;
+            padding: 20px;
             border: 3px solid #228B22;
             background: rgba(0, 50, 0, 0.85);
             border-radius: 20px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(5px);
-              margin: 10px;
+            margin: 10px;
         }
         .background-image {
             position: absolute;
@@ -86,39 +86,74 @@
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-             min-height: 90px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-        }
-        .options {
+            min-height: 90px;
             display: flex;
-            flex-wrap: wrap;
+            align-items: center;
             justify-content: center;
-            gap: 12px;
-            margin-bottom: 20px;
+            text-align: center;
+            
         }
-        .option {
-            background-color: #228B22;
-            color: #fff;
-            font-size: 18px;
-            padding: 14px 25px;
-            border: none;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            flex: 1 1 45%;
-            min-width: 130px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-            font-weight: bold;
-            text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-        }
-        .option:hover {
-            background-color: #1e701e;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
-        }
+
+/* Десктопная версия (2 колонки) */
+.options {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.option {
+    width: calc(50% - 10px);
+    margin-right: 20px;
+    margin-bottom: 20px;
+   background-color: #228B22;
+    color: #fff;
+    font-size: 18px;
+    padding: 14px 25px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1 1 45%;
+    min-width: 130px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    font-weight: bold;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+.option:hover {
+    background-color: #1ac21a;
+   transform: scale(1.05); /* Увеличение на 2% вместо смещения */
+    transform-origin: center; /* Центр трансформации */
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+}
+
+.option:nth-child(2n) {
+    margin-right: 0;
+}
+
+.option:nth-last-child(-n+2) {
+    margin-bottom: 0;
+}
+
+/* Мобильная версия (1 колонка) */
+@media (max-width: 600px) {
+    .options {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .option {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 15px !important; /* Принудительный отступ */
+    }
+    
+    .option:last-child {
+        margin-bottom: 0 !important;
+    }
+}
+
         .result {
             font-size: 22px;
             background-color: rgba(0, 50, 0, 0.95);
@@ -154,6 +189,11 @@
             transform: scale(1.05);
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
         }
+        footer {
+            margin-top: 25px;
+            font-size: 13px;
+            color: #aaa;
+        }
         .result.correct {
             background-color: rgba(46, 139, 87, 0.9);
             color: #e0ffe0;
@@ -165,31 +205,11 @@
             border: 1px solid rgba(178, 34, 34, 0.7);
         }
         @media (max-width: 600px) {
-            .question {
-                font-size: 22px;
-                padding: 10px 12px;
-                 min-height: 90px;
-            }
             .option {
+                flex: 1 1 100%;
                 font-size: 16px;
                 padding: 12px 18px;
-                flex: 1 1 100%;
             }
-            .result {
-                font-size: 18px;
-            }
-            .restart-button {
-                padding: 12px 25px;
-                font-size: 16px;
-                border-radius: 15px;
-            }
-        }
-
-        
-        footer {
-            margin-top: 25px;
-            font-size: 13px;
-            color: #aaa;
         }
         .record-display {
             font-size: 12px;
@@ -202,7 +222,7 @@
             display: inline-block;
             min-width: 200px;
         }
-        /* .errors-list {
+        .errors-list {
             text-align: left;
             color: #fff;
             font-size: 16px;
@@ -212,57 +232,130 @@
             border-radius: 12px;
             max-height: 300px;
             overflow-y: auto;
-        } */
-.errors-list {
-        text-align: left;
-        color: #fff;
-        font-size: 16px;
-        margin-top: 20px;
-        background: rgba(0, 0, 0, 0.3);
-        padding: 10px;
-        border-radius: 12px;
-        max-height: 300px;
-        overflow-y: auto;
-        display: none; /* Скрываем по умолчанию */
+            display: none;
+        }
+
+
+.difficulty-selection {
+    text-align: center;
+    padding: 40px 20px;
+    background: rgba(35, 75, 47, 0.8);
+    border-radius: 20px;
+    margin: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.difficulty-btn {
+    background-color: #2e8b57;
+    color: white;
+    font-size: 18px;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    min-width: 200px;
+    font-weight: bold;
+    margin: 10px; /* Добавляем отступы вокруг кнопок */
+    display: inline-block; /* Для правильного применения margin */
+}
+
+.difficulty-btn:hover {
+    background-color: #226633;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+}
+
+@media (max-width: 600px) {
+    .difficulty-btn {
+        display: block; /* На мобильных - одна кнопка под другой */
+        width: 100%;
+        margin: 10px 0; /* Отступы только сверху и снизу */
     }
-</style>
+}
+
+
+
+        .option-input {
+            padding: 10px;
+            font-size: 18px;
+            width: 100%;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .quiz-container > * {
+            display: none;
+        }
+        .quiz-container > .difficulty-selection {
+            display: block;
+        }
+    </style>
 </head>
 <body>
-   <div class="quiz-container">
-    <div class="background-image" id="backgroundImage"></div>
-    <!-- <div class="record-display" id="recordDisplay"></div> -->
-    <div class="progress-bar">
-        <div class="progress-fill" id="progressFill"></div>
-        <div class="progress-text" id="progressText">1 з 10</div>
+    <div class="quiz-container">
+        <div class="difficulty-selection" id="difficultySelection">
+            <h2 style="color: #ffd700; margin-bottom: 20px;">Оберіть рівень складності:</h2>
+            <button id="easyMode" class="difficulty-btn">Легше</button>
+            <button id="hardMode" class="difficulty-btn">Складніше</button>
+        </div>
+        <div class="background-image" id="backgroundImage"></div>
+        <div class="record-display" id="recordDisplay"></div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+            <div class="progress-text" id="progressText">1 з 10</div>
+        </div>
+        <div class="question" id="question"></div>
+        <div class="options" id="options"></div>
+        <div class="result" id="result"></div>
+        <div class="errors-list" id="errorsList"></div>
+        <button class="restart-button" id="restartButton">Почати знову</button>
+        <audio id="soundRight" src="right.mp3"></audio>
+        <audio id="soundWrong" src="wrong.mp3"></audio>
+        <footer>
+            <a href="index.html" style="color: #aaa; text-decoration: none;">&copy; 2025 NATO</a>
+        </footer>
     </div>
-    <div class="question" id="question"></div>
-    <div class="options" id="options"></div>
-    <div class="result" id="result"></div>
-    <div class="errors-list" id="errorsList"></div> <!-- Теперь невидим -->
-    <button class="restart-button" id="restartButton">Почати знову</button>
-    <audio id="soundRight" src="right.mp3"></audio>
-    <audio id="soundWrong" src="wrong.mp3"></audio>
-    <footer>
-    <a href="index.html" style="color: #aaa; text-decoration: none;">&copy; 2025 NATO</a>
-</footer>
-</div>
     <script>
+        let quizInstance = null;
+        function startQuiz(mode) {
+            document.getElementById("difficultySelection").style.display = "none";
+            document.querySelectorAll(".quiz-container > *").forEach(el => {
+                if (el.id !== "difficultySelection") el.style.display = "block";
+            });
+            quizInstance = new Quiz(questions, mode);
+        }
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("easyMode").addEventListener("click", () => startQuiz("multiple-choice"));
+            document.getElementById("hardMode").addEventListener("click", () => startQuiz("numeric-input"));
+            document.getElementById('restartButton').onclick = () => location.reload();
+        });
+
         class Quiz {
-            constructor(questions) {
+            constructor(questions, mode = "multiple-choice") {
                 this.questions = questions;
                 this.currentQuestionIndex = 0;
                 this.score = 0;
                 this.errors = [];
+                this.mode = mode;
                 this.shuffleQuestions();
                 this.showQuestion();
-                // const recordDisplay = document.getElementById('recordDisplay');
-                // const savedRecord = localStorage.getItem('quizRecordCount');
-                // const total = this.questions.length;
-                // if (savedRecord && total) {
-                //     recordDisplay.innerText = `РЕКОРД: ${savedRecord} з ${total}`;
-                // } else {
-                //     recordDisplay.innerText = `РЕКОРД: 0 з ${total || 10}`;
-                // }
+                this.initRecordDisplay();
+            }
+            initRecordDisplay() {
+                const recordDisplay = document.getElementById('recordDisplay');
+                const total = this.questions.length;
+                let recordKey = this.mode === "numeric-input" ? "quizRecord_hard" : "quizRecord_easy";
+                const savedRecord = localStorage.getItem(recordKey);
+                if (savedRecord && total) {
+                    recordDisplay.innerText = `Рекорд: ${savedRecord} з ${total}`;
+                } else {
+                    recordDisplay.innerText = `Рекорд: 0 з ${total || 10}`;
+                }
             }
             shuffleQuestions() {
                 for (let i = this.questions.length - 1; i > 0; i--) {
@@ -281,18 +374,55 @@
                 document.getElementById('errorsList').innerHTML = '';
                 this.updateProgress();
             }
-            showOptions(options) {
-                const optionsContainer = document.getElementById('options');
-                optionsContainer.innerHTML = '';
-                this.shuffleOptions(options);
-                options.forEach(option => {
-                    const button = document.createElement('button');
-                    button.innerText = option.text;
-                    button.className = 'option';
-                    button.onclick = () => this.checkAnswer(option);
-                    optionsContainer.appendChild(button);
-                });
-            }
+showOptions(options) {
+  const optionsContainer = document.getElementById("options");
+  optionsContainer.innerHTML = "";
+  
+  if (this.mode === "numeric-input") {
+    // Код для числового ввода (сложный уровень)
+    const input = document.createElement("input");
+    input.type = "tel";
+    input.inputMode = "decimal";
+    input.placeholder = "Введіть число (наприклад, 3,5)";
+    input.className = "option-input";
+    
+    input.addEventListener("input", function() {
+      const cursorPos = this.selectionStart;
+      let value = this.value.replace(/\./g, ',');
+      value = value.replace(/[^0-9,]/g, '');
+      const commaIndex = value.indexOf(',');
+      if (commaIndex !== -1) {
+        value = value.substring(0, commaIndex + 1) + 
+                value.substring(commaIndex + 1).replace(/,/g, '');
+      }
+      this.value = value;
+      this.setSelectionRange(cursorPos, cursorPos);
+    });
+
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") this.checkAnswerInput(input.value);
+    });
+
+    optionsContainer.appendChild(input);
+
+    const submitBtn = document.createElement("button");
+    submitBtn.innerText = "Перевірити";
+    submitBtn.className = "option";
+    submitBtn.onclick = () => this.checkAnswerInput(input.value);
+    optionsContainer.appendChild(submitBtn);
+    
+  } else {
+    // Код для множественного выбора (легкий уровень)
+    this.shuffleOptions(options);
+    options.forEach(option => {
+      const button = document.createElement("button");
+      button.className = "option";
+      button.innerHTML = option.text;
+      button.onclick = () => this.checkAnswer(option);
+      optionsContainer.appendChild(button);
+    });
+  }
+}
             shuffleOptions(options) {
                 for (let i = options.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
@@ -306,7 +436,6 @@
                 const selectedText = selectedOption.text;
                 const correctOption = currentQuestion.options.find(option => option.correct);
                 const correctText = correctOption.text;
-
                 if (selectedOption.correct) {
                     this.score++;
                     document.getElementById('result').innerText = 'Вірно!';
@@ -320,8 +449,47 @@
                     soundWrong.currentTime = 0;
                     soundWrong.play();
                 }
-
                 this.currentQuestionIndex++;
+                this.moveToNextQuestion();
+            }
+   checkAnswerInput(userAnswer) {
+  // Заменяем запятую на точку для корректного парсинга
+  const normalizedAnswer = userAnswer.replace(',', '.');
+  const currentQuestion = this.questions[this.currentQuestionIndex];
+  const correctOption = currentQuestion.options.find(option => option.correct);
+  
+  // Парсим числа с учетом локали
+  const correctNumber = parseFloat(
+    correctOption.text.replace(',', '.').replace(/\s/g, '')
+  );
+  
+  const userNumber = parseFloat(normalizedAnswer);
+
+  // Сравниваем с допуском 0.01 для плавающих чисел
+  if (!isNaN(userNumber) && Math.abs(userNumber - correctNumber) < 0.01) {
+    this.score++;
+    this.showResultMessage("Вірно!", "correct");
+  } else {
+    this.errors.push({ 
+      question: currentQuestion.question, 
+      user: userAnswer, 
+      correct: correctOption.text 
+    });
+    this.showResultMessage(`Невірно. Правильна відповідь: ${correctOption.text}`, "incorrect");
+  }
+  
+  this.currentQuestionIndex++;
+  this.moveToNextQuestion();
+}
+
+
+            showResultMessage(text, type) {
+                const result = document.getElementById("result");
+                result.innerText = text;
+                result.className = `result ${type}`;
+                document.getElementById("sound" + (type === "correct" ? "Right" : "Wrong")).play();
+            }
+            moveToNextQuestion() {
                 if (this.currentQuestionIndex < this.questions.length) {
                     setTimeout(() => this.showQuestion(), 1200);
                 } else {
@@ -329,75 +497,58 @@
                 }
                 this.updateProgress();
             }
-          
-            
             showResult() {
-    const total = this.questions.length;
-    const score = this.score;
-    document.getElementById('question').innerText = `Ваш результат: ${score} з ${total}`;
-    document.getElementById('options').innerHTML = '';
-    document.getElementById('result').style.display = 'none';
-
-    // Показываем список ошибок
-    const errorsList = document.getElementById('errorsList');
-    errorsList.style.display = 'block'; // Делаем блок видимым
-
-    errorsList.innerHTML = '<strong>Помилки:</strong><br>';
-    if (this.errors.length === 0) {
-        errorsList.innerHTML += '<br>Усі відповіді правильні!';
-    } else {
-        this.errors.forEach(err => {
-            errorsList.innerHTML += `<br>Питання: "${err.question}"<br>Ваша відповідь: "${err.user}" — Правильна відповідь: "${err.correct}"<br>`;
-        });
-    }
-
-    document.getElementById('progressText').innerText = '';
-    document.getElementById('progressFill').style.width = '100%';
-    document.getElementById('restartButton').style.display = 'block';
-
-    // let record = localStorage.getItem('quizRecord');
-    // let recordCount = localStorage.getItem('quizRecordCount');
-    // if (!record || !recordCount) {
-    //     record = 0;
-    //     recordCount = 0;
-    // } else {
-    //     record = parseInt(record);
-    //     recordCount = parseInt(recordCount);
-    // }
-    // const currentScore = score;
-    // const recordDisplay = document.getElementById('recordDisplay');
-    // if (currentScore > record) {
-    //     localStorage.setItem('quizRecord', currentScore);
-    //     localStorage.setItem('quizRecordCount', currentScore);
-    //     recordDisplay.innerText = `РЕКОРД: ${currentScore} з ${total}`;
-    // } else {
-    //     recordDisplay.innerText = `РЕКОРД: ${recordCount} з ${total}`;
-    // }
-}
-
-
+                const total = this.questions.length;
+                const score = this.score;
+                document.getElementById('question').innerText = `Ваш результат: ${score} з ${total}`;
+                document.getElementById('options').innerHTML = '';
+                document.getElementById('result').style.display = 'none';
+                const errorsList = document.getElementById('errorsList');
+                errorsList.style.display = 'block';
+                errorsList.innerHTML = '<strong>Помилки:</strong><br>';
+                if (this.errors.length === 0) {
+                    errorsList.innerHTML += '<br>Усі відповіді правильні!';
+                } else {
+                    this.errors.forEach(err => {
+                        errorsList.innerHTML += `<br>Питання: "${err.question}"<br>Ваша відповідь: "${err.user}" — Правильна відповідь: "${err.correct}"<br>`;
+                    });
+                }
+                document.getElementById('progressText').innerText = '';
+                document.getElementById('progressFill').style.width = '100%';
+                document.getElementById('restartButton').style.display = 'block';
+                let recordKey = this.mode === "numeric-input" ? "quizRecord_hard" : "quizRecord_easy";
+                let recordCountKey = this.mode === "numeric-input" ? "quizRecordCount_hard" : "quizRecordCount_easy";
+                const currentScore = score;
+                const savedRecord = localStorage.getItem(recordKey);
+                const savedRecordCount = localStorage.getItem(recordCountKey);
+                let record = savedRecord ? parseInt(savedRecord) : 0;
+                let recordCount = savedRecordCount ? parseInt(savedRecordCount) : 0;
+                const recordDisplay = document.getElementById('recordDisplay');
+                if (currentScore > record) {
+                    localStorage.setItem(recordKey, currentScore);
+                    localStorage.setItem(recordCountKey, currentScore);
+                    recordDisplay.innerText = `Рекорд: ${currentScore} з ${total}`;
+                } else {
+                    recordDisplay.innerText = `Рекорд: ${recordCount} з ${total}`;
+                }
+            }
             updateProgress() {
                 const totalQuestions = this.questions.length;
-                const currentQuestionNum = this.currentQuestionIndex;
-                const progressPercent = totalQuestions === 0 ? 0 : (currentQuestionNum / totalQuestions) * 100;
-             document.getElementById('progressText').innerText = `${this.currentQuestionIndex} з ${totalQuestions}`;
+                const progressPercent = totalQuestions === 0 ? 0 : (this.currentQuestionIndex / totalQuestions) * 100;
+                document.getElementById('progressText').innerText = `${this.currentQuestionIndex} з ${totalQuestions}`;
                 document.getElementById('progressFill').style.width = `${progressPercent}%`;
             }
             setBackgroundImage(imageUrl) {
                 const bgImage = document.getElementById('backgroundImage');
-                bgImage.style.backgroundImage = `url(${imageUrl})`;
+                bgImage.style.backgroundImage = imageUrl ? `url(${imageUrl})` : 'none';
                 bgImage.style.opacity = imageUrl ? '0.15' : '0';
             }
         }
 
-        const questions = [
+       const questions = [
 
-
-         
-            //////////////////////////////////////////
-
-            {
-                question: "Максимальна дальність ураження цілей ПЗРК Stinger навздогін?",
+ {
+                question: "Максимальна дальність ураження цілей ПЗРК Stinger навздогін, в метрах?",
                 options: [
                     { text: "6400 м", correct: false },
                     { text: "8000 м", correct: true },
@@ -406,8 +557,8 @@
                 ]
             },
 
-             {
-                question: "Максимальна дальність ураження цілей ПЗРК Piorun навздогін?",
+            {
+                question: "Максимальна дальність ураження цілей ПЗРК Piorun навздогін, в метрах?",
                 options: [
                     { text: "5600 м", correct: false },
                     { text: "6500 м", correct: true },
@@ -416,7 +567,7 @@
                 ]
             },
             {
-                question: "Максимальна дальність ураження цілей ПЗРК Ігла навздогін?",
+                question: "Максимальна дальність ураження цілей ПЗРК Ігла навздогін, в метрах?",
                 options: [
                     { text: "5000 м", correct: true },
                     { text: "4000 м", correct: false },
@@ -425,7 +576,7 @@
                 ]
             },
             {
-                question: "Маршева швидкість ЗКР Piorun?",
+                question: "Маршева швидкість ЗКР Piorun, в м/с?",
                 options: [
                     { text: "570 м/с", correct: false },
                     { text: "660 м/с", correct: true },
@@ -434,7 +585,7 @@
                 ]
             },
             {
-                question: "Маршева швидкість ЗКР Stinger?",
+                question: "Маршева швидкість ЗКР Stinger, в м/с?",
                 options: [
                     { text: "570 м/с", correct: false },
                     { text: ">700 м/с", correct: true },
@@ -443,7 +594,7 @@
                 ]
             },
             {
-                question: "Маршева швидкість ЗКР Ігла?",
+                question: "Маршева швидкість ЗКР Ігла, в м/с?",
                 options: [
                     { text: "360 м/с", correct: false },
                     { text: "570 м/с", correct: true },
@@ -452,8 +603,8 @@
                 ]
             },
 
-             {
-                question: "Швидкість вражаємих цілей ПЗРК Stinger на зустрічних курсах?",
+            {
+                question: "Швидкість вражаємих цілей ПЗРК Stinger на зустрічних курсах, в м/с?",
                 options: [
                     { text: "320 м/с", correct: false },
                     { text: "400 м/с", correct: true },
@@ -462,8 +613,8 @@
                 ]
             },
 
-             {
-                question: "Швидкість вражаємих цілей ПЗРК Piorun на зустрічних курсах?",
+            {
+                question: "Швидкість вражаємих цілей ПЗРК Piorun на зустрічних курсах, в м/с?",
                 options: [
                     { text: "320 м/с", correct: false },
                     { text: "400 м/с", correct: true },
@@ -472,8 +623,8 @@
                 ]
             },
 
-              {
-                question: "Швидкість вражаємих цілей ПЗРК Ігла на зустрічних курсах?",
+            {
+                question: "Швидкість вражаємих цілей ПЗРК Ігла на зустрічних курсах, в м/с?",
                 options: [
                     { text: "320 м/с", correct: false },
                     { text: "360 м/с", correct: true },
@@ -482,8 +633,8 @@
                 ]
             },
 
-             {
-                question: "Швидкість вражаємих цілей ПЗРК Stinger на догонних курсах?",
+            {
+                question: "Швидкість вражаємих цілей ПЗРК Stinger на догонних курсах, в м/с?",
                 options: [
                     { text: "430 м/с", correct: false },
                     { text: "340 м/с", correct: true },
@@ -492,8 +643,8 @@
                 ]
             },
 
-             {
-                question: "Швидкість вражаємих цілей ПЗРК Piorun на догонних курсах?",
+            {
+                question: "Швидкість вражаємих цілей ПЗРК Piorun на догонних курсах, в м/с?",
                 options: [
                     { text: "400 м/с", correct: false },
                     { text: "320 м/с", correct: true },
@@ -502,18 +653,18 @@
                 ]
             },
 
-              {
-                question: "Швидкість вражаємих цілей ПЗРК Ігла на догонних курсах?",
+            {
+                question: "Швидкість вражаємих цілей ПЗРК Ігла на догонних курсах, в м/с?",
                 options: [
-                   { text: "400 м/с", correct: false },
+                    { text: "400 м/с", correct: false },
                     { text: "320 м/с", correct: true },
                     { text: "360 м/с", correct: false },
                     { text: "450 м/с", correct: false }
                 ]
             },
 
-             {
-                question: "Маса бойової частини ПЗРК Stinger?",
+            {
+                question: "Маса бойової частини ПЗРК Stinger, в кг?",
                 options: [
                     { text: "4 кг", correct: false },
                     { text: "3 кг", correct: true },
@@ -522,8 +673,8 @@
                 ]
             },
 
-           {
-                question: "Маса бойової частини ПЗРК Piorun?",
+            {
+                question: "Маса бойової частини ПЗРК Piorun, в кг?",
                 options: [
                     { text: "3 кг", correct: false },
                     { text: "1,82 кг", correct: true },
@@ -532,7 +683,7 @@
                 ]
             },
             {
-                question: "Маса бойової частини ПЗРК Ігла?",
+                question: "Маса бойової частини ПЗРК Ігла, в кг?",
                 options: [
                     { text: "4 кг", correct: false },
                     { text: "1,27 кг", correct: true },
@@ -541,21 +692,12 @@
                 ]
             },
 
-            
-
-
-            //////////////////
-          
-            
+            ////////////////
+         
 
         ];
 
 
-        const quiz = new Quiz(questions);
-
-        document.getElementById('restartButton').onclick = () => {
-            location.reload();
-        };
-    </script>
+ </script>
 </body>
-</html>
+</html> 
