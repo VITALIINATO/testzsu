@@ -377,9 +377,7 @@
 showOptions(options) {
   const optionsContainer = document.getElementById("options");
   optionsContainer.innerHTML = "";
-  
   if (this.mode === "numeric-input") {
-    // Код для числового ввода (сложный уровень)
     const input = document.createElement("input");
     input.type = "tel";
     input.inputMode = "decimal";
@@ -388,13 +386,36 @@ showOptions(options) {
     
     input.addEventListener("input", function() {
       const cursorPos = this.selectionStart;
-      let value = this.value.replace(/\./g, ',');
+      let value = this.value;
+      
+      // Заменяем точки на запятые
+      value = value.replace(/\./g, ',');
+      
+      // Удаляем все символы, кроме цифр и запятых
       value = value.replace(/[^0-9,]/g, '');
+      
+      // Разрешаем только одну запятую
       const commaIndex = value.indexOf(',');
       if (commaIndex !== -1) {
         value = value.substring(0, commaIndex + 1) + 
                 value.substring(commaIndex + 1).replace(/,/g, '');
       }
+      
+      // Удаляем лишние нули после запятой
+      if (commaIndex !== -1) {
+        const parts = value.split(',');
+        if (parts[1]) {
+          // Удаляем лишние нули в конце
+          parts[1] = parts[1].replace(/0+$/, '');
+          // Удаляем запятую, если после нее ничего нет
+          if (parts[1] === '') {
+            value = parts[0];
+          } else {
+            value = parts[0] + ',' + parts[1];
+          }
+        }
+      }
+      
       this.value = value;
       this.setSelectionRange(cursorPos, cursorPos);
     });
