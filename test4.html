@@ -374,12 +374,63 @@
                 document.getElementById('errorsList').innerHTML = '';
                 this.updateProgress();
             }
+
+
+// showOptions(options) {
+//   const optionsContainer = document.getElementById("options");
+//   optionsContainer.innerHTML = "";
+  
+//   if (this.mode === "numeric-input") {
+//     // Код для числового ввода (сложный уровень)
+//     const input = document.createElement("input");
+//     input.type = "tel";
+//     input.inputMode = "decimal";
+//     input.placeholder = "Введіть число (наприклад, 3,5)";
+//     input.className = "option-input";
+    
+//     input.addEventListener("input", function() {
+//       const cursorPos = this.selectionStart;
+//       let value = this.value.replace(/\./g, ',');
+//       value = value.replace(/[^0-9,]/g, '');
+//       const commaIndex = value.indexOf(',');
+//       if (commaIndex !== -1) {
+//         value = value.substring(0, commaIndex + 1) + 
+//                 value.substring(commaIndex + 1).replace(/,/g, '');
+//       }
+//       this.value = value;
+//       this.setSelectionRange(cursorPos, cursorPos);
+//     });
+
+//     input.addEventListener("keydown", (e) => {
+//       if (e.key === "Enter") this.checkAnswerInput(input.value);
+//     });
+
+//     optionsContainer.appendChild(input);
+
+//     const submitBtn = document.createElement("button");
+//     submitBtn.innerText = "Перевірити";
+//     submitBtn.className = "option";
+//     submitBtn.onclick = () => this.checkAnswerInput(input.value);
+//     optionsContainer.appendChild(submitBtn);
+    
+//   } else {
+//     // Код для множественного выбора (легкий уровень)
+//     this.shuffleOptions(options);
+//     options.forEach(option => {
+//       const button = document.createElement("button");
+//       button.className = "option";
+//       button.innerHTML = option.text;
+//       button.onclick = () => this.checkAnswer(option);
+//       optionsContainer.appendChild(button);
+//     });
+//   }
+// }
+
+
 showOptions(options) {
   const optionsContainer = document.getElementById("options");
   optionsContainer.innerHTML = "";
-  
   if (this.mode === "numeric-input") {
-    // Код для числового ввода (сложный уровень)
     const input = document.createElement("input");
     input.type = "tel";
     input.inputMode = "decimal";
@@ -388,13 +439,36 @@ showOptions(options) {
     
     input.addEventListener("input", function() {
       const cursorPos = this.selectionStart;
-      let value = this.value.replace(/\./g, ',');
+      let value = this.value;
+      
+      // Заменяем точки на запятые
+      value = value.replace(/\./g, ',');
+      
+      // Удаляем все символы, кроме цифр и запятых
       value = value.replace(/[^0-9,]/g, '');
+      
+      // Разрешаем только одну запятую
       const commaIndex = value.indexOf(',');
       if (commaIndex !== -1) {
         value = value.substring(0, commaIndex + 1) + 
                 value.substring(commaIndex + 1).replace(/,/g, '');
       }
+      
+      // Удаляем лишние нули после запятой
+      if (commaIndex !== -1) {
+        const parts = value.split(',');
+        if (parts[1]) {
+          // Удаляем лишние нули в конце
+          parts[1] = parts[1].replace(/0+$/, '');
+          // Удаляем запятую, если после нее ничего нет
+          if (parts[1] === '') {
+            value = parts[0];
+          } else {
+            value = parts[0] + ',' + parts[1];
+          }
+        }
+      }
+      
       this.value = value;
       this.setSelectionRange(cursorPos, cursorPos);
     });
