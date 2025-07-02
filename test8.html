@@ -374,59 +374,6 @@
                 document.getElementById('errorsList').innerHTML = '';
                 this.updateProgress();
             }
-
-
-// showOptions(options) {
-//   const optionsContainer = document.getElementById("options");
-//   optionsContainer.innerHTML = "";
-  
-//   if (this.mode === "numeric-input") {
-//     // Код для числового ввода (сложный уровень)
-//     const input = document.createElement("input");
-//     input.type = "tel";
-//     input.inputMode = "decimal";
-//     input.placeholder = "Введіть число (наприклад, 3,5)";
-//     input.className = "option-input";
-    
-//     input.addEventListener("input", function() {
-//       const cursorPos = this.selectionStart;
-//       let value = this.value.replace(/\./g, ',');
-//       value = value.replace(/[^0-9,]/g, '');
-//       const commaIndex = value.indexOf(',');
-//       if (commaIndex !== -1) {
-//         value = value.substring(0, commaIndex + 1) + 
-//                 value.substring(commaIndex + 1).replace(/,/g, '');
-//       }
-//       this.value = value;
-//       this.setSelectionRange(cursorPos, cursorPos);
-//     });
-
-//     input.addEventListener("keydown", (e) => {
-//       if (e.key === "Enter") this.checkAnswerInput(input.value);
-//     });
-
-//     optionsContainer.appendChild(input);
-
-//     const submitBtn = document.createElement("button");
-//     submitBtn.innerText = "Перевірити";
-//     submitBtn.className = "option";
-//     submitBtn.onclick = () => this.checkAnswerInput(input.value);
-//     optionsContainer.appendChild(submitBtn);
-    
-//   } else {
-//     // Код для множественного выбора (легкий уровень)
-//     this.shuffleOptions(options);
-//     options.forEach(option => {
-//       const button = document.createElement("button");
-//       button.className = "option";
-//       button.innerHTML = option.text;
-//       button.onclick = () => this.checkAnswer(option);
-//       optionsContainer.appendChild(button);
-//     });
-//   }
-// }
-
-
 showOptions(options) {
   const optionsContainer = document.getElementById("options");
   optionsContainer.innerHTML = "";
@@ -497,7 +444,8 @@ showOptions(options) {
     });
   }
 }
-            shuffleOptions(options) {
+
+shuffleOptions(options) {
                 for (let i = options.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
                     [options[i], options[j]] = [options[j], options[i]];
@@ -619,7 +567,260 @@ showOptions(options) {
             }
         }
 
-    const questions = [
+       const questions = [
+
+
+
+            {
+                question: "Прицільна дальність АК-74?",
+                options: [
+                    { text: "1350 м", correct: false },
+                    { text: "1000 м", correct: true },
+                    { text: "440 м", correct: false },
+                    { text: "600 м", correct: false }
+                ]
+            },
+
+            {
+                question: "Дальність прямого пострілу АК-74 по грудній фігурі?",
+                options: [
+                    { text: "625 м", correct: false },
+                    { text: "440 м", correct: true },
+                    { text: "900 м", correct: false },
+                    { text: "600 м", correct: false }
+                ]
+            },
+
+
+            {
+                question: "Темп стрільби АК-74, пострілів за хвилину?",
+                options: [
+                    { text: "900 п/х", correct: false },
+                    { text: "600 п/х", correct: true },
+                    { text: "400 п/х", correct: false },
+                    { text: "500 п/х", correct: false }
+                ]
+            },
+
+
+            {
+                question: "Бойова швидкострільність АК-74 одиночними, пострілів за хвилину ?",
+                options: [
+                    { text: "75 п/х", correct: false },
+                    { text: "40 п/х", correct: true },
+                    { text: "90 п/х", correct: false },
+                    { text: "100 п/х", correct: false }
+                ]
+            },
+
+            {
+                question: "Бойова швидкострільність АК-74 чергами, пострілів за хвилину ?",
+                options: [
+                    { text: "75 п/х", correct: false },
+                    { text: "100 п/х", correct: true },
+                    { text: "90 п/х", correct: false },
+                    { text: "40 п/х", correct: false }
+                ]
+            },
+
+            {
+                question: "Початкова швидкість кулі АК-74, в м/с?",
+                options: [
+                    { text: "1250 м/c", correct: false },
+                    { text: "900 м/c", correct: true },
+                    { text: "650 м/c", correct: false },
+                    { text: "625 м/c", correct: false }
+                ]
+            },
+
+            {
+                question: "Дальність на якій зберігається убійна дія кулі АК-74?",
+                options: [
+                    { text: "1500 м", correct: false },
+                    { text: "1350 м", correct: true },
+                    { text: "1000 м", correct: false },
+                    { text: "600 м", correct: false }
+                ]
+            },
+
+            {
+                question: "Максимальна дальність польоту кулі АК-74?",
+                options: [
+                    { text: "1350 м", correct: false },
+                    { text: "3150 м", correct: true },
+                    { text: "4400 м", correct: false },
+                    { text: "2400 м", correct: false }
+                ]
+            },
+
+            {
+                question: "Вага автомата АК-74 без багнета зі споряжденим магазином?",
+                options: [
+                    { text: "3,06 кг", correct: false },
+                    { text: "3,6 кг", correct: true },
+                    { text: "4,16 кг", correct: false },
+                    { text: "3,96 кг", correct: false }
+                ]
+            },
+
+            {
+                question: "Найдієвіший вогонь АК-74?",
+                options: [
+                    { text: "1000 м", correct: false },
+                    { text: "500 м", correct: true },
+                    { text: "750 м", correct: false },
+                    { text: "250 м", correct: false }
+                ]
+            },
+//
+
+
+ {
+                question: "Максимальна дальність ураження цілей ПЗРК Stinger навздогін, в метрах?",
+                options: [
+                    { text: "6400 м", correct: false },
+                    { text: "8000 м", correct: true },
+                    { text: "5000 м", correct: false },
+                    { text: "7000 м", correct: false }
+                ]
+            },
+
+            {
+                question: "Максимальна дальність ураження цілей ПЗРК Piorun навздогін, в метрах?",
+                options: [
+                    { text: "5600 м", correct: false },
+                    { text: "6500 м", correct: true },
+                    { text: "5000 м", correct: false },
+                    { text: "8000 м", correct: false }
+                ]
+            },
+            {
+                question: "Максимальна дальність ураження цілей ПЗРК Ігла навздогін, в метрах?",
+                options: [
+                    { text: "5000 м", correct: true },
+                    { text: "4000 м", correct: false },
+                    { text: "6500 м", correct: false },
+                    { text: "4800 м", correct: false }
+                ]
+            },
+            {
+                question: "Маршева швидкість ЗКР Piorun, в м/с?",
+                options: [
+                    { text: "570 м/с", correct: false },
+                    { text: "660 м/с", correct: true },
+                    { text: "600 м/с", correct: false },
+                    { text: "750 м/с", correct: false }
+                ]
+            },
+            {
+                question: "Маршева швидкість ЗКР Stinger, в м/с?",
+                options: [
+                    { text: "570 м/с", correct: false },
+                    { text: "700 м/с", correct: true },
+                    { text: "660 м/с", correct: false },
+                    { text: "400 м/с", correct: false }
+                ]
+            },
+            {
+                question: "Маршева швидкість ЗКР Ігла, в м/с?",
+                options: [
+                    { text: "360 м/с", correct: false },
+                    { text: "570 м/с", correct: true },
+                    { text: "420 м/с", correct: false },
+                    { text: "4000 м/с", correct: false }
+                ]
+            },
+
+            {
+                question: "Швидкість вражаємих цілей ПЗРК Stinger на зустрічних курсах, в м/с?",
+                options: [
+                    { text: "320 м/с", correct: false },
+                    { text: "400 м/с", correct: true },
+                    { text: "660 м/с", correct: false },
+                    { text: "750 м/с", correct: false }
+                ]
+            },
+
+            {
+                question: "Швидкість вражаємих цілей ПЗРК Piorun на зустрічних курсах, в м/с?",
+                options: [
+                    { text: "320 м/с", correct: false },
+                    { text: "400 м/с", correct: true },
+                    { text: "660 м/с", correct: false },
+                    { text: "750 м/с", correct: false }
+                ]
+            },
+
+            {
+                question: "Швидкість вражаємих цілей ПЗРК Ігла на зустрічних курсах, в м/с?",
+                options: [
+                    { text: "320 м/с", correct: false },
+                    { text: "360 м/с", correct: true },
+                    { text: "400 м/с", correct: false },
+                    { text: "470 м/с", correct: false }
+                ]
+            },
+
+            {
+                question: "Швидкість вражаємих цілей ПЗРК Stinger на догонних курсах, в м/с?",
+                options: [
+                    { text: "430 м/с", correct: false },
+                    { text: "340 м/с", correct: true },
+                    { text: "320 м/с", correct: false },
+                    { text: "400 м/с", correct: false }
+                ]
+            },
+
+            {
+                question: "Швидкість вражаємих цілей ПЗРК Piorun на догонних курсах, в м/с?",
+                options: [
+                    { text: "400 м/с", correct: false },
+                    { text: "320 м/с", correct: true },
+                    { text: "360 м/с", correct: false },
+                    { text: "450 м/с", correct: false }
+                ]
+            },
+
+            {
+                question: "Швидкість вражаємих цілей ПЗРК Ігла на догонних курсах, в м/с?",
+                options: [
+                    { text: "400 м/с", correct: false },
+                    { text: "320 м/с", correct: true },
+                    { text: "360 м/с", correct: false },
+                    { text: "450 м/с", correct: false }
+                ]
+            },
+
+            {
+                question: "Маса бойової частини ПЗРК Stinger, в кг?",
+                options: [
+                    { text: "4 кг", correct: false },
+                    { text: "3 кг", correct: true },
+                    { text: "2,37 кг", correct: false },
+                    { text: "1,27 м", correct: false }
+                ]
+            },
+
+            {
+                question: "Маса бойової частини ПЗРК Piorun, в кг?",
+                options: [
+                    { text: "3 кг", correct: false },
+                    { text: "1,82 кг", correct: true },
+                    { text: "2,33 кг", correct: false },
+                    { text: "1,27 кг", correct: false }
+                ]
+            },
+            {
+                question: "Маса бойової частини ПЗРК Ігла, в кг?",
+                options: [
+                    { text: "4 кг", correct: false },
+                    { text: "1,27 кг", correct: true },
+                    { text: "1,82 кг", correct: false },
+                    { text: "1,17 м", correct: false }
+                ]
+            },
+//
+
 
             {
                 question: "Швидкість КР Х-101, в м/с?",
@@ -731,6 +932,7 @@ showOptions(options) {
                 ]
             },
 
+            
             {
                 question: "Вага бойової частини Іскандер-М?", 
                 options: [
@@ -873,8 +1075,73 @@ showOptions(options) {
                 ]
             },
 
-            ////////////////
+            
+
+            {
+                question: "Початкова швидкість кулі кулемета Максим, в м/с?",
+                options: [
+                    { text: "690 м/c", correct: false },
+                    { text: "740 м/c", correct: true },
+                    { text: "800 м/c", correct: false },
+                    { text: "920 м/c", correct: false }
+                ]
+            },
+
+            {
+                question: "Швидкострильність кулемета Максим, п/х?",
+                options: [
+                    { text: "800 п/х", correct: false },
+                    { text: "600 п/х", correct: true },
+                    { text: "900 п/х", correct: false },
+                    { text: "700 п/х", correct: false }
+                ]
+            },
+
+            
+             {
+                question: "Вага кулемета Максим, в кг?",
+                options: [
+                    { text: "24,7 кг", correct: false },
+                    { text: "27,2 кг", correct: true },
+                    { text: "25,3 кг", correct: false },
+                    { text: "29,4 кг", correct: false }
+                ]
+            },
+
+             {
+                question: "Довжина ствола кулемета Максим, в мм?",
+                options: [
+                    { text: "754 мм", correct: false },
+                    { text: "721 мм", correct: true },
+                    { text: "692 мм", correct: false },
+                    { text: "774 мм", correct: false }
+                ]
+            },
+
+            
+             {
+                question: "Довжина кулемета Максим, в мм?",
+                options: [
+                    { text: "998 мм", correct: false },
+                    { text: "1067 мм", correct: true },
+                    { text: "1102 мм", correct: false },
+                    { text: "1206 мм", correct: false }
+                ]
+            },
          
+//
+
+
+
+
+       
+
+
+
+
+
+
+
 
         ];
 
