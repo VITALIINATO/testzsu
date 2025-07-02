@@ -374,38 +374,40 @@
                 document.getElementById('errorsList').innerHTML = '';
                 this.updateProgress();
             }
+
+           
+            
             showOptions(options) {
-                const optionsContainer = document.getElementById("options");
-                optionsContainer.innerHTML = "";
-                if (this.mode === "multiple-choice") {
-                    this.shuffleOptions(options);
-                    options.forEach(option => {
-                        const button = document.createElement("button");
-                        button.innerText = option.text;
-                        button.className = "option";
-                        button.onclick = () => this.checkAnswer(option);
-                        optionsContainer.appendChild(button);
-                    });
-                } else if (this.mode === "numeric-input") {
-                    const input = document.createElement("input");
-                    input.type = "number";
-                    input.inputMode = "numeric";
-                    input.pattern = "[0-9]*";
-                    input.placeholder = "Введіть тільки цифри...";
-                    input.className = "option-input";
-                   
-                    input.oninput = () => input.value = input.value.replace(/[^0-9.,]/g, '');
-                    input.addEventListener("keydown", (e) => {
-                        if (e.key === "Enter") this.checkAnswerInput(input.value);
-                    });
-                    optionsContainer.appendChild(input);
-                    const submitBtn = document.createElement("button");
-                    submitBtn.innerText = "Перевірити";
-                    submitBtn.className = "option";
-                    submitBtn.onclick = () => this.checkAnswerInput(input.value);
-                    optionsContainer.appendChild(submitBtn);
-                }
-            }
+  const optionsContainer = document.getElementById("options");
+  optionsContainer.innerHTML = "";
+  if (this.mode === "numeric-input") {
+    const input = document.createElement("input");
+    input.type = "text"; // Изменено на text для доступа к запятой
+    input.pattern = "[0-9,]*"; // Разрешаем цифры и запятую
+    input.placeholder = "Введіть число (наприклад, 3,5)";
+    input.className = "option-input";
+    
+    // Разрешаем только цифры и одну запятую
+    input.oninput = () => {
+      let value = input.value.replace(/[^0-9,]/g, ''); // Удаляем всё, кроме цифр и запятой
+      value = value.replace(/(,).*?($)/, '$1$2'); // Оставляем только первую запятую
+      input.value = value;
+    };
+
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") this.checkAnswerInput(input.value);
+    });
+
+    optionsContainer.appendChild(input);
+
+    const submitBtn = document.createElement("button");
+    submitBtn.innerText = "Перевірити";
+    submitBtn.className = "option";
+    submitBtn.onclick = () => this.checkAnswerInput(input.value);
+    optionsContainer.appendChild(submitBtn);
+  }
+}
+
             shuffleOptions(options) {
                 for (let i = options.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
