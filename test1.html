@@ -375,22 +375,34 @@
                 this.updateProgress();
             }
 
-           
-   showOptions(options) {
+ showOptions(options) {
   const optionsContainer = document.getElementById("options");
   optionsContainer.innerHTML = "";
   if (this.mode === "numeric-input") {
     const input = document.createElement("input");
-    input.type = "text"; // Меняем на "text" для доступа к запятой
-    input.inputMode = "decimal"; // Отображает клавиатуру с десятичным разделителем
-    input.pattern = "[0-9,]*"; // Разрешаем цифры и запятую
-    input.placeholder = "Введіть число (наприклад, 3,5)";
+    input.type = "text"; // Оставляем text для гибкости
+    input.inputMode = "decimal"; // Клавиатура с цифрами и запятой
+    input.placeholder = "Введіть число (наприклад 3,5)";
     input.className = "option-input";
     
-    // Разрешаем только цифры и одну запятую
+    // Автоматическая замена точки на запятую
+    input.addEventListener("keyup", (e) => {
+      if (e.key === ".") {
+        const cursorPos = input.selectionStart;
+        input.value = input.value.replace(".", ",");
+        input.setSelectionRange(cursorPos, cursorPos);
+      }
+    });
+
+    // Разрешаем только цифры и запятые
     input.oninput = () => {
-      let value = input.value.replace(/[^0-9,]/g, ''); // Удаляем всё, кроме цифр и запятой
-      value = value.replace(/(,).*?($)/, '$1$2'); // Оставляем только первую запятую
+      let value = input.value.replace(/[^0-9,]/g, '');
+      // Оставляем только первую запятую
+      const commaIndex = value.indexOf(',');
+      if (commaIndex !== -1) {
+        value = value.substring(0, commaIndex + 1) + 
+                value.substring(commaIndex + 1).replace(/,/g, '');
+      }
       input.value = value;
     };
 
@@ -405,9 +417,18 @@
     submitBtn.className = "option";
     submitBtn.onclick = () => this.checkAnswerInput(input.value);
     optionsContainer.appendChild(submitBtn);
+  } else {
+    // Оригинальный код для множественного выбора
+    this.shuffleOptions(options);
+    options.forEach(option => {
+      const button = document.createElement("button");
+      button.className = "option";
+      button.innerHTML = option.text;
+      button.onclick = () => this.checkAnswer(option);
+      optionsContainer.appendChild(button);
+    });
   }
 }
-
             shuffleOptions(options) {
                 for (let i = options.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
@@ -437,20 +458,31 @@
                 this.currentQuestionIndex++;
                 this.moveToNextQuestion();
             }
-checkAnswerInput(userAnswer) {
-  const normalizedAnswer = userAnswer.replace(',', '.'); // Замена запятой на точку
+   checkAnswerInput(userAnswer) {
+  // Заменяем запятую на точку для корректного парсинга
+  const normalizedAnswer = userAnswer.replace(',', '.');
   const currentQuestion = this.questions[this.currentQuestionIndex];
   const correctOption = currentQuestion.options.find(option => option.correct);
-  const correctNumber = parseFloat(correctOption.text.replace(',', '.')); // Приведение к числу
+  
+  // Парсим числа с учетом локали
+  const correctNumber = parseFloat(
+    correctOption.text.replace(',', '.').replace(/\s/g, '')
+  );
+  
   const userNumber = parseFloat(normalizedAnswer);
 
-  if (!isNaN(userNumber) && userNumber === correctNumber) {
+  if (!isNaN(userNumber) && Math.abs(userNumber - correctNumber) < 0.01) {
     this.score++;
     this.showResultMessage("Вірно!", "correct");
   } else {
-    this.errors.push({ question: currentQuestion.question, user: userAnswer, correct: correctOption.text });
+    this.errors.push({ 
+      question: currentQuestion.question, 
+      user: userAnswer, 
+      correct: correctOption.text 
+    });
     this.showResultMessage(`Невірно. Правильна відповідь: ${correctOption.text}`, "incorrect");
   }
+  
   this.currentQuestionIndex++;
   this.moveToNextQuestion();
 }
