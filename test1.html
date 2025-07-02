@@ -377,12 +377,12 @@
 
            
             
-            showOptions(options) {
+          showOptions(options) {
   const optionsContainer = document.getElementById("options");
   optionsContainer.innerHTML = "";
   if (this.mode === "numeric-input") {
     const input = document.createElement("input");
-    input.type = "text"; // Изменено на text для доступа к запятой
+    input.type = "text"; // Меняем на text для доступа к запятой
     input.pattern = "[0-9,]*"; // Разрешаем цифры и запятую
     input.placeholder = "Введіть число (наприклад, 3,5)";
     input.className = "option-input";
@@ -437,21 +437,27 @@
                 this.currentQuestionIndex++;
                 this.moveToNextQuestion();
             }
-            checkAnswerInput(userAnswer) {
-                const currentQuestion = this.questions[this.currentQuestionIndex];
-                const correctOption = currentQuestion.options.find(option => option.correct);
-                const correctNumber = correctOption.text.match(/\d+/)?.[0] || "";
-                const userNumber = userAnswer.trim();
-                if (userNumber === correctNumber) {
-                    this.score++;
-                    this.showResultMessage("Вірно!", "correct");
-                } else {
-                    this.errors.push({ question: currentQuestion.question, user: userNumber, correct: correctNumber });
-                    this.showResultMessage(`Невірно. Правильна відповідь: ${correctNumber}`, "incorrect");
-                }
-                this.currentQuestionIndex++;
-                this.moveToNextQuestion();
-            }
+
+           checkAnswerInput(userAnswer) {
+  const currentQuestion = this.questions[this.currentQuestionIndex];
+  const correctOption = currentQuestion.options.find(option => option.correct);
+  const correctText = correctOption.text;
+
+  // Приводим ответы к числу, заменяя запятую на точку
+  const userNumber = parseFloat(userAnswer.replace(',', '.'));
+  const correctNumber = parseFloat(correctText.replace(',', '.'));
+
+  if (!isNaN(userNumber) && userNumber === correctNumber) {
+    this.score++;
+    this.showResultMessage("Вірно!", "correct");
+  } else {
+    this.errors.push({ question: currentQuestion.question, user: userAnswer, correct: correctText });
+    this.showResultMessage(`Невірно. Правильна відповідь: ${correctText}`, "incorrect");
+  }
+  this.currentQuestionIndex++;
+  this.moveToNextQuestion();
+}
+
             showResultMessage(text, type) {
                 const result = document.getElementById("result");
                 result.innerText = text;
