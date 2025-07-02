@@ -294,25 +294,25 @@
                     recordDisplay.innerText = `Рекорд: 0 з ${total || 10}`;
                 }
             }
-            
+
             shuffleQuestions() {
                 for (let i = this.questions.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
                     [this.questions[i], this.questions[j]] = [this.questions[j], this.questions[i]];
                 }
             }
-            
+
             showQuestion() {
                 const currentQuestion = this.questions[this.currentQuestionIndex];
                 document.getElementById('question').innerText = currentQuestion.question;
-                
+
                 // Определяем тип вопроса
                 if (currentQuestion.numeric) {
                     this.showNumericInput();
                 } else {
                     this.showOptions(currentQuestion.options);
                 }
-                
+
                 this.setBackgroundImage(currentQuestion.image);
                 document.getElementById('result').innerText = '';
                 document.getElementById('result').className = 'result';
@@ -320,35 +320,37 @@
                 document.getElementById('errorsList').innerHTML = '';
                 this.updateProgress();
             }
-            
-            showNumericInput() {
-                const optionsContainer = document.getElementById("options");
-                optionsContainer.innerHTML = "";
-                
-                const input = document.createElement("input");
-                input.type = "text";
-                input.inputMode = "decimal";
-                input.className = "option-input";
-                input.placeholder = "Введіть число (наприклад: 2,5)";
-                input.id = "numericAnswer";
-                
-                // Разрешаем цифры, запятую и точку (но заменяем точку на запятую)
-                input.oninput = function() {
-                    this.value = this.value.replace(/[^0-9,.]/g, '')
-                                           .replace(/\./g, ',');
-                };
-                
-                optionsContainer.appendChild(input);
-                
-                const submitBtn = document.createElement("button");
-                submitBtn.innerText = "Перевірити";
-                submitBtn.className = "option";
-                submitBtn.onclick = () => {
-                    const answer = document.getElementById("numericAnswer").value;
-                    this.checkNumericAnswer(answer);
-                };
-                optionsContainer.appendChild(submitBtn);
-                
+
+          showNumericInput() {
+    const optionsContainer = document.getElementById("options");
+    optionsContainer.innerHTML = "";
+    const input = document.createElement("input");
+    input.type = "text";
+    input.inputMode = "numeric"; // Цифровая клавиатура
+    input.className = "option-input";
+    input.placeholder = "Введіть число (наприклад: 2,5 або 2.5)";
+    input.id = "numericAnswer";
+    
+    input.oninput = function() {
+        // Разрешаем цифры, запятую и точку
+        this.value = this.value.replace(/[^0-9,.]/g, '');
+        // Заменяем точку на запятую
+        if (this.value.includes('.')) {
+            this.value = this.value.replace('.', ',');
+        }
+    };
+    
+    optionsContainer.appendChild(input);
+    const submitBtn = document.createElement("button");
+    submitBtn.innerText = "Перевірити";
+    submitBtn.className = "option";
+    submitBtn.onclick = () => {
+        const answer = document.getElementById("numericAnswer").value;
+        this.checkNumericAnswer(answer);
+    };
+    optionsContainer.appendChild(submitBtn);
+
+
                 // Добавляем обработчик нажатия Enter
                 input.addEventListener("keydown", (e) => {
                     if (e.key === "Enter") {
@@ -357,17 +359,17 @@
                     }
                 });
             }
-            
+
             checkNumericAnswer(answer) {
                 const currentQuestion = this.questions[this.currentQuestionIndex];
                 const correctAnswer = currentQuestion.correctValue;
                 const soundRight = document.getElementById("soundRight");
                 const soundWrong = document.getElementById("soundWrong");
-                
+
                 // Нормализуем ввод: заменяем запятые на точки для сравнения
-                const normalizedAnswer = answer.replace(',', '.');
-                const normalizedCorrect = correctAnswer.toString().replace(',', '.');
-                
+                const normalizedAnswer = parseFloat(answer.replace(',', '.'));
+                const normalizedCorrect = parseFloat(correctAnswer.toString().replace(',', '.'));
+
                 if (normalizedAnswer === normalizedCorrect) {
                     this.score++;
                     document.getElementById('result').innerText = 'Вірно!';
@@ -375,17 +377,17 @@
                     soundRight.currentTime = 0;
                     soundRight.play();
                 } else {
-                    this.errors.push({ 
-                        question: currentQuestion.question, 
-                        user: answer, 
-                        correct: correctAnswer 
+                    this.errors.push({
+                        question: currentQuestion.question,
+                        user: answer,
+                        correct: correctAnswer
                     });
                     document.getElementById('result').innerText = `Невірно. Правильна відповідь: ${correctAnswer}`;
                     document.getElementById('result').className = 'result incorrect';
                     soundWrong.currentTime = 0;
                     soundWrong.play();
                 }
-                
+
                 this.currentQuestionIndex++;
                 if (this.currentQuestionIndex < this.questions.length) {
                     setTimeout(() => this.showQuestion(), 1200);
@@ -394,12 +396,12 @@
                 }
                 this.updateProgress();
             }
-            
+
             showOptions(options) {
                 const optionsContainer = document.getElementById("options");
                 optionsContainer.innerHTML = "";
                 this.shuffleOptions(options);
-                
+
                 options.forEach(option => {
                     const button = document.createElement("button");
                     button.innerText = option.text;
@@ -408,14 +410,14 @@
                     optionsContainer.appendChild(button);
                 });
             }
-            
+
             shuffleOptions(options) {
                 for (let i = options.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
                     [options[i], options[j]] = [options[j], options[i]];
                 }
             }
-            
+
             checkAnswer(selectedOption) {
                 const soundRight = document.getElementById("soundRight");
                 const soundWrong = document.getElementById("soundWrong");
@@ -446,7 +448,7 @@
                 }
                 this.updateProgress();
             }
-            
+
             showResult() {
                 const total = this.questions.length;
                 const score = this.score;
@@ -489,7 +491,7 @@
                     recordDisplay.innerText = `Рекорд: ${recordCount} з ${total}`;
                 }
             }
-            
+
             updateProgress() {
                 const totalQuestions = this.questions.length;
                 const currentQuestionNum = this.currentQuestionIndex;
@@ -497,7 +499,7 @@
                 document.getElementById('progressText').innerText = `${this.currentQuestionIndex} з ${totalQuestions}`;
                 document.getElementById('progressFill').style.width = `${progressPercent}%`;
             }
-            
+
             setBackgroundImage(imageUrl) {
                 const bgImage = document.getElementById('backgroundImage');
                 bgImage.style.backgroundImage = `url(${imageUrl})`;
@@ -871,4 +873,5 @@
         };
     </script>
 </body>
+
 </html>
