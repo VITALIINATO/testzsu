@@ -393,7 +393,7 @@
                     input.pattern = "[0-9]*";
                     input.placeholder = "Введіть тільки цифри...";
                     input.className = "option-input";
-                   input.oninput = () => input.value = input.value.replace(/[^0-9,]/g, '');
+                   const correctNumber = correctOption.text.match(/[\d,]+/)?.[0] || "";
                     input.addEventListener("keydown", (e) => {
                         if (e.key === "Enter") this.checkAnswerInput(input.value);
                     });
@@ -434,17 +434,20 @@
                 this.currentQuestionIndex++;
                 this.moveToNextQuestion();
             }
-        checkAnswerInput(userAnswer) {
+     checkAnswerInput(userAnswer) {
     const currentQuestion = this.questions[this.currentQuestionIndex];
     const correctOption = currentQuestion.options.find(option => option.correct);
-    const correctNumber = correctOption.text.match(/\d+/)?.[0] || "";
-    const userNumber = input.value.trim().replace(/,/g, ''); // Убираем запятые перед сравнением
+
+    // Извлекаем число вместе с запятой, если есть
+   const correctNumber = correctOption.text.match(/[\d,]+/)?.[0] || "";
+
+    const userNumber = userAnswer.trim();
 
     if (userNumber === correctNumber) {
         this.score++;
         this.showResultMessage("Вірно!", "correct");
     } else {
-        this.errors.push({ question: currentQuestion.question, user: userAnswer, correct: correctNumber });
+        this.errors.push({ question: currentQuestion.question, user: userNumber, correct: correctNumber });
         this.showResultMessage(`Невірно. Правильна відповідь: ${correctNumber}`, "incorrect");
     }
     this.currentQuestionIndex++;
