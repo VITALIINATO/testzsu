@@ -434,21 +434,22 @@
                 this.currentQuestionIndex++;
                 this.moveToNextQuestion();
             }
-            checkAnswerInput(userAnswer) {
-                const currentQuestion = this.questions[this.currentQuestionIndex];
-                const correctOption = currentQuestion.options.find(option => option.correct);
-                const correctNumber = correctOption.text.match(/\d+/)?.[0] || "";
-                const userNumber = userAnswer.trim();
-                if (userNumber === correctNumber) {
-                    this.score++;
-                    this.showResultMessage("Вірно!", "correct");
-                } else {
-                    this.errors.push({ question: currentQuestion.question, user: userNumber, correct: correctNumber });
-                    this.showResultMessage(`Невірно. Правильна відповідь: ${correctNumber}`, "incorrect");
-                }
-                this.currentQuestionIndex++;
-                this.moveToNextQuestion();
-            }
+        checkAnswerInput(userAnswer) {
+    const currentQuestion = this.questions[this.currentQuestionIndex];
+    const correctOption = currentQuestion.options.find(option => option.correct);
+    const correctNumber = correctOption.text.match(/\d+/)?.[0] || "";
+    const userNumber = input.value.trim().replace(/,/g, ''); // Убираем запятые перед сравнением
+
+    if (userNumber === correctNumber) {
+        this.score++;
+        this.showResultMessage("Вірно!", "correct");
+    } else {
+        this.errors.push({ question: currentQuestion.question, user: userAnswer, correct: correctNumber });
+        this.showResultMessage(`Невірно. Правильна відповідь: ${correctNumber}`, "incorrect");
+    }
+    this.currentQuestionIndex++;
+    this.moveToNextQuestion();
+}
             showResultMessage(text, type) {
                 const result = document.getElementById("result");
                 result.innerText = text;
