@@ -375,36 +375,39 @@
                 this.updateProgress();
             }
 
- showOptions(options) {
+showOptions(options) {
   const optionsContainer = document.getElementById("options");
   optionsContainer.innerHTML = "";
   if (this.mode === "numeric-input") {
     const input = document.createElement("input");
-    input.type = "text"; // Оставляем text для гибкости
-    input.inputMode = "decimal"; // Клавиатура с цифрами и запятой
-    input.placeholder = "Введіть число (наприклад 3,5)";
+    input.type = "tel"; // Используем тип tel для лучшей поддержки мобильных клавиатур
+    input.inputMode = "decimal";
+    input.placeholder = "Введіть число (наприклад, 3,5)";
     input.className = "option-input";
     
-    // Автоматическая замена точки на запятую
-    input.addEventListener("keyup", (e) => {
-      if (e.key === ".") {
-        const cursorPos = input.selectionStart;
-        input.value = input.value.replace(".", ",");
-        input.setSelectionRange(cursorPos, cursorPos);
-      }
-    });
-
-    // Разрешаем только цифры и запятые
-    input.oninput = () => {
-      let value = input.value.replace(/[^0-9,]/g, '');
-      // Оставляем только первую запятую
+    // Новый обработчик ввода
+    input.addEventListener("input", function() {
+      // Сохраняем позицию курсора
+      const cursorPos = this.selectionStart;
+      
+      // Заменяем точки на запятые
+      let value = this.value.replace(/\./g, ',');
+      
+      // Удаляем все символы, кроме цифр и запятых
+      value = value.replace(/[^0-9,]/g, '');
+      
+      // Разрешаем только одну запятую
       const commaIndex = value.indexOf(',');
       if (commaIndex !== -1) {
         value = value.substring(0, commaIndex + 1) + 
                 value.substring(commaIndex + 1).replace(/,/g, '');
       }
-      input.value = value;
-    };
+      
+      this.value = value;
+      
+      // Восстанавливаем позицию курсора
+      this.setSelectionRange(cursorPos, cursorPos);
+    });
 
     input.addEventListener("keydown", (e) => {
       if (e.key === "Enter") this.checkAnswerInput(input.value);
@@ -417,16 +420,6 @@
     submitBtn.className = "option";
     submitBtn.onclick = () => this.checkAnswerInput(input.value);
     optionsContainer.appendChild(submitBtn);
-  } else {
-    // Оригинальный код для множественного выбора
-    this.shuffleOptions(options);
-    options.forEach(option => {
-      const button = document.createElement("button");
-      button.className = "option";
-      button.innerHTML = option.text;
-      button.onclick = () => this.checkAnswer(option);
-      optionsContainer.appendChild(button);
-    });
   }
 }
             shuffleOptions(options) {
@@ -471,6 +464,7 @@
   
   const userNumber = parseFloat(normalizedAnswer);
 
+  // Сравниваем с допуском 0.01 для плавающих чисел
   if (!isNaN(userNumber) && Math.abs(userNumber - correctNumber) < 0.01) {
     this.score++;
     this.showResultMessage("Вірно!", "correct");
@@ -486,6 +480,8 @@
   this.currentQuestionIndex++;
   this.moveToNextQuestion();
 }
+
+
             showResultMessage(text, type) {
                 const result = document.getElementById("result");
                 result.innerText = text;
