@@ -376,12 +376,13 @@
             }
 
            
-        showOptions(options) {
+   showOptions(options) {
   const optionsContainer = document.getElementById("options");
   optionsContainer.innerHTML = "";
   if (this.mode === "numeric-input") {
     const input = document.createElement("input");
     input.type = "text"; // Меняем на "text" для доступа к запятой
+    input.inputMode = "decimal"; // Отображает клавиатуру с десятичным разделителем
     input.pattern = "[0-9,]*"; // Разрешаем цифры и запятую
     input.placeholder = "Введіть число (наприклад, 3,5)";
     input.className = "option-input";
