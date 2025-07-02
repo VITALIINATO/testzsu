@@ -437,27 +437,23 @@
                 this.currentQuestionIndex++;
                 this.moveToNextQuestion();
             }
-
-           checkAnswerInput(userAnswer) {
+checkAnswerInput(userAnswer) {
+  const normalizedAnswer = userAnswer.replace(',', '.'); // Замена запятой на точку
   const currentQuestion = this.questions[this.currentQuestionIndex];
   const correctOption = currentQuestion.options.find(option => option.correct);
-  const correctText = correctOption.text;
-
-  // Приводим ответы к числу, заменяя запятую на точку
-  const userNumber = parseFloat(userAnswer.replace(',', '.'));
-  const correctNumber = parseFloat(correctText.replace(',', '.'));
+  const correctNumber = parseFloat(correctOption.text.replace(',', '.')); // Приведение к числу
+  const userNumber = parseFloat(normalizedAnswer);
 
   if (!isNaN(userNumber) && userNumber === correctNumber) {
     this.score++;
     this.showResultMessage("Вірно!", "correct");
   } else {
-    this.errors.push({ question: currentQuestion.question, user: userAnswer, correct: correctText });
-    this.showResultMessage(`Невірно. Правильна відповідь: ${correctText}`, "incorrect");
+    this.errors.push({ question: currentQuestion.question, user: userAnswer, correct: correctOption.text });
+    this.showResultMessage(`Невірно. Правильна відповідь: ${correctOption.text}`, "incorrect");
   }
   this.currentQuestionIndex++;
   this.moveToNextQuestion();
 }
-
             showResultMessage(text, type) {
                 const result = document.getElementById("result");
                 result.innerText = text;
