@@ -627,14 +627,6 @@
             }
 
 
-            resetRecord() {
-                const recordKey = this.mode === "numeric-input" ? "quizRecord_hard" : "quizRecord_easy";
-                const recordCountKey = this.mode === "numeric-input" ? "quizRecordCount_hard" : "quizRecordCount_easy";
-
-                localStorage.removeItem(recordKey);
-                localStorage.removeItem(recordCountKey);
-                this.initRecordDisplay();
-            }
 
         }
 

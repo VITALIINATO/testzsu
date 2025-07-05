@@ -564,6 +564,16 @@ showOptions(options) {
                 bgImage.style.backgroundImage = imageUrl ? `url(${imageUrl})` : 'none';
                 bgImage.style.opacity = imageUrl ? '0.15' : '0';
             }
+
+            
+            resetRecord() {
+                const recordKey = this.mode === "numeric-input" ? "quizRecord_hard" : "quizRecord_easy";
+                const recordCountKey = this.mode === "numeric-input" ? "quizRecordCount_hard" : "quizRecordCount_easy";
+
+                localStorage.removeItem(recordKey);
+                localStorage.removeItem(recordCountKey);
+                this.initRecordDisplay();
+            }
         }
 
        const questions = [

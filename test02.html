@@ -346,6 +346,7 @@
         document.getElementById('restartButton').onclick = function() {
             window.location.href = "index.html";
         };
+
         });
 
         document.getElementById('recordDisplay').addEventListener('click', function() {
@@ -394,58 +395,6 @@
                  document.getElementById('errorsList').style.display = 'none'; // Явно скрываем при каждом новом вопросе
                 this.updateProgress();
             }
-
-
-// showOptions(options) {
-//   const optionsContainer = document.getElementById("options");
-//   optionsContainer.innerHTML = "";
-  
-//   if (this.mode === "numeric-input") {
-//     // Код для числового ввода (сложный уровень)
-//     const input = document.createElement("input");
-//     input.type = "tel";
-//     input.inputMode = "decimal";
-//     input.placeholder = "Введіть число (наприклад, 3,5)";
-//     input.className = "option-input";
-    
-//     input.addEventListener("input", function() {
-//       const cursorPos = this.selectionStart;
-//       let value = this.value.replace(/\./g, ',');
-//       value = value.replace(/[^0-9,]/g, '');
-//       const commaIndex = value.indexOf(',');
-//       if (commaIndex !== -1) {
-//         value = value.substring(0, commaIndex + 1) + 
-//                 value.substring(commaIndex + 1).replace(/,/g, '');
-//       }
-//       this.value = value;
-//       this.setSelectionRange(cursorPos, cursorPos);
-//     });
-
-//     input.addEventListener("keydown", (e) => {
-//       if (e.key === "Enter") this.checkAnswerInput(input.value);
-//     });
-
-//     optionsContainer.appendChild(input);
-
-//     const submitBtn = document.createElement("button");
-//     submitBtn.innerText = "Перевірити";
-//     submitBtn.className = "option";
-//     submitBtn.onclick = () => this.checkAnswerInput(input.value);
-//     optionsContainer.appendChild(submitBtn);
-    
-//   } else {
-//     // Код для множественного выбора (легкий уровень)
-//     this.shuffleOptions(options);
-//     options.forEach(option => {
-//       const button = document.createElement("button");
-//       button.className = "option";
-//       button.innerHTML = option.text;
-//       button.onclick = () => this.checkAnswer(option);
-//       optionsContainer.appendChild(button);
-//     });
-//   }
-// }
-
 
 showOptions(options) {
   const optionsContainer = document.getElementById("options");
@@ -637,6 +586,17 @@ showOptions(options) {
                 bgImage.style.backgroundImage = imageUrl ? `url(${imageUrl})` : 'none';
                 bgImage.style.opacity = imageUrl ? '0.15' : '0';
             }
+
+            
+            resetRecord() {
+                const recordKey = this.mode === "numeric-input" ? "quizRecord_hard" : "quizRecord_easy";
+                const recordCountKey = this.mode === "numeric-input" ? "quizRecordCount_hard" : "quizRecordCount_easy";
+
+                localStorage.removeItem(recordKey);
+                localStorage.removeItem(recordCountKey);
+                this.initRecordDisplay();
+            }
+            
         }
 
     const questions = [
