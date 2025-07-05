@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link rel="icon" href="icon.png" type="image/png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Тест ППО</title>
+    <title>Максим</title>
     <style>
         body {
             margin: 0;
@@ -23,6 +24,7 @@
             align-items: center;
             justify-content: center;
         }
+
         .quiz-container {
             box-sizing: border-box;
             position: relative;
@@ -37,6 +39,7 @@
             backdrop-filter: blur(5px);
             margin: 10px;
         }
+
         .background-image {
             position: absolute;
             top: 0;
@@ -49,6 +52,7 @@
             opacity: 0.1;
             filter: grayscale(0.7);
         }
+
         .progress-bar {
             width: 100%;
             height: 25px;
@@ -59,6 +63,7 @@
             position: relative;
             box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
         }
+
         .progress-fill {
             height: 100%;
             width: 0%;
@@ -66,6 +71,7 @@
             transition: width 0.3s ease;
             box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
         }
+
         .progress-text {
             position: absolute;
             width: 100%;
@@ -76,6 +82,7 @@
             color: #fff;
             text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
         }
+
         .question {
             font-size: 26px;
             margin-bottom: 20px;
@@ -91,70 +98,74 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            
+
         }
 
-/* Десктопная версия (2 колонки) */
-.options {
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-}
+        /* Десктопная версия (2 колонки) */
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
 
-.option {
-    width: calc(50% - 10px);
-    margin-right: 20px;
-    margin-bottom: 20px;
-   background-color: #228B22;
-    color: #fff;
-    font-size: 18px;
-    padding: 14px 25px;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    flex: 1 1 45%;
-    min-width: 130px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-    font-weight: bold;
-    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-}
+        .option {
+            width: calc(50% - 10px);
+            margin-right: 20px;
+            margin-bottom: 20px;
+            background-color: #228B22;
+            color: #fff;
+            font-size: 18px;
+            padding: 14px 25px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1 1 45%;
+            min-width: 130px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            font-weight: bold;
+            text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+        }
 
-.option:hover {
-    background-color: #1ac21a;
-   transform: scale(1.05); /* Увеличение на 2% вместо смещения */
-    transform-origin: center; /* Центр трансформации */
-    transition: all 0.3s ease;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
-}
+        .option:hover {
+            background-color: #1ac21a;
+            transform: scale(1.05);
+            /* Увеличение на 2% вместо смещения */
+            transform-origin: center;
+            /* Центр трансформации */
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+        }
 
-.option:nth-child(2n) {
-    margin-right: 0;
-}
+        .option:nth-child(2n) {
+            margin-right: 0;
+        }
 
-.option:nth-last-child(-n+2) {
-    margin-bottom: 0;
-}
+        .option:nth-last-child(-n+2) {
+            margin-bottom: 0;
+        }
 
-/* Мобильная версия (1 колонка) */
-@media (max-width: 600px) {
-    .options {
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .option {
-        width: 100%;
-        margin-right: 0;
-        margin-bottom: 15px !important; /* Принудительный отступ */
-    }
-    
-    .option:last-child {
-        margin-bottom: 0 !important;
-    }
-}
+        /* Мобильная версия (1 колонка) */
+        @media (max-width: 600px) {
+            .options {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .option {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 15px !important;
+                /* Принудительный отступ */
+            }
+
+            .option:last-child {
+                margin-bottom: 0 !important;
+            }
+        }
 
         .result {
+             display: none; /* Добавляем это свойство */
             font-size: 22px;
             background-color: rgba(0, 50, 0, 0.95);
             color: #f0f0f0;
@@ -170,6 +181,7 @@
             justify-content: center;
             overflow: hidden;
         }
+
         .restart-button {
             display: none;
             padding: 14px 35px;
@@ -184,26 +196,31 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
             margin: 0 auto;
         }
+
         .restart-button:hover {
             background-color: #226633;
             transform: scale(1.05);
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
         }
+
         footer {
             margin-top: 25px;
             font-size: 13px;
             color: #aaa;
         }
+
         .result.correct {
             background-color: rgba(46, 139, 87, 0.9);
             color: #e0ffe0;
             border: 1px solid rgba(46, 139, 87, 0.7);
         }
+
         .result.incorrect {
             background-color: rgba(178, 34, 34, 0.9);
             color: #ffe0e0;
             border: 1px solid rgba(178, 34, 34, 0.7);
         }
+
         @media (max-width: 600px) {
             .option {
                 flex: 1 1 100%;
@@ -211,8 +228,9 @@
                 padding: 12px 18px;
             }
         }
+
         .record-display {
-            font-size: 12px;
+            font-size: 14px;
             font-weight: bold;
             color: #ffd700;
             margin-bottom: 15px;
@@ -222,6 +240,17 @@
             display: inline-block;
             min-width: 200px;
         }
+
+        .record-display {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .record-display:hover {
+            background-color: rgba(255, 215, 0, 0.2);
+            transform: scale(1.05);
+        }
+
         .errors-list {
             text-align: left;
             color: #fff;
@@ -233,47 +262,52 @@
             max-height: 300px;
             overflow-y: auto;
             display: none;
+            
         }
 
 
-.difficulty-selection {
-    text-align: center;
-    padding: 40px 20px;
-    background: rgba(35, 75, 47, 0.8);
-    border-radius: 20px;
-    margin: 20px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-}
+        .difficulty-selection {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(35, 75, 47, 0.8);
+            border-radius: 20px;
+            margin: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
 
-.difficulty-btn {
-    background-color: #2e8b57;
-    color: white;
-    font-size: 18px;
-    padding: 15px 25px;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-    min-width: 200px;
-    font-weight: bold;
-    margin: 10px; /* Добавляем отступы вокруг кнопок */
-    display: inline-block; /* Для правильного применения margin */
-}
+        .difficulty-btn {
+            background-color: #2e8b57;
+            color: white;
+            font-size: 18px;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            min-width: 200px;
+            font-weight: bold;
+            margin: 10px;
+            /* Добавляем отступы вокруг кнопок */
+            display: inline-block;
+            /* Для правильного применения margin */
+        }
 
-.difficulty-btn:hover {
-    background-color: #226633;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
-}
+        .difficulty-btn:hover {
+            background-color: #226633;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+        }
 
-@media (max-width: 600px) {
-    .difficulty-btn {
-        display: block; /* На мобильных - одна кнопка под другой */
-        width: 100%;
-        margin: 10px 0; /* Отступы только сверху и снизу */
-    }
-}
+        @media (max-width: 600px) {
+            .difficulty-btn {
+                display: block;
+                /* На мобильных - одна кнопка под другой */
+                width: 100%;
+                margin: 10px 0;
+                /* Отступы только сверху и снизу */
+            }
+        }
 
 
 
@@ -288,14 +322,17 @@
             box-sizing: border-box;
             text-align: center;
         }
-        .quiz-container > * {
+
+        .quiz-container>* {
             display: none;
         }
-        .quiz-container > .difficulty-selection {
+
+        .quiz-container>.difficulty-selection {
             display: block;
         }
     </style>
 </head>
+
 <body>
     <div class="quiz-container">
         <div class="difficulty-selection" id="difficultySelection">
@@ -304,7 +341,7 @@
             <button id="hardMode" class="difficulty-btn">Складніше</button>
         </div>
         <div class="background-image" id="backgroundImage"></div>
-        <div class="record-display" id="recordDisplay"></div>
+       <div class="record-display" id="recordDisplay"></div>
         <div class="progress-bar">
             <div class="progress-fill" id="progressFill"></div>
             <div class="progress-text" id="progressText">1 з 10</div>
@@ -329,10 +366,19 @@
             });
             quizInstance = new Quiz(questions, mode);
         }
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("easyMode").addEventListener("click", () => startQuiz("multiple-choice"));
             document.getElementById("hardMode").addEventListener("click", () => startQuiz("numeric-input"));
-            document.getElementById('restartButton').onclick = () => location.reload();
+           // Заменяем только эту строку:
+        document.getElementById('restartButton').onclick = function() {
+            window.location.href = "index.html";
+        };
+        });
+
+        document.getElementById('recordDisplay').addEventListener('click', function () {
+            if (quizInstance && confirm("Ви впевнені, що хочете скинути рекорд?")) {
+                quizInstance.resetRecord();
+            }
         });
 
         class Quiz {
@@ -372,80 +418,81 @@
                 document.getElementById('result').className = 'result';
                 document.getElementById('restartButton').style.display = 'none';
                 document.getElementById('errorsList').innerHTML = '';
+                 document.getElementById('errorsList').style.display = 'none'; // Явно скрываем при каждом новом вопросе
                 this.updateProgress();
             }
 
 
             showOptions(options) {
-  const optionsContainer = document.getElementById("options");
-  optionsContainer.innerHTML = "";
-  if (this.mode === "numeric-input") {
-    const input = document.createElement("input");
-    input.type = "tel";
-    input.inputMode = "decimal";
-    input.placeholder = "Введіть число";
-    input.className = "option-input";
-    
-    input.addEventListener("input", function() {
-      const cursorPos = this.selectionStart;
-      let value = this.value;
-      
-      // Заменяем точки на запятые
-      value = value.replace(/\./g, ',');
-      
-      // Удаляем все символы, кроме цифр и запятых
-      value = value.replace(/[^0-9,]/g, '');
-      
-      // Разрешаем только одну запятую
-      const commaIndex = value.indexOf(',');
-      if (commaIndex !== -1) {
-        value = value.substring(0, commaIndex + 1) + 
-                value.substring(commaIndex + 1).replace(/,/g, '');
-      }
-      
-      // Удаляем лишние нули после запятой
-      if (commaIndex !== -1) {
-        const parts = value.split(',');
-        if (parts[1]) {
-          // Удаляем лишние нули в конце
-          parts[1] = parts[1].replace(/0+$/, '');
-          // Удаляем запятую, если после нее ничего нет
-          if (parts[1] === '') {
-            value = parts[0];
-          } else {
-            value = parts[0] + ',' + parts[1];
-          }
-        }
-      }
-      
-      this.value = value;
-      this.setSelectionRange(cursorPos, cursorPos);
-    });
+                const optionsContainer = document.getElementById("options");
+                optionsContainer.innerHTML = "";
+                if (this.mode === "numeric-input") {
+                    const input = document.createElement("input");
+                    input.type = "tel";
+                    input.inputMode = "decimal";
+                    input.placeholder = "Введіть число";
+                    input.className = "option-input";
 
-    input.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") this.checkAnswerInput(input.value);
-    });
+                    input.addEventListener("input", function () {
+                        const cursorPos = this.selectionStart;
+                        let value = this.value;
 
-    optionsContainer.appendChild(input);
+                        // Заменяем точки на запятые
+                        value = value.replace(/\./g, ',');
 
-    const submitBtn = document.createElement("button");
-    submitBtn.innerText = "Перевірити";
-    submitBtn.className = "option";
-    submitBtn.onclick = () => this.checkAnswerInput(input.value);
-    optionsContainer.appendChild(submitBtn);
-    
-  } else {
-    // Код для множественного выбора (легкий уровень)
-    this.shuffleOptions(options);
-    options.forEach(option => {
-      const button = document.createElement("button");
-      button.className = "option";
-      button.innerHTML = option.text;
-      button.onclick = () => this.checkAnswer(option);
-      optionsContainer.appendChild(button);
-    });
-  }
-}
+                        // Удаляем все символы, кроме цифр и запятых
+                        value = value.replace(/[^0-9,]/g, '');
+
+                        // Разрешаем только одну запятую
+                        const commaIndex = value.indexOf(',');
+                        if (commaIndex !== -1) {
+                            value = value.substring(0, commaIndex + 1) +
+                                value.substring(commaIndex + 1).replace(/,/g, '');
+                        }
+
+                        // Удаляем лишние нули после запятой
+                        if (commaIndex !== -1) {
+                            const parts = value.split(',');
+                            if (parts[1]) {
+                                // Удаляем лишние нули в конце
+                                parts[1] = parts[1].replace(/0+$/, '');
+                                // Удаляем запятую, если после нее ничего нет
+                                if (parts[1] === '') {
+                                    value = parts[0];
+                                } else {
+                                    value = parts[0] + ',' + parts[1];
+                                }
+                            }
+                        }
+
+                        this.value = value;
+                        this.setSelectionRange(cursorPos, cursorPos);
+                    });
+
+                    input.addEventListener("keydown", (e) => {
+                        if (e.key === "Enter") this.checkAnswerInput(input.value);
+                    });
+
+                    optionsContainer.appendChild(input);
+
+                    const submitBtn = document.createElement("button");
+                    submitBtn.innerText = "Перевірити";
+                    submitBtn.className = "option";
+                    submitBtn.onclick = () => this.checkAnswerInput(input.value);
+                    optionsContainer.appendChild(submitBtn);
+
+                } else {
+                    // Код для множественного выбора (легкий уровень)
+                    this.shuffleOptions(options);
+                    options.forEach(option => {
+                        const button = document.createElement("button");
+                        button.className = "option";
+                        button.innerHTML = option.text;
+                        button.onclick = () => this.checkAnswer(option);
+                        optionsContainer.appendChild(button);
+                    });
+                }
+            }
 
             shuffleOptions(options) {
                 for (let i = options.length - 1; i > 0; i--) {
@@ -476,35 +523,35 @@
                 this.currentQuestionIndex++;
                 this.moveToNextQuestion();
             }
-   checkAnswerInput(userAnswer) {
-  // Заменяем запятую на точку для корректного парсинга
-  const normalizedAnswer = userAnswer.replace(',', '.');
-  const currentQuestion = this.questions[this.currentQuestionIndex];
-  const correctOption = currentQuestion.options.find(option => option.correct);
-  
-  // Парсим числа с учетом локали
-  const correctNumber = parseFloat(
-    correctOption.text.replace(',', '.').replace(/\s/g, '')
-  );
-  
-  const userNumber = parseFloat(normalizedAnswer);
+            checkAnswerInput(userAnswer) {
+                // Заменяем запятую на точку для корректного парсинга
+                const normalizedAnswer = userAnswer.replace(',', '.');
+                const currentQuestion = this.questions[this.currentQuestionIndex];
+                const correctOption = currentQuestion.options.find(option => option.correct);
 
-  // Сравниваем с допуском 0.01 для плавающих чисел
-  if (!isNaN(userNumber) && Math.abs(userNumber - correctNumber) < 0.01) {
-    this.score++;
-    this.showResultMessage("Вірно!", "correct");
-  } else {
-    this.errors.push({ 
-      question: currentQuestion.question, 
-      user: userAnswer, 
-      correct: correctOption.text 
-    });
-    this.showResultMessage(`Невірно. Правильна відповідь: ${correctOption.text}`, "incorrect");
-  }
-  
-  this.currentQuestionIndex++;
-  this.moveToNextQuestion();
-}
+                // Парсим числа с учетом локали
+                const correctNumber = parseFloat(
+                    correctOption.text.replace(',', '.').replace(/\s/g, '')
+                );
+
+                const userNumber = parseFloat(normalizedAnswer);
+
+                // Сравниваем с допуском 0.01 для плавающих чисел
+                if (!isNaN(userNumber) && Math.abs(userNumber - correctNumber) < 0.01) {
+                    this.score++;
+                    this.showResultMessage("Вірно!", "correct");
+                } else {
+                    this.errors.push({
+                        question: currentQuestion.question,
+                        user: userAnswer,
+                        correct: correctOption.text
+                    });
+                    this.showResultMessage(`Невірно. Правильна відповідь: ${correctOption.text}`, "incorrect");
+                }
+
+                this.currentQuestionIndex++;
+                this.moveToNextQuestion();
+            }
 
 
             showResultMessage(text, type) {
@@ -567,11 +614,33 @@
                 bgImage.style.backgroundImage = imageUrl ? `url(${imageUrl})` : 'none';
                 bgImage.style.opacity = imageUrl ? '0.15' : '0';
             }
+
+
+
+            resetRecord() {
+                const recordKey = this.mode === "numeric-input" ? "quizRecord_hard" : "quizRecord_easy";
+                const recordCountKey = this.mode === "numeric-input" ? "quizRecordCount_hard" : "quizRecordCount_easy";
+
+                localStorage.removeItem(recordKey);
+                localStorage.removeItem(recordCountKey);
+                this.initRecordDisplay();
+            }
+
+
+            resetRecord() {
+                const recordKey = this.mode === "numeric-input" ? "quizRecord_hard" : "quizRecord_easy";
+                const recordCountKey = this.mode === "numeric-input" ? "quizRecordCount_hard" : "quizRecordCount_easy";
+
+                localStorage.removeItem(recordKey);
+                localStorage.removeItem(recordCountKey);
+                this.initRecordDisplay();
+            }
+
         }
 
-       const questions = [
+        const questions = [
 
-      
+
 
             {
                 question: "Початкова швидкість кулі кулемета Максим, в м/с?",
@@ -593,8 +662,8 @@
                 ]
             },
 
-            
-             {
+
+            {
                 question: "Вага кулемета Максим, в кг?",
                 options: [
                     { text: "24,7 кг", correct: false },
@@ -604,7 +673,7 @@
                 ]
             },
 
-             {
+            {
                 question: "Довжина ствола кулемета Максим, в мм?",
                 options: [
                     { text: "754 мм", correct: false },
@@ -614,8 +683,8 @@
                 ]
             },
 
-            
-             {
+
+            {
                 question: "Довжина кулемета Максим, в мм?",
                 options: [
                     { text: "998 мм", correct: false },
@@ -624,11 +693,12 @@
                     { text: "1206 мм", correct: false }
                 ]
             },
-         
+
 
         ];
 
 
- </script>
+    </script>
 </body>
-</html> 
+
+</html>

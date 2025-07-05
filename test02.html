@@ -4,7 +4,7 @@
     <link rel="icon" href="icon.png" type="image/png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Тест ППО</title>
+    <title>ЦІЛІ</title>
     <style>
         body {
             margin: 0;
@@ -222,6 +222,16 @@
             display: inline-block;
             min-width: 200px;
         }
+
+        .record-display {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.record-display:hover {
+    background-color: rgba(255, 215, 0, 0.2);
+    transform: scale(1.05);
+}
+
         .errors-list {
             text-align: left;
             color: #fff;
@@ -304,7 +314,7 @@
             <button id="hardMode" class="difficulty-btn">Складніше</button>
         </div>
         <div class="background-image" id="backgroundImage"></div>
-        <div class="record-display" id="recordDisplay"></div>
+       <div class="record-display" id="recordDisplay"></div>
         <div class="progress-bar">
             <div class="progress-fill" id="progressFill"></div>
             <div class="progress-text" id="progressText">1 з 10</div>
@@ -332,8 +342,17 @@
         document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("easyMode").addEventListener("click", () => startQuiz("multiple-choice"));
             document.getElementById("hardMode").addEventListener("click", () => startQuiz("numeric-input"));
-            document.getElementById('restartButton').onclick = () => location.reload();
+            // Заменяем только эту строку:
+        document.getElementById('restartButton').onclick = function() {
+            window.location.href = "index.html";
+        };
         });
+
+        document.getElementById('recordDisplay').addEventListener('click', function() {
+        if (quizInstance && confirm("Ви впевнені, що хочете скинути рекорд?")) {
+            quizInstance.resetRecord();
+        }
+    });
 
         class Quiz {
             constructor(questions, mode = "multiple-choice") {
@@ -372,6 +391,7 @@
                 document.getElementById('result').className = 'result';
                 document.getElementById('restartButton').style.display = 'none';
                 document.getElementById('errorsList').innerHTML = '';
+                 document.getElementById('errorsList').style.display = 'none'; // Явно скрываем при каждом новом вопросе
                 this.updateProgress();
             }
 
