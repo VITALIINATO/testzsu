@@ -18,7 +18,7 @@ body {
     background-image: 
         radial-gradient(circle at 10% 20%, rgba(20, 60, 20, 0.3) 0%, transparent 25%),
         linear-gradient(45deg, rgba(139, 69, 19, 0.08) 0%, rgba(245, 222, 179, 0.08) 10%, transparent 90%),
-        linear-gradient(to bottom, #0d300d, #001400);
+        linear-gradient(to bottom, #194619, #001400);
     background-size: 300% 300%, 20px 20px, cover;
     animation: bgScan 15s linear infinite;
     color: #e0e8d0;
@@ -29,6 +29,7 @@ body {
     padding: 16px;
     overflow-x: hidden;
     position: relative;
+    
 }
 
 body::before {
@@ -57,22 +58,24 @@ body::before {
     width: 100%;
     max-width: 620px;
     text-align: center;
-    background: 
+    
+    /* background: 
         radial-gradient(ellipse at center, rgba(0, 40, 0, 0.7) 0%, rgba(0, 20, 0, 0.9) 100%),
-        url('https://www.transparenttextures.com/patterns/dark-leather.png');
+        url('https://www.transparenttextures.com/patterns/dark-leather.png'); */
     background-blend-mode: multiply;
     border: 3px solid #2a5c38;
     border-radius: 12px;
     box-shadow:
         0 0 20px rgba(0, 80, 0, 0.7),
         inset 0 0 15px rgba(0, 30, 0, 0.8);
-    backdrop-filter: blur(6px);
+    backdrop-filter: blur(3px);
     padding: 30px 20px;
     position: relative;
     overflow: hidden;
     transform: translateY(20px);
     opacity: 0;
     animation: containerEnter 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+   
 }
 
 @keyframes containerEnter {
@@ -106,7 +109,7 @@ h1 {
     font-size: 28px;
     margin-bottom: 30px;
     font-weight: bold;
-    color: #b8c4b0;
+    color: #ccc560;
     text-shadow: 
         0 0 8px rgba(60, 130, 60, 0.7),
         0 1px 1px #000;

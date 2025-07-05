@@ -249,14 +249,14 @@
 .difficulty-selection {
     text-align: center;
     padding: 40px 20px;
-    background: rgba(35, 75, 47, 0.8);
+    background: transparent;
     border-radius: 20px;
     margin: 20px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
 
 .difficulty-btn {
-    background-color: #2e8b57;
+    background-color: #302e8b;
     color: white;
     font-size: 18px;
     padding: 15px 25px;
@@ -272,11 +272,32 @@
 }
 
 .difficulty-btn:hover {
-    background-color: #226633;
+    background-color: #226622;
     transform: translateY(-3px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
 }
 
+.difficulty-btn2 {
+    background-color: #8b2e2e;
+    color: white;
+    font-size: 18px;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    min-width: 200px;
+    font-weight: bold;
+    margin: 10px; /* Добавляем отступы вокруг кнопок */
+    display: inline-block; /* Для правильного применения margin */
+}
+
+.difficulty-btn2:hover {
+    background-color: #226622;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+}
 @media (max-width: 600px) {
     .difficulty-btn {
         display: block; /* На мобильных - одна кнопка под другой */
@@ -313,7 +334,7 @@
         <div class="difficulty-selection" id="difficultySelection">
             <h2 style="color: #ffd700; margin-bottom: 20px;">Оберіть рівень складності:</h2>
             <button id="easyMode" class="difficulty-btn">Легше</button>
-            <button id="hardMode" class="difficulty-btn">Складніше</button>
+            <button id="hardMode" class="difficulty-btn2">Складніше</button>
         </div>
         <div class="background-image" id="backgroundImage"></div>
        <div class="record-display" id="recordDisplay"></div>
@@ -596,7 +617,7 @@ showOptions(options) {
                 localStorage.removeItem(recordCountKey);
                 this.initRecordDisplay();
             }
-            
+
         }
 
        const questions = [
