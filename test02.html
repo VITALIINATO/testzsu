@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +27,6 @@
         .quiz-container {
             box-sizing: border-box;
             position: relative;
-              min-height: 720px;
             width: 100%;
             max-width: 700px;
             text-align: center;
@@ -37,6 +37,9 @@
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(5px);
             margin: 10px;
+            display: flex;
+            flex-direction: column;
+            min-height: 80vh;
         }
         .background-image {
             position: absolute;
@@ -97,28 +100,27 @@
             display: flex;
             flex-direction: column;
             margin-bottom: 20px;
+            flex-grow: 1;
         }
-    
-.option {
-    background-color: #228B22;
-    color: #fff;
-    font-size: 16px;
-    padding: 14px 20px;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: left;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-    font-weight: bold;
-    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 20px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
+        .option {
+            background-color: #228B22;
+            color: #fff;
+            font-size: 16px;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            font-weight: bold;
+            text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
         .option:last-child {
             margin-bottom: 0;
         }
@@ -134,7 +136,7 @@
             min-width: 24px;
             color: #ffd700;
         }
-        .result {
+         .result {
             font-size: 22px;
             background-color: rgba(0, 50, 0, 0.95);
             color: #f0f0f0;
@@ -151,10 +153,11 @@
             justify-content: center;
             overflow: hidden;
         }
+
         .next-button {
             display: none;
-            padding: 14px 40px;
-            font-size: 16px;
+            padding: 14px 35px;
+            font-size: 18px;
             background-color: #2e8b57;
             color: white;
             border: none;
@@ -167,7 +170,7 @@
         }
         .next-button:hover {
             background-color: #226633;
-            transform: scale(1.02);
+            transform: scale(1.05);
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
         }
         .restart-button {
@@ -190,7 +193,8 @@
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
         }
         footer {
-            margin-top: 25px;
+            margin-top: auto;
+            margin-bottom: 10px;
             font-size: 13px;
             color: #aaa;
         }
@@ -464,7 +468,7 @@
                     errorsList.innerHTML += '<br>Усі відповіді правильні!';
                 } else {
                     this.errors.forEach(err => {
-                        errorsList.innerHTML += `<br>Питання: "${err.question}"<br>Ваша відповідь: "${err.user}" — Правильна відповідь: "${err.correct}"<br>`;
+                        errorsList.innerHTML += `<br>Питання: "${err.question}"<br><br>Ваша відповідь: "${err.user}"<br><br>Правильна відповідь: "${err.correct}"<br><br>`;
                     });
                 }
                 document.getElementById('progressText').innerText = '';
@@ -514,45 +518,55 @@
                 question: "Каков основной принцип наведения ракеты RBS-70?",
                 options: [
                     { text: "Ракета получает координаты GPS от прицела и следует по ним к цели.", correct: false },
-                    { text: "Ракета следует за лучом наведения, который создается в прицеле.", correct: true },
+                    { text: "Ракета следует за лучом наведения, который создается в прицеле..", correct: true },
                     { text: "Наведение осуществляется по проводам, которые разматываются с ракеты после запуска.", correct: false },
                     { text: "Ракета использует инфракрасную головку самонаведения для захвата тепловой сигнатуры цели.", correct: false }
                 ]
             },
            {
-                question: "Как ракета определяет свое положение внутри коридора наведения?",
+                question: "Каков основной принцип наведения ракеты RBS-70?",
                 options: [
-                    { text: "Используя собственную инерциальную систему навигации для отслеживания отклонений от курса.", correct: false },
-                    { text: "Путем анализа интенсивности лазерного луча в четырех разных точках на своем корпусе.", correct: false },
-                    { text: "Она получает закодированные цифровые сигналы, которые точно указывают ее координаты.", correct: false },
-                    { text: "С помощью измерения разницы во времени между ожидаемым и фактическим моментом прохождения луча через приемник.", correct: true }
+                    { text: "Ракета получает координаты GPS от прицела и следует по ним к цели.", correct: false },
+                    { text: "Ракета следует за лучом наведения, который создается в прицеле..", correct: true },
+                    { text: "Наведение осуществляется по проводам, которые разматываются с ракеты после запуска.", correct: false },
+                    { text: "Ракета использует инфракрасную головку самонаведения для захвата тепловой сигнатуры цели.", correct: false }
                 ]
             },
             {
-                question: "Каково назначение системы зум-объективов в прицеле RBS-70?",
+                question: "Каков основной принцип наведения ракеты RBS-70?",
                 options: [
-                    { text: "Для увеличения мощности лазерного луча по мере удаления ракеты.", correct: false },
-                    { text: "Для изменения угла конуса коридора наведения с целью поддержания постоянной интенсивности света и увеличения разрешения.", correct: true },
-                    { text: "Для увеличения изображения цели для оператора.", correct: false },
-                    { text: "Для автоматической фокусировки луча наведения на цели.", correct: false }
+                    { text: "Ракета получает координаты GPS от прицела и следует по ним к цели.", correct: false },
+                    { text: "Ракета следует за лучом наведения, который создается в прицеле..", correct: true },
+                    { text: "Наведение осуществляется по проводам, которые разматываются с ракеты после запуска.", correct: false },
+                    { text: "Ракета использует инфракрасную головку самонаведения для захвата тепловой сигнатуры цели.", correct: false }
                 ]
             },
             {
-                question: "В какой момент после запуска ракеты может потребоваться грубое прицеливание (поворот всего прицела)?",
+                question: "Каков основной принцип наведения ракеты RBS-70?",
                 options: [
-                    { text: "Когда зеркало системы точного прицеливания приближается к своему пределу отклонения.", correct: true },
-                    { text: "Если цель выполняет резкий маневр уклонения.", correct: false },
-                    { text: "Немедленно после запуска, чтобы 'поймать' ракету в луч наведения.", correct: false },
-                    { text: "Грубое прицеливание никогда не используется после запуска ракеты.", correct: false }
+                    { text: "Ракета получает координаты GPS от прицела и следует по ним к цели.", correct: false },
+                    { text: "Ракета следует за лучом наведения, который создается в прицеле..", correct: true },
+                    { text: "Наведение осуществляется по проводам, которые разматываются с ракеты после запуска.", correct: false },
+                    { text: "Ракета использует инфракрасную головку самонаведения для захвата тепловой сигнатуры цели.", correct: false }
                 ]
             },
            {
-                question: "Какую форму имеет коридор наведения и как он формируется?",
+                question: "Каков основной принцип наведения ракеты RBS-70?",
                 options: [
-                    { text: "Цилиндрическую; формируется четырьмя статичными лазерными лучами, определяющими его границы.", correct: false },
-                    { text: "Коническую; формируется лазерным лучом, который совершает горизонтальные и вертикальные развертки.", correct: true },
-                    { text: "Прямоугольную; формируется двумя колеблющимися лазерными плоскостями.", correct: false },
-                    { text: "Сферическую; генерируется самой ракетой вокруг себя.", correct: false }
+                    { text: "Ракета получает координаты GPS от прицела и следует по ним к цели.", correct: false },
+                    { text: "Ракета следует за лучом наведения, который создается в прицеле..", correct: true },
+                    { text: "Наведение осуществляется по проводам, которые разматываются с ракеты после запуска.", correct: false },
+                    { text: "Ракета использует инфракрасную головку самонаведения для захвата тепловой сигнатуры цели.", correct: false }
+                ]
+            },
+
+            {
+                question: "Какова основная функция джойстика для большого пальца после запуска ракеты?",
+                options: [
+                    { text: "Изменение скорости линии прицеливания и луча наведения путем управления сервоприводным зеркалом.", correct: false },
+                    { text: "Отправка команды на подрыв боевой части ракеты.", correct: true },
+                    { text: "Прямое управление рулями ракеты.", correct: false },
+                    { text: "Регулировка уровня увеличения зума в телескопе.", correct: false }
                 ]
             },
             
@@ -560,4 +574,3 @@
     </script>
 </body>
 </html>
-
