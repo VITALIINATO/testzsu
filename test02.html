@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +28,7 @@
             box-sizing: border-box;
             position: relative;
             width: 100%;
-            max-width: 600px;
+            max-width: 700px;
             text-align: center;
             padding: 20px;
             border: 3px solid #228B22;
@@ -77,12 +78,12 @@
             text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
         }
         .question {
-            font-size: 26px;
-            margin-bottom: 20px;
+            font-size: 22px;
+            margin-bottom: 25px;
             font-weight: bold;
             background-color: rgba(255, 255, 255, 0.15);
             color: #fff;
-            padding: 12px 15px;
+            padding: 15px 20px;
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
@@ -91,69 +92,44 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            
         }
-
-/* Десктопная версия (2 колонки) */
-.options {
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-}
-
-.option {
-    width: calc(50% - 10px);
-    margin-right: 20px;
-    margin-bottom: 20px;
-   background-color: #228B22;
-    color: #fff;
-    font-size: 18px;
-    padding: 14px 25px;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    flex: 1 1 45%;
-    min-width: 130px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-    font-weight: bold;
-    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-}
-
-.option:hover {
-    background-color: #1ac21a;
-   transform: scale(1.05); /* Увеличение на 2% вместо смещения */
-    transform-origin: center; /* Центр трансформации */
-    transition: all 0.3s ease;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
-}
-
-.option:nth-child(2n) {
-    margin-right: 0;
-}
-
-.option:nth-last-child(-n+2) {
-    margin-bottom: 0;
-}
-
-/* Мобильная версия (1 колонка) */
-@media (max-width: 600px) {
-    .options {
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .option {
-        width: 100%;
-        margin-right: 0;
-        margin-bottom: 15px !important; /* Принудительный отступ */
-    }
-    
-    .option:last-child {
-        margin-bottom: 0 !important;
-    }
-}
-
+        .options {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+        .option {
+            background-color: #228B22;
+            color: #fff;
+            font-size: 16px;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            font-weight: bold;
+            text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        .option:last-child {
+            margin-bottom: 0;
+        }
+        .option:hover {
+            background-color: #1ac21a;
+            transform: scale(1.02);
+            transform-origin: center;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+        }
+        .option-letter {
+            font-weight: bold;
+            margin-right: 12px;
+            min-width: 24px;
+            color: #ffd700;
+        }
         .result {
             font-size: 22px;
             background-color: rgba(0, 50, 0, 0.95);
@@ -169,6 +145,25 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
+        }
+        .next-button {
+            display: none;
+            padding: 14px 35px;
+            font-size: 18px;
+            background-color: #2e8b57;
+            color: white;
+            border: none;
+            border-radius: 18px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            margin: 0 auto 20px;
+        }
+        .next-button:hover {
+            background-color: #226633;
+            transform: scale(1.05);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
         }
         .restart-button {
             display: none;
@@ -204,13 +199,6 @@
             color: #ffe0e0;
             border: 1px solid rgba(178, 34, 34, 0.7);
         }
-        @media (max-width: 600px) {
-            .option {
-                flex: 1 1 100%;
-                font-size: 16px;
-                padding: 12px 18px;
-            }
-        }
         .record-display {
             font-size: 12px;
             font-weight: bold;
@@ -221,17 +209,13 @@
             border-radius: 12px;
             display: inline-block;
             min-width: 200px;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
-
-        .record-display {
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-.record-display:hover {
-    background-color: rgba(255, 215, 0, 0.2);
-    transform: scale(1.05);
-}
-
+        .record-display:hover {
+            background-color: rgba(255, 215, 0, 0.2);
+            transform: scale(1.05);
+        }
         .errors-list {
             text-align: left;
             color: #fff;
@@ -244,86 +228,56 @@
             overflow-y: auto;
             display: none;
         }
-
-
-.difficulty-selection {
-    text-align: center;
-    padding: 40px 20px;
-     background: transparent;
-    border-radius: 20px;
-    margin: 20px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-}
-
-.difficulty-btn {
-    background-color: #302e8b;
-    color: white;
-    font-size: 18px;
-    padding: 15px 25px;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-    min-width: 200px;
-    font-weight: bold;
-    margin: 10px; /* Добавляем отступы вокруг кнопок */
-    display: inline-block; /* Для правильного применения margin */
-}
-
-.difficulty-btn:hover {
-    background-color: #226622;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
-}
-
-.difficulty-btn2 {
-    background-color: #8b2e2e;
-    color: white;
-    font-size: 18px;
-    padding: 15px 25px;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-    min-width: 200px;
-    font-weight: bold;
-    margin: 10px; /* Добавляем отступы вокруг кнопок */
-    display: inline-block; /* Для правильного применения margin */
-}
-
-.difficulty-btn2:hover {
-    background-color: #226622;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
-}
-@media (max-width: 600px) {
-    .difficulty-btn {
-        display: block; /* На мобильных - одна кнопка под другой */
-        width: 100%;
-        margin: 10px 0; /* Отступы только сверху и снизу */
-    }
-}
-
-
-
-        .option-input {
-            padding: 10px;
-            font-size: 18px;
-            width: 100%;
-            border-radius: 10px;
-            border: none;
-            outline: none;
-            margin-bottom: 15px;
-            box-sizing: border-box;
+        .difficulty-selection {
             text-align: center;
-        }
-        .quiz-container > * {
+            padding: 40px 20px;
+            background: transparent;
+            border-radius: 20px;
+            margin: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
             display: none;
         }
-        .quiz-container > .difficulty-selection {
-            display: block;
+        .difficulty-btn, .difficulty-btn2 {
+            background-color: #302e8b;
+            color: white;
+            font-size: 18px;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            min-width: 200px;
+            font-weight: bold;
+            margin: 10px;
+            display: inline-block;
+        }
+        .difficulty-btn2 {
+            background-color: #8b2e2e;
+        }
+        .difficulty-btn:hover, .difficulty-btn2:hover {
+            background-color: #226622;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+        }
+        @media (max-width: 600px) {
+            .quiz-container {
+                max-width: 95%;
+                padding: 15px;
+            }
+            .question {
+                font-size: 18px;
+                padding: 12px 15px;
+            }
+            .option {
+                font-size: 14px;
+                padding: 12px 16px;
+            }
+            .difficulty-btn, .difficulty-btn2 {
+                display: block;
+                width: 100%;
+                margin: 10px 0;
+            }
         }
     </style>
 </head>
@@ -335,7 +289,7 @@
             <button id="hardMode" class="difficulty-btn2">Складніше</button>
         </div>
         <div class="background-image" id="backgroundImage"></div>
-       <div class="record-display" id="recordDisplay"></div>
+        <div class="record-display" id="recordDisplay"></div>
         <div class="progress-bar">
             <div class="progress-fill" id="progressFill"></div>
             <div class="progress-text" id="progressText">1 з 10</div>
@@ -343,6 +297,7 @@
         <div class="question" id="question"></div>
         <div class="options" id="options"></div>
         <div class="result" id="result"></div>
+        <button class="next-button" id="nextButton">Далі</button>
         <div class="errors-list" id="errorsList"></div>
         <button class="restart-button" id="restartButton">Почати знову</button>
         <audio id="soundRight" src="right.mp3"></audio>
@@ -361,21 +316,18 @@
             quizInstance = new Quiz(questions, mode);
         }
         document.addEventListener("DOMContentLoaded", function() {
-            document.getElementById("easyMode").addEventListener("click", () => startQuiz("multiple-choice"));
-            document.getElementById("hardMode").addEventListener("click", () => startQuiz("numeric-input"));
-            // Заменяем только эту строку:
-        document.getElementById('restartButton').onclick = function() {
-            window.location.href = "index.html";
-        };
-
+            // Start quiz immediately without difficulty selection
+            startQuiz("multiple-choice");
+            
+            document.getElementById('restartButton').onclick = function() {
+                window.location.href = "index.html";
+            };
         });
-
         document.getElementById('recordDisplay').addEventListener('click', function() {
-        if (quizInstance && confirm("Ви впевнені, що хочете скинути рекорд?")) {
-            quizInstance.resetRecord();
-        }
-    });
-
+            if (quizInstance && confirm("Ви впевнені, що хочете скинути рекорд?")) {
+                quizInstance.resetRecord();
+            }
+        });
         class Quiz {
             constructor(questions, mode = "multiple-choice") {
                 this.questions = questions;
@@ -386,11 +338,12 @@
                 this.shuffleQuestions();
                 this.showQuestion();
                 this.initRecordDisplay();
+                this.awaitingNext = false;
             }
             initRecordDisplay() {
                 const recordDisplay = document.getElementById('recordDisplay');
                 const total = this.questions.length;
-                let recordKey = this.mode === "numeric-input" ? "quizRecord_hard" : "quizRecord_easy";
+                let recordKey = "quizRecord_easy";
                 const savedRecord = localStorage.getItem(recordKey);
                 if (savedRecord && total) {
                     recordDisplay.innerText = `Рекорд: ${savedRecord} з ${total}`;
@@ -412,81 +365,26 @@
                 document.getElementById('result').innerText = '';
                 document.getElementById('result').className = 'result';
                 document.getElementById('restartButton').style.display = 'none';
+                document.getElementById('nextButton').style.display = 'none';
                 document.getElementById('errorsList').innerHTML = '';
-                 document.getElementById('errorsList').style.display = 'none'; // Явно скрываем при каждом новом вопросе
+                document.getElementById('errorsList').style.display = 'none';
                 this.updateProgress();
+                this.awaitingNext = false;
             }
-
-showOptions(options) {
-  const optionsContainer = document.getElementById("options");
-  optionsContainer.innerHTML = "";
-  if (this.mode === "numeric-input") {
-    const input = document.createElement("input");
-    input.type = "tel";
-    input.inputMode = "decimal";
-    input.placeholder = "Введіть число";
-    input.className = "option-input";
-    
-    input.addEventListener("input", function() {
-      const cursorPos = this.selectionStart;
-      let value = this.value;
-      
-      // Заменяем точки на запятые
-      value = value.replace(/\./g, ',');
-      
-      // Удаляем все символы, кроме цифр и запятых
-      value = value.replace(/[^0-9,]/g, '');
-      
-      // Разрешаем только одну запятую
-      const commaIndex = value.indexOf(',');
-      if (commaIndex !== -1) {
-        value = value.substring(0, commaIndex + 1) + 
-                value.substring(commaIndex + 1).replace(/,/g, '');
-      }
-      
-      // Удаляем лишние нули после запятой
-      if (commaIndex !== -1) {
-        const parts = value.split(',');
-        if (parts[1]) {
-          // Удаляем лишние нули в конце
-          parts[1] = parts[1].replace(/0+$/, '');
-          // Удаляем запятую, если после нее ничего нет
-          if (parts[1] === '') {
-            value = parts[0];
-          } else {
-            value = parts[0] + ',' + parts[1];
-          }
-        }
-      }
-      
-      this.value = value;
-      this.setSelectionRange(cursorPos, cursorPos);
-    });
-
-    input.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") this.checkAnswerInput(input.value);
-    });
-
-    optionsContainer.appendChild(input);
-
-    const submitBtn = document.createElement("button");
-    submitBtn.innerText = "Перевірити";
-    submitBtn.className = "option";
-    submitBtn.onclick = () => this.checkAnswerInput(input.value);
-    optionsContainer.appendChild(submitBtn);
-    
-  } else {
-    // Код для множественного выбора (легкий уровень)
-    this.shuffleOptions(options);
-    options.forEach(option => {
-      const button = document.createElement("button");
-      button.className = "option";
-      button.innerHTML = option.text;
-      button.onclick = () => this.checkAnswer(option);
-      optionsContainer.appendChild(button);
-    });
-  }
-}
+            showOptions(options) {
+                const optionsContainer = document.getElementById("options");
+                optionsContainer.innerHTML = "";
+                this.shuffleOptions(options);
+                const numbers = ['1', '2', '3', '4'];
+                options.forEach((option, index) => {
+                    const button = document.createElement("button");
+                    button.className = "option";
+                    const number = numbers[index] || (index + 1).toString();
+                    button.innerHTML = `<span class="option-letter">${number}.</span>${option.text}`;
+                    button.onclick = () => this.checkAnswer(option);
+                    optionsContainer.appendChild(button);
+                });
+            }
             shuffleOptions(options) {
                 for (let i = options.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
@@ -494,6 +392,8 @@ showOptions(options) {
                 }
             }
             checkAnswer(selectedOption) {
+                if (this.awaitingNext) return;
+                
                 const soundRight = document.getElementById("soundRight");
                 const soundWrong = document.getElementById("soundWrong");
                 const currentQuestion = this.questions[this.currentQuestionIndex];
@@ -513,53 +413,26 @@ showOptions(options) {
                     soundWrong.currentTime = 0;
                     soundWrong.play();
                 }
-                this.currentQuestionIndex++;
-                this.moveToNextQuestion();
-            }
-   checkAnswerInput(userAnswer) {
-  // Заменяем запятую на точку для корректного парсинга
-  const normalizedAnswer = userAnswer.replace(',', '.');
-  const currentQuestion = this.questions[this.currentQuestionIndex];
-  const correctOption = currentQuestion.options.find(option => option.correct);
-  
-  // Парсим числа с учетом локали
-  const correctNumber = parseFloat(
-    correctOption.text.replace(',', '.').replace(/\s/g, '')
-  );
-  
-  const userNumber = parseFloat(normalizedAnswer);
-
-  // Сравниваем с допуском 0.01 для плавающих чисел
-  if (!isNaN(userNumber) && Math.abs(userNumber - correctNumber) < 0.01) {
-    this.score++;
-    this.showResultMessage("Вірно!", "correct");
-  } else {
-    this.errors.push({ 
-      question: currentQuestion.question, 
-      user: userAnswer, 
-      correct: correctOption.text 
-    });
-    this.showResultMessage(`Невірно. Правильна відповідь: ${correctOption.text}`, "incorrect");
-  }
-  
-  this.currentQuestionIndex++;
-  this.moveToNextQuestion();
-}
-
-
-            showResultMessage(text, type) {
-                const result = document.getElementById("result");
-                result.innerText = text;
-                result.className = `result ${type}`;
-                document.getElementById("sound" + (type === "correct" ? "Right" : "Wrong")).play();
+                
+                // Disable option buttons
+                const optionButtons = document.querySelectorAll('.option');
+                optionButtons.forEach(button => {
+                    button.disabled = true;
+                    button.style.opacity = '0.6';
+                    button.style.cursor = 'not-allowed';
+                });
+                
+                // Show next button
+                document.getElementById('nextButton').style.display = 'block';
+                this.awaitingNext = true;
             }
             moveToNextQuestion() {
+                this.currentQuestionIndex++;
                 if (this.currentQuestionIndex < this.questions.length) {
-                    setTimeout(() => this.showQuestion(), 1200);
+                    this.showQuestion();
                 } else {
-                    setTimeout(() => this.showResult(), 200);
+                    this.showResult();
                 }
-                this.updateProgress();
             }
             showResult() {
                 const total = this.questions.length;
@@ -567,6 +440,7 @@ showOptions(options) {
                 document.getElementById('question').innerText = `Ваш результат: ${score} з ${total}`;
                 document.getElementById('options').innerHTML = '';
                 document.getElementById('result').style.display = 'none';
+                document.getElementById('nextButton').style.display = 'none';
                 const errorsList = document.getElementById('errorsList');
                 errorsList.style.display = 'block';
                 errorsList.innerHTML = '<strong>Помилки:</strong><br>';
@@ -580,306 +454,93 @@ showOptions(options) {
                 document.getElementById('progressText').innerText = '';
                 document.getElementById('progressFill').style.width = '100%';
                 document.getElementById('restartButton').style.display = 'block';
-                let recordKey = this.mode === "numeric-input" ? "quizRecord_hard" : "quizRecord_easy";
-                let recordCountKey = this.mode === "numeric-input" ? "quizRecordCount_hard" : "quizRecordCount_easy";
+                let recordKey = "quizRecord_easy";
                 const currentScore = score;
                 const savedRecord = localStorage.getItem(recordKey);
-                const savedRecordCount = localStorage.getItem(recordCountKey);
                 let record = savedRecord ? parseInt(savedRecord) : 0;
-                let recordCount = savedRecordCount ? parseInt(savedRecordCount) : 0;
                 const recordDisplay = document.getElementById('recordDisplay');
                 if (currentScore > record) {
                     localStorage.setItem(recordKey, currentScore);
-                    localStorage.setItem(recordCountKey, currentScore);
                     recordDisplay.innerText = `Рекорд: ${currentScore} з ${total}`;
                 } else {
-                    recordDisplay.innerText = `Рекорд: ${recordCount} з ${total}`;
+                    recordDisplay.innerText = `Рекорд: ${record} з ${total}`;
                 }
             }
             updateProgress() {
                 const totalQuestions = this.questions.length;
                 const progressPercent = totalQuestions === 0 ? 0 : (this.currentQuestionIndex / totalQuestions) * 100;
-                document.getElementById('progressText').innerText = `${this.currentQuestionIndex} з ${totalQuestions}`;
-                document.getElementById('progressFill').style.width = `${progressPercent}%`;
+                document.getElementById('progressText').innerText = `${this.currentQuestionIndex + 1} з ${totalQuestions}`;
+                document.getElementById('progressFill').style.width = `${((this.currentQuestionIndex) / totalQuestions) * 100}%`;
             }
             setBackgroundImage(imageUrl) {
                 const bgImage = document.getElementById('backgroundImage');
                 bgImage.style.backgroundImage = imageUrl ? `url(${imageUrl})` : 'none';
                 bgImage.style.opacity = imageUrl ? '0.15' : '0';
             }
-
-            
             resetRecord() {
-                const recordKey = this.mode === "numeric-input" ? "quizRecord_hard" : "quizRecord_easy";
-                const recordCountKey = this.mode === "numeric-input" ? "quizRecordCount_hard" : "quizRecordCount_easy";
-
+                const recordKey = "quizRecord_easy";
                 localStorage.removeItem(recordKey);
-                localStorage.removeItem(recordCountKey);
                 this.initRecordDisplay();
             }
-
         }
-
-    const questions = [
-
+        
+        // Add event listener for next button
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById('nextButton').onclick = function() {
+                if (quizInstance) {
+                    quizInstance.moveToNextQuestion();
+                }
+            };
+        });
+        
+        const questions = [
             {
-                question: "Швидкість КР Х-101, в м/с?",
+                question: "Каков основной принцип наведения ракеты RBS-70?",
                 options: [
-                    { text: "700 м/с", correct: false },
-                    { text: "200 м/с", correct: true },
-                    { text: "290 м/с", correct: false },
-                    { text: "1050 м/с", correct: false }
+                    { text: "Ракета получает координаты GPS от прицела и следует по ним к цели.", correct: false },
+                    { text: "Ракета следует за лучом наведения, который создается в прицеле..", correct: true },
+                    { text: "Наведение осуществляется по проводам, которые разматываются с ракеты после запуска.", correct: false },
+                    { text: "Ракета использует инфракрасную головку самонаведения для захвата тепловой сигнатуры цели.", correct: false }
                 ]
             },
-
-            {
-                question: "Швидкість КР Калібр, в м/с?",
+           {
+                question: "Каков основной принцип наведения ракеты RBS-70?",
                 options: [
-                    { text: "420 м/с", correct: false },
-                    { text: "240 м/с", correct: true },
-                    { text: "720 м/с", correct: false },
-                    { text: "170 м/с", correct: false }
-                ]
-            },
-            {
-                question: "Швидкість КР Х-59, в м/с?",
-                options: [
-                    { text: "360 м/с", correct: false },
-                    { text: "290 м/с", correct: true },
-                    { text: "400 м/с", correct: false },
-                    { text: "200 м/с", correct: false }
-                ]
-            },
-
-            {
-                question: "Швидкість КР Х-55, в м/с?",
-                options: [
-                    { text: "360 м/с", correct: false },
-                    { text: "230 м/с", correct: true },
-                    { text: "400 м/с", correct: false },
-                    { text: "200 м/с", correct: false }
-                ]
-            },
-
-            {
-                question: "Максимальна вага бойової частини КР Калібр?",
-                options: [
-                    { text: "500 кг", correct: false },
-                    { text: "450 кг", correct: true },
-                    { text: "250 кг", correct: false },
-                    { text: "320 кг", correct: false }
-                ]
-            },
-
-
-            {
-                question: "Максимальна швидкість КР Іскандер-К в м/с?",
-                options: [
-                    { text: "360 м/с", correct: false },
-                    { text: "260 м/с", correct: true },
-                    { text: "400 м/с", correct: false },
-                    { text: "220 м/с", correct: false }
-                ]
-            },
-
-            {
-                question: "Максимальна вага бойової частини КР Іскандер-К?",
-                options: [
-                    { text: "400 кг", correct: false },
-                    { text: "500 кг", correct: true },
-                    { text: "350 кг", correct: false },
-                    { text: "600 кг", correct: false }
-                ]
-            },
-
-            {
-                question: "Максимальна вага бойової частини КР Калібр?",
-                options: [
-                    { text: "500 кг", correct: false },
-                    { text: "450 кг", correct: true },
-                    { text: "250 кг", correct: false },
-                    { text: "320 кг", correct: false }
-                ]
-            },
-
-            {
-                question: "Вага бойової частини КР Х-101?",
-                options: [
-                    { text: "290 кг", correct: false },
-                    { text: "430 кг", correct: true },
-                    { text: "500 кг", correct: false },
-                    { text: "310 кг", correct: false }
-                ]
-            },
-
-            {
-                question: "Вага бойової частини КР Х-59?",
-                options: [
-                    { text: "290 кг", correct: false },
-                    { text: "310 кг", correct: true },
-                    { text: "550 кг", correct: false },
-                    { text: "500 кг", correct: false }
-                ]
-            },
-
-            {
-                question: "Вага бойової частини КР Х-55?",
-                options: [
-                    { text: "290 кг", correct: false },
-                    { text: "450 кг", correct: true },
-                    { text: "550 кг", correct: false },
-                    { text: "500 кг", correct: false }
-                ]
-            },
-
-            {
-                question: "Вага бойової частини Іскандер-М?", 
-                options: [
-                    { text: "750 кг", correct: false },
-                    { text: "480 кг", correct: true },
-                    { text: "400 кг", correct: false },
-                    { text: "580 кг", correct: false }
-                ]
-            },
-
-             {
-                question: "Максимальна швидкість Іскандер-М в м/с?",
-                options: [
-                    { text: "1540 м/с", correct: false },
-                    { text: "2450 м/с", correct: true },
-                    { text: "2000 м/с", correct: false },
-                    { text: "3300 м/с", correct: false }
-                ]
-            },
-
-            ///////////////////////////////////
-
-            {
-                question: "Довжина БпЛА Шахед-136, в метрах?",
-                options: [
-                    { text: "2,5 м", correct: false },
-                    { text: "3,5 м", correct: true },
-                    { text: "2 м", correct: false },
-                    { text: "4 м", correct: false }
-                ]
-            },
-
-
-            {
-                question: "Розмах крил БпЛА Шахед-136, в метрах?",
-                options: [
-                    { text: "3,5 м", correct: false },
-                    { text: "2,5 м", correct: true },
-                    { text: "2 м", correct: false },
-                    { text: "4 м", correct: false }
-                ]
-            },
-
-            {
-                question: "Крейсерська швидкість БпЛА Шахед-136 у 2023р, в м/с?",
-                options: [
-                    { text: "180 м/с", correct: false },
-                    { text: "50 м/с", correct: true },
-                    { text: "75 м/с", correct: false },
-                    { text: "220 м/с", correct: false }
+                    { text: "Ракета получает координаты GPS от прицела и следует по ним к цели.", correct: false },
+                    { text: "Ракета следует за лучом наведения, который создается в прицеле..", correct: true },
+                    { text: "Наведение осуществляется по проводам, которые разматываются с ракеты после запуска.", correct: false },
+                    { text: "Ракета использует инфракрасную головку самонаведения для захвата тепловой сигнатуры цели.", correct: false }
                 ]
             },
             {
-                question: "Крейсерська швидкість БпЛА Шахед-136 у 2023р, в км/г?",
+                question: "Каков основной принцип наведения ракеты RBS-70?",
                 options: [
-                    { text: "300 км/г", correct: false },
-                    { text: "180 км/г", correct: true },
-                    { text: "120 км/г", correct: false },
-                    { text: "150 км/г", correct: false }
+                    { text: "Ракета получает координаты GPS от прицела и следует по ним к цели.", correct: false },
+                    { text: "Ракета следует за лучом наведения, который создается в прицеле..", correct: true },
+                    { text: "Наведение осуществляется по проводам, которые разматываются с ракеты после запуска.", correct: false },
+                    { text: "Ракета использует инфракрасную головку самонаведения для захвата тепловой сигнатуры цели.", correct: false }
                 ]
             },
-
             {
-                question: "Вага бойової частини БпЛА Шахед-136 у 2023р?",
+                question: "Каков основной принцип наведения ракеты RBS-70?",
                 options: [
-                    { text: "100 кг", correct: false },
-                    { text: "50 кг", correct: true },
-                    { text: "30 кг", correct: false },
-                    { text: "70 кг", correct: false }
+                    { text: "Ракета получает координаты GPS от прицела и следует по ним к цели.", correct: false },
+                    { text: "Ракета следует за лучом наведения, который создается в прицеле..", correct: true },
+                    { text: "Наведение осуществляется по проводам, которые разматываются с ракеты после запуска.", correct: false },
+                    { text: "Ракета использует инфракрасную головку самонаведения для захвата тепловой сигнатуры цели.", correct: false }
                 ]
             },
-
-            {
-                question: "Крейсерська швидкість БпЛА Орлан-10 в км/г",
+           {
+                question: "Каков основной принцип наведения ракеты RBS-70?",
                 options: [
-                    { text: "150 км/г", correct: false },
-                    { text: "100 км/г", correct: true },
-                    { text: "180 км/г", correct: false },
-                    { text: "70 км/г", correct: false }
+                    { text: "Ракета получает координаты GPS от прицела и следует по ним к цели.", correct: false },
+                    { text: "Ракета следует за лучом наведения, который создается в прицеле..", correct: true },
+                    { text: "Наведение осуществляется по проводам, которые разматываются с ракеты после запуска.", correct: false },
+                    { text: "Ракета использует инфракрасную головку самонаведения для захвата тепловой сигнатуры цели.", correct: false }
                 ]
             },
-
-            {
-                question: "Розмах крил БпЛА Орлан-10 в м?",
-                options: [
-                    { text: "2,3 м", correct: false },
-                    { text: "3,1 м", correct: true },
-                    { text: "1,8 м", correct: false },
-                    { text: "3 м", correct: false }
-                ]
-            },
-
-            {
-                question: "Довжина БпЛА Орлан-10 в м?",
-                options: [
-                    { text: "2,3 м", correct: false },
-                    { text: "1,8 м", correct: true },
-                    { text: "3,1 м", correct: false },
-                    { text: "3 м", correct: false }
-                ]
-            },
-
-             {
-                question: "Довжина БпЛА Гербера?",
-                options: [
-                    { text: "2,5 м", correct: false },
-                    { text: "2 м", correct: true },
-                    { text: "3 м", correct: false },
-                    { text: "1,5 м", correct: false }
-                ]
-            },
-
-             {
-                question: "Розмах крил БпЛА Гербера?",
-                options: [
-                    { text: "2 м", correct: false },
-                    { text: "2,5 м", correct: true },
-                    { text: "3 м", correct: false },
-                    { text: "1,5 м", correct: false }
-                ]
-            },
-
-             {
-                question: "Максимальна швидкість БпЛА Гербера, в км/г?",
-                options: [
-                    { text: "140 км/г", correct: false },
-                    { text: "160 км/г", correct: true },
-                    { text: "180 км/г", correct: false },
-                    { text: "200 км/г", correct: false }
-                ]
-            },
-
-            {
-                question: "Максимальна швидкість БпЛА Гербера, в м/с?",
-                options: [
-                    { text: "55 м/c", correct: false },
-                    { text: "45 м/c", correct: true },
-                    { text: "65 м/c", correct: false },
-                    { text: "35 м/c", correct: false }
-                ]
-            },
-
-            ////////////////
-         
-
+            
         ];
-
-
- </script>
+    </script>
 </body>
-</html> 
+</html>
