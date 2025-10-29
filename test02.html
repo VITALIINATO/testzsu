@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link rel="icon" href="icon.png" type="image/png">
     <meta charset="UTF-8">
@@ -24,6 +24,7 @@
             align-items: center;
             justify-content: center;
         }
+
         .quiz-container {
             box-sizing: border-box;
             position: relative;
@@ -42,6 +43,7 @@
             /* height: 720px; */
             min-height: 95vh;
         }
+
         .background-image {
             position: absolute;
             top: 0;
@@ -54,6 +56,7 @@
             opacity: 0.1;
             filter: grayscale(0.7);
         }
+
         .progress-bar {
             width: 100%;
             height: 25px;
@@ -64,6 +67,7 @@
             position: relative;
             box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
         }
+
         .progress-fill {
             height: 100%;
             width: 0%;
@@ -71,6 +75,7 @@
             transition: width 0.3s ease;
             box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
         }
+
         .progress-text {
             position: absolute;
             width: 100%;
@@ -81,6 +86,7 @@
             color: #fff;
             text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
         }
+
         .question {
             font-size: 22px;
             margin-bottom: 25px;
@@ -97,12 +103,14 @@
             justify-content: center;
             text-align: center;
         }
+
         .options {
             display: flex;
             flex-direction: column;
             margin-bottom: 20px;
             flex-grow: 1;
         }
+
         .option {
             background-color: #228B22;
             color: #fff;
@@ -122,22 +130,26 @@
             width: 100%;
             box-sizing: border-box;
         }
+
         .option:last-child {
             margin-bottom: 0;
         }
+
         .option:hover {
             background-color: #1ac21a;
             transform: scale(1.02);
             transform-origin: center;
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
         }
+
         .option-letter {
             font-weight: bold;
             margin-right: 12px;
             min-width: 24px;
             color: #ffd700;
         }
-         .result {
+
+        .result {
             font-size: 18px;
             background-color: rgba(0, 50, 0, 0.95);
             color: #f0f0f0;
@@ -147,7 +159,7 @@
             border: 1px solid rgba(34, 139, 34, 0.5);
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
             font-weight: bold;
-             min-height: 30px;
+            min-height: 30px;
             /* height: 48px; */
             display: flex;
             align-items: center;
@@ -172,11 +184,13 @@
             margin-top: 0px;
             margin-bottom: 10px;
         }
+
         .next-button:hover {
             background-color: #163842;
             transform: scale(1.05);
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
         }
+
         .restart-button {
             display: none;
             padding: 14px 35px;
@@ -191,27 +205,32 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
             margin: 0 auto;
         }
+
         .restart-button:hover {
             background-color: #226633;
             transform: scale(1.05);
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
         }
+
         footer {
             margin-top: auto;
             margin-bottom: 10px;
             font-size: 13px;
             color: #aaa;
         }
+
         .result.correct {
             background-color: rgba(46, 139, 87, 0.9);
             color: #e0ffe0;
             border: 1px solid rgba(46, 139, 87, 0.7);
         }
+
         .result.incorrect {
             background-color: rgba(178, 34, 34, 0.9);
             color: #ffe0e0;
             border: 1px solid rgba(178, 34, 34, 0.7);
         }
+
         .record-display {
             font-size: 10px;
             font-weight: bold;
@@ -225,10 +244,12 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
+
         .record-display:hover {
             background-color: rgba(255, 215, 0, 0.2);
             transform: scale(1.05);
         }
+
         .errors-list {
             text-align: left;
             color: #fff;
@@ -241,6 +262,7 @@
             overflow-y: auto;
             display: none;
         }
+
         .difficulty-selection {
             text-align: center;
             padding: 40px 20px;
@@ -250,7 +272,9 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
             display: none;
         }
-        .difficulty-btn, .difficulty-btn2 {
+
+        .difficulty-btn,
+        .difficulty-btn2 {
             background-color: #302e8b;
             color: white;
             font-size: 18px;
@@ -265,28 +289,36 @@
             margin: 10px;
             display: inline-block;
         }
+
         .difficulty-btn2 {
             background-color: #8b2e2e;
         }
-        .difficulty-btn:hover, .difficulty-btn2:hover {
+
+        .difficulty-btn:hover,
+        .difficulty-btn2:hover {
             background-color: #226622;
             transform: translateY(-3px);
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
         }
+
         @media (max-width: 600px) {
             .quiz-container {
                 max-width: 95%;
                 padding: 15px;
             }
+
             .question {
                 font-size: 18px;
                 padding: 12px 15px;
             }
+
             .option {
                 font-size: 14px;
                 padding: 12px 16px;
             }
-            .difficulty-btn, .difficulty-btn2 {
+
+            .difficulty-btn,
+            .difficulty-btn2 {
                 display: block;
                 width: 100%;
                 margin: 10px 0;
@@ -294,6 +326,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="quiz-container">
         <div class="difficulty-selection" id="difficultySelection">
@@ -309,9 +342,9 @@
         </div>
         <div class="question" id="question"></div>
         <div class="options" id="options"></div>
-         <button class="next-button" id="nextButton">Далі</button>
+        <button class="next-button" id="nextButton">Далі</button>
         <div class="result" id="result"></div>
-       
+
         <div class="errors-list" id="errorsList"></div>
         <button class="restart-button" id="restartButton">Почати знову</button>
         <audio id="soundRight" src="right.mp3"></audio>
@@ -329,15 +362,15 @@
             });
             quizInstance = new Quiz(questions, mode);
         }
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             // Start quiz immediately without difficulty selection
             startQuiz("multiple-choice");
-            
-            document.getElementById('restartButton').onclick = function() {
+
+            document.getElementById('restartButton').onclick = function () {
                 window.location.href = "index.html";
             };
         });
-        document.getElementById('recordDisplay').addEventListener('click', function() {
+        document.getElementById('recordDisplay').addEventListener('click', function () {
             if (quizInstance && confirm("Ви впевнені, що хочете скинути рекорд?")) {
                 quizInstance.resetRecord();
             }
@@ -407,12 +440,12 @@
             }
             checkAnswer(selectedOption, selectedIndex) {
                 if (this.awaitingNext) return;
-                
+
                 const soundRight = document.getElementById("soundRight");
                 const soundWrong = document.getElementById("soundWrong");
                 const currentQuestion = this.questions[this.currentQuestionIndex];
                 const selectedText = selectedOption.text;
-                
+
                 // Find the correct option and its index
                 let correctIndex = -1;
                 let correctText = "";
@@ -424,7 +457,7 @@
                     }
                 }
                 const correctNumber = correctIndex + 1;
-                
+
                 if (selectedOption.correct) {
                     this.score++;
                     document.getElementById('result').innerText = 'Вірно!';
@@ -438,7 +471,7 @@
                     soundWrong.currentTime = 0;
                     soundWrong.play();
                 }
-                
+
                 // Disable option buttons
                 const optionButtons = document.querySelectorAll('.option');
                 optionButtons.forEach(button => {
@@ -446,7 +479,7 @@
                     button.style.opacity = '0.6';
                     button.style.cursor = 'not-allowed';
                 });
-                
+
                 // Show next button
                 document.getElementById('nextButton').style.display = 'block';
                 this.awaitingNext = true;
@@ -508,113 +541,113 @@
                 this.initRecordDisplay();
             }
         }
-        
+
         // Add event listener for next button
-        document.addEventListener("DOMContentLoaded", function() {
-            document.getElementById('nextButton').onclick = function() {
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById('nextButton').onclick = function () {
                 if (quizInstance) {
                     quizInstance.moveToNextQuestion();
                 }
             };
         });
-        
-      
- const questions = [
 
-        
 
-{
-        question: "Яка основна функція діоптричного кільця в процедурі прицілювання?",
-        options: [
-            { text: "Стабілізація зображення в телескопі перед запуском.", correct: false },
-            { text: "Точне коригування лінії прицілювання після запуску ракети.", correct: false },
-            { text: "Виконання початкового, грубого наведення всього прицілу на ціль.", correct: true },
-            { text: "Захоплення ракети променем наведення одразу після вильоту з контейнера.", correct: false }
-        ]
-    },
+        const questions = [
 
-    {
-        question: "Що відбувається з дзеркалом системи прицілювання в момент переходу від режиму відстеження до режиму запуску?",
-        options: [
-            { text: "Воно фіксується в положенні, що відповідає останньому положенню цілі.", correct: false },
-            { text: "Воно відхиляється на номінальні 2°, щоб підняти промінь наведення.", correct: false },
-            { text: "Воно починає вібрувати для розширення коридору наведення.", correct: false },
-            { text: "Воно стає рухомим, готуючись до роботи від серво-керування.", correct: true }
-        ]
-    },
 
-    {
-        question: "Яким чином оператор керує лінією прицілювання за допомогою джойстика після запуску ракети?",
-        options: [
-            { text: "Змінює кутову швидкість лінії прицілювання та променя наведення.", correct: true },
-            { text: "Керує фізичним поворотом усієї стійки з прицілом.", correct: false },
-            { text: "Безпосередньо змінює кутове положення лінії прицілювання.", correct: false },
-            { text: "Перемикає приціл між режимами грубого та точного наведення.", correct: false }
-        ]
-    },
 
-   
-    {
-        question: "За яких умов оператору може знадобитися виконати грубе прицілювання вже після запуску ракети та під час її польоту?",
-        options: [
-            { text: "При втраті візуального контакту з ракетою в телескопі.", correct: false },
-            { text: "Кожні 30 секунд для калібрування системи наведення.", correct: false },
-            { text: "Коли ціль починає рухатись із великою швидкістю.", correct: false },
-            { text: "Коли дзеркало серво-приводу наближається до межі свого діапазону відхилення.", correct: true }
-        ]
-    },
+            {
+                question: "Яка основна функція діоптричного кільця в процедурі прицілювання?",
+                options: [
+                    { text: "Стабілізація зображення в телескопі перед запуском.", correct: false },
+                    { text: "Точне коригування лінії прицілювання після запуску ракети.", correct: false },
+                    { text: "Виконання початкового, грубого наведення всього прицілу на ціль.", correct: true },
+                    { text: "Захоплення ракети променем наведення одразу після вильоту з контейнера.", correct: false }
+                ]
+            },
 
-    {
-        question: "Чому приціл номінально встановлюється з вертикальною похибкою у 2°?",
-        options: [
-            { text: "Щоб полегшити оператору захоплення цілі через діоптричне кільце.", correct: false },
-            { text: "Щоб зменшити вплив віддачі на точність прицілювання під час запуску.", correct: false },
-            { text: "Щоб компенсувати оптичне викривлення, створюване дзеркалом.", correct: false },
-            { text: "Щоб запобігти падінню ракети нижче коридору наведення на початковому етапі.", correct: true }
-        ]
-    },
+            {
+                question: "Що відбувається з дзеркалом системи прицілювання в момент переходу від режиму відстеження до режиму запуску?",
+                options: [
+                    { text: "Воно фіксується в положенні, що відповідає останньому положенню цілі.", correct: false },
+                    { text: "Воно відхиляється на номінальні 2°, щоб підняти промінь наведення.", correct: false },
+                    { text: "Воно починає вібрувати для розширення коридору наведення.", correct: false },
+                    { text: "Воно стає рухомим, готуючись до роботи від серво-керування.", correct: true }
+                ]
+            },
 
-    {
-        question: "Яка система забезпечує нерухомість лінії прицілювання телескопа відносно цілі до моменту запуску, незважаючи на можливі рухи стійки?",
-        options: [
-            { text: "Серво-керована система точного прицілювання.", correct: false },
-            { text: "Гіро-стабілізована платформа, на якій закріплене дзеркало.", correct: true },
-            { text: "Механізм фіксації діоптричного кільця.", correct: false },
-            { text: "Ручне керування оператора за допомогою джойстика.", correct: false }
-        ]
-    },
+            {
+                question: "Яким чином оператор керує лінією прицілювання за допомогою джойстика після запуску ракети?",
+                options: [
+                    { text: "Змінює кутову швидкість лінії прицілювання та променя наведення.", correct: true },
+                    { text: "Керує фізичним поворотом усієї стійки з прицілом.", correct: false },
+                    { text: "Безпосередньо змінює кутове положення лінії прицілювання.", correct: false },
+                    { text: "Перемикає приціл між режимами грубого та точного наведення.", correct: false }
+                ]
+            },
 
-    {
-        question: "Що відбувається з кутовою швидкістю лінії прицілювання в момент запуску, якщо оператор не втручається за допомогою джойстика?",
-        options: [
-            { text: "Вона негайно обнуляється, і приціл фіксується на точці запуску.", correct: false },
-            { text: "Вона зберігає те значення, яке мала в момент запуску.", correct: true },
-            { text: "Вона автоматично збільшується для випередження рухомої цілі.", correct: false },
-            { text: "Вона починає коливатися, доки оператор не стабілізує її.", correct: false }
-        ]
-    },
 
-{
-        question: "Яка ключова відмінність між процедурами прицілювання до запуску ракети та після нього?",
-        options: [
-            { text: "До запуску використовується телескоп, а після — діоптричне кільце.", correct: false },
-            { text: "До запуску використовується промінь наведення, а після — лише оптичне відстеження.", correct: false },
-            { text: "До запуску ціль відстежується вручну, а після — повністю автоматично.", correct: false },
-            { text: "До запуску прицілювання виконується поворотом всього прицілу, а після — відхиленням внутрішнього дзеркала.", correct: true }
-        ]
-    },
+            {
+                question: "За яких умов оператору може знадобитися виконати грубе прицілювання вже після запуску ракети та під час її польоту?",
+                options: [
+                    { text: "При втраті візуального контакту з ракетою в телескопі.", correct: false },
+                    { text: "Кожні 30 секунд для калібрування системи наведення.", correct: false },
+                    { text: "Коли ціль починає рухатись із великою швидкістю.", correct: false },
+                    { text: "Коли дзеркало серво-приводу наближається до межі свого діапазону відхилення.", correct: true }
+                ]
+            },
 
-    {
-        question: "Чому система точного прицілювання, що використовує серво-кероване дзеркало, запобігає збиванню ліній прицілювання під час запуску?",
-        options: [
-            { text: "Тому що джойстик оператора має вбудований демпфер для компенсації поштовху.", correct: false },
-            { text: "Тому що рух дзеркала не пов'язаний з основним корпусом прицілу, який може здригнутися.", correct: true },
-            { text: "Тому що гіро-стабілізована платформа повністю поглинає віддачу від пуску.", correct: false },
-            { text: "Тому що дзеркало має дуже малу масу і не піддається інерції.", correct: false }
-        ]
-    },
+            {
+                question: "Чому приціл номінально встановлюється з вертикальною похибкою у 2°?",
+                options: [
+                    { text: "Щоб полегшити оператору захоплення цілі через діоптричне кільце.", correct: false },
+                    { text: "Щоб зменшити вплив віддачі на точність прицілювання під час запуску.", correct: false },
+                    { text: "Щоб компенсувати оптичне викривлення, створюване дзеркалом.", correct: false },
+                    { text: "Щоб запобігти падінню ракети нижче коридору наведення на початковому етапі.", correct: true }
+                ]
+            },
 
-    {
+            {
+                question: "Яка система забезпечує нерухомість лінії прицілювання телескопа відносно цілі до моменту запуску, незважаючи на можливі рухи стійки?",
+                options: [
+                    { text: "Серво-керована система точного прицілювання.", correct: false },
+                    { text: "Гіро-стабілізована платформа, на якій закріплене дзеркало.", correct: true },
+                    { text: "Механізм фіксації діоптричного кільця.", correct: false },
+                    { text: "Ручне керування оператора за допомогою джойстика.", correct: false }
+                ]
+            },
+
+            {
+                question: "Що відбувається з кутовою швидкістю лінії прицілювання в момент запуску, якщо оператор не втручається за допомогою джойстика?",
+                options: [
+                    { text: "Вона негайно обнуляється, і приціл фіксується на точці запуску.", correct: false },
+                    { text: "Вона зберігає те значення, яке мала в момент запуску.", correct: true },
+                    { text: "Вона автоматично збільшується для випередження рухомої цілі.", correct: false },
+                    { text: "Вона починає коливатися, доки оператор не стабілізує її.", correct: false }
+                ]
+            },
+
+            {
+                question: "Яка ключова відмінність між процедурами прицілювання до запуску ракети та після нього?",
+                options: [
+                    { text: "До запуску використовується телескоп, а після — діоптричне кільце.", correct: false },
+                    { text: "До запуску використовується промінь наведення, а після — лише оптичне відстеження.", correct: false },
+                    { text: "До запуску ціль відстежується вручну, а після — повністю автоматично.", correct: false },
+                    { text: "До запуску прицілювання виконується поворотом всього прицілу, а після — відхиленням внутрішнього дзеркала.", correct: true }
+                ]
+            },
+
+            {
+                question: "Чому система точного прицілювання, що використовує серво-кероване дзеркало, запобігає збиванню ліній прицілювання під час запуску?",
+                options: [
+                    { text: "Тому що джойстик оператора має вбудований демпфер для компенсації поштовху.", correct: false },
+                    { text: "Тому що рух дзеркала не пов'язаний з основним корпусом прицілу, який може здригнутися.", correct: true },
+                    { text: "Тому що гіро-стабілізована платформа повністю поглинає віддачу від пуску.", correct: false },
+                    { text: "Тому що дзеркало має дуже малу масу і не піддається інерції.", correct: false }
+                ]
+            },
+
+            {
                 question: "З яких основних частин, що переносяться окремо, складається пускова установка RBS 70 для бойового застосування?",
                 options: [
                     { text: "Приціл, стійка, ракета та обладнання IFF", correct: false },
@@ -624,13 +657,174 @@
                 ]
             },
 
+            // ===============================================
+{
+        question: "Яка модель ЗУР була прийнята на озброєння в 1993 році?",
+        options: [
+            { text: "Rb-70Mk2", correct: true },
+            { text: "Bolide", correct: false },
+            { text: "Rb-70Mk0", correct: false },
+            { text: "Rb-70 Mk1", correct: false },
+        ]
+    },
+
+    {
+        question: "Яка максимальна висота ураження для ракети Bolide?",
+        options: [
+            { text: "3000 м", correct: false },
+            { text: "4000 м", correct: false },
+            { text: "5000 м", correct: true },
+            { text: "8000 м", correct: false }
+        ]
+    },
+{
+        question: "Яка з перелічених моделей ракет має найвищу максимальну швидкість?",
+        options: [
+            { text: "Bolide", correct: true },
+            { text: "Rb-70 Mk1", correct: false },
+            { text: "Rb-70Mk2", correct: false },
+            { text: "Rb-70Mk0", correct: false }
+        ]
+    },
+    {
+        question: "Яка мінімальна дальність ураження для моделей Mk0, Mk1, Mk2?",
+        options: [
+            { text: "300 м", correct: false },
+            { text: "250 м", correct: false },
+            { text: "200 м", correct: true },
+            { text: "350 м", correct: false }
+        ]
+    },
+
+   {
+        question: "Яка максимальна швидкість у ракети типу Rb-70Mk2?",
+        options: [
+            { text: "580 м/с", correct: true },
+            { text: "550 м/с", correct: false },
+            { text: "525 м/с", correct: false },
+            { text: "680 м/с", correct: false },
+        ]
+    },
+
+    {
+        question: "Яка з перелічених ракет була прийнята на озброєння в 2001 році?",
+        options: [
+            { text: "Rb-70Mk2", correct: false },
+            { text: "Rb-70 Mk1", correct: false },
+            { text: "Bolide", correct: true },
+            { text: "Rb-70Mk0", correct: false }
+        ]
+    },
+
+    {
+        question: "Яка максимальна дальність ураження цілі у ракети Bolide?",
+        options: [
+            { text: "3000 м", correct: false },
+            { text: "5000 м", correct: false },
+            { text: "8000 м", correct: true },
+            { text: "7000 м", correct: false }
+        ]
+    },
+
+    {
+        question: "Яка характеристика є однаковою для всіх чотирьох представлених типів ракет?",
+        options: [
+            { text: "Потолок", correct: false },
+            { text: "Маса УР", correct: false },
+            { text: "Довжина і діаметр УР", correct: true },
+            { text: "Макс. швидкість", correct: false }
+        ]
+    },
+
+    {
+        question: "Який стелю ураження цілі у ракети Rb-70 Mk1?",
+        options: [
+            { text: "3000 м", correct: true },
+            { text: "4000 м", correct: false },
+            { text: "200 м", correct: false },
+            { text: "5000 м", correct: false }
+        ]
+    },
+
+    
+
+    {
+        question: "Ракета з максимальною швидкістю 525 м/с і стелею 3000 м — це яка модель?",
+        options: [
+            { text: "Rb-70Mk2", correct: false },
+            { text: "Bolide", correct: false },
+            { text: "Rb-70 Mk1", correct: false },
+            { text: "Rb-70Mk0", correct: true }
+        ]
+    },
+
+
+    {
+        question: "Яка ракета має стелю ураження цілі 4000 метрів?",
+        options: [
+            { text: "Rb-70Mk2", correct: true },
+            { text: "Rb-70Mk0", correct: false },
+            { text: "Rb-70 Mk1", correct: false },
+            { text: "Bolide", correct: false }
+        ]
+    },
+
+    {
+        question: "Які дві ракети мають однакову максимальну дальність ураження в 5000 метрів?",
+        options: [
+            { text: "Rb-70Mk0 і Rb-70 Mk1", correct: true },
+            { text: "Rb-70 Mk1 і Rb-70Mk2", correct: false },
+            { text: "Rb-70Mk0 і Bolide", correct: false },
+            { text: "Rb-70Mk2 і Bolide", correct: false }
+        ]
+    },
+
+    {
+        question: "На скільки зросла максимальна швидкість при переході від моделі Rb-70 Mk1 до Rb-70Mk2?",
+        options: [
+            { text: "30 м/с", correct: true },
+            { text: "75 м/с", correct: false },
+            { text: "25 м/с", correct: false },
+            { text: "50 м/с", correct: false }
+        ]
+    },
+
+    {
+        question: "Яка загальна маса ракети Rb-70Mk1?",
+        options: [
+            { text: "17 кг", correct: true },
+            { text: "19 кг", correct: false },
+            { text: "15 кг", correct: false },
+            { text: "13 кг", correct: false }
+        ]
+    },
+
+    {
+        question: "Яка мінімальна дальність ураження є спільною для ракет Rb-70Mk0, Mk1 і Mk2?",
+        options: [
+            { text: "200 м", correct: true },
+            { text: "150 м", correct: false },
+            { text: "250 м", correct: false },
+            { text: "300 м", correct: false }
+        ]
+    }
+
+
+
+
+
+
+    
+
+
 
 
 
 
         ];
 
-        
+
     </script>
 </body>
+
 </html>
