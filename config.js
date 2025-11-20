@@ -8,5 +8,5 @@ const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzlp0tlxmJbaM
 const GOOGLE_SHEET_EMBED_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ-0C7Jn3eccb1L9b4NtNK1sVSY2C6XATxErumLP_UsUtYZfKpp0Saw1-5uKMAiJlWk8qrUAP3cRgaI/pubhtml?widget=true&headers=false";
 
 // ПАРОЛИ
-const USER_PASSWORD = "111";   // Пароль для прохождения теста
-const ADMIN_PASSWORD = "333";  // Пароль для входа в админку
+const USER_PASSWORD = "";   // Пароль для прохождения теста
+const ADMIN_PASSWORD = "NATOVITALII";  // Пароль для входа в админку
