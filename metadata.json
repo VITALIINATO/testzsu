@@ -1,0 +1,5 @@
+{
+  "name": "NATO Quiz App with Admin Panel",
+  "description": "Military equipment identification quiz with Firebase backend for score tracking.",
+  "requestFramePermissions": []
+}

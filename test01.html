@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +6,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ПЗРК</title>
+    
+    <!-- Config -->
+    <script src="config.js"></script>
+
     <style>
         body {
             margin: 0;
@@ -37,6 +42,35 @@
             backdrop-filter: blur(5px);
             margin: 10px;
         }
+        /* Styles for Name Input Modal */
+        .name-modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .name-box {
+            background: #1a472a;
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #ffd700;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        .name-input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 18px;
+            border-radius: 5px;
+            border: none;
+            box-sizing: border-box;
+        }
+        /* Existing Styles */
         .background-image {
             position: absolute;
             top: 0;
@@ -91,69 +125,47 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            
         }
-
-/* Десктопная версия (2 колонки) */
-.options {
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-}
-
-.option {
-    width: calc(50% - 10px);
-    margin-right: 20px;
-    margin-bottom: 20px;
-   background-color: #228B22;
-    color: #fff;
-    font-size: 18px;
-    padding: 14px 25px;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    flex: 1 1 45%;
-    min-width: 130px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-    font-weight: bold;
-    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-}
-
-.option:hover {
-    background-color: #1ac21a;
-   transform: scale(1.05); /* Увеличение на 2% вместо смещения */
-    transform-origin: center; /* Центр трансформации */
-    transition: all 0.3s ease;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
-}
-
-.option:nth-child(2n) {
-    margin-right: 0;
-}
-
-.option:nth-last-child(-n+2) {
-    margin-bottom: 0;
-}
-
-/* Мобильная версия (1 колонка) */
-@media (max-width: 600px) {
-    .options {
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .option {
-        width: 100%;
-        margin-right: 0;
-        margin-bottom: 15px !important; /* Принудительный отступ */
-    }
-    
-    .option:last-child {
-        margin-bottom: 0 !important;
-    }
-}
-
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .option {
+            width: calc(50% - 10px);
+            margin-right: 20px;
+            margin-bottom: 20px;
+            background-color: #228B22;
+            color: #fff;
+            font-size: 18px;
+            padding: 14px 25px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1 1 45%;
+            min-width: 130px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            font-weight: bold;
+            text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+        }
+        .option:hover {
+            background-color: #1ac21a;
+            transform: scale(1.05);
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+        }
+        .option:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        .option:nth-child(2n) { margin-right: 0; }
+        .option:nth-last-child(-n+2) { margin-bottom: 0; }
+        @media (max-width: 600px) {
+            .options { display: flex; flex-direction: column; }
+            .option { width: 100%; margin-right: 0; margin-bottom: 15px !important; }
+            .option:last-child { margin-bottom: 0 !important; }
+        }
         .result {
             font-size: 22px;
             background-color: rgba(0, 50, 0, 0.95);
@@ -164,11 +176,30 @@
             border: 1px solid rgba(34, 139, 34, 0.5);
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
             font-weight: bold;
-            height: 48px;
+            min-height: 48px;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+        }
+        .next-button {
+            display: none;
+            padding: 10px 35px;
+            font-size: 16px;
+            background-color: #1e4d5b;
+            color: white;
+            border: none;
+            border-radius: 18px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            margin: 0 auto 20px;
+        }
+        .next-button:hover {
+            background-color: #163842;
+            transform: scale(1.05);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
         }
         .restart-button {
             display: none;
@@ -189,28 +220,9 @@
             transform: scale(1.05);
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
         }
-        footer {
-            margin-top: 25px;
-            font-size: 13px;
-            color: #aaa;
-        }
-        .result.correct {
-            background-color: rgba(46, 139, 87, 0.9);
-            color: #e0ffe0;
-            border: 1px solid rgba(46, 139, 87, 0.7);
-        }
-        .result.incorrect {
-            background-color: rgba(178, 34, 34, 0.9);
-            color: #ffe0e0;
-            border: 1px solid rgba(178, 34, 34, 0.7);
-        }
-        @media (max-width: 600px) {
-            .option {
-                flex: 1 1 100%;
-                font-size: 16px;
-                padding: 12px 18px;
-            }
-        }
+        footer { margin-top: 25px; font-size: 13px; color: #aaa; }
+        .result.correct { background-color: rgba(46, 139, 87, 0.9); color: #e0ffe0; border: 1px solid rgba(46, 139, 87, 0.7); }
+        .result.incorrect { background-color: rgba(178, 34, 34, 0.9); color: #ffe0e0; border: 1px solid rgba(178, 34, 34, 0.7); }
         .record-display {
             font-size: 12px;
             font-weight: bold;
@@ -221,17 +233,10 @@
             border-radius: 12px;
             display: inline-block;
             min-width: 200px;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
-
-        .record-display {
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-.record-display:hover {
-    background-color: rgba(255, 215, 0, 0.2);
-    transform: scale(1.05);
-}
-
+        .record-display:hover { background-color: rgba(255, 215, 0, 0.2); transform: scale(1.05); }
         .errors-list {
             text-align: left;
             color: #fff;
@@ -244,73 +249,31 @@
             overflow-y: auto;
             display: none;
         }
-
-
-.difficulty-selection {
-    text-align: center;
-    padding: 40px 20px;
-    /* background: rgba(150, 129, 35, 0.8); */
-    background: transparent;
-    border-radius: 20px;
-    margin: 20px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-}
-
-.difficulty-btn {
-    background-color: #302e8b;
-    color: white;
-    font-size: 18px;
-    padding: 15px 25px;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-    min-width: 200px;
-    font-weight: bold;
-    margin: 10px; /* Добавляем отступы вокруг кнопок */
-    display: inline-block; /* Для правильного применения margin */
-}
-
-.difficulty-btn:hover {
-    background-color: #226622;
-    /* transform: translateY(-3px); */
-     transform: scale(1.1);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
-}
-
-.difficulty-btn2 {
-    background-color: #8b2e2e;
-    color: white;
-    font-size: 18px;
-    padding: 15px 25px;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-    min-width: 200px;
-    font-weight: bold;
-    margin: 10px; /* Добавляем отступы вокруг кнопок */
-    display: inline-block; /* Для правильного применения margin */
-}
-
-.difficulty-btn2:hover {
-    background-color: #226622;
-   transform: scale(1.1);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
-}
-
-@media (max-width: 600px) {
-    .difficulty-btn {
-        display: block; /* На мобильных - одна кнопка под другой */
-        width: 100%;
-        margin: 10px 0; /* Отступы только сверху и снизу */
-    }
-}
-
-
-
+        .difficulty-selection {
+            text-align: center;
+            padding: 40px 20px;
+            background: transparent;
+            border-radius: 20px;
+            margin: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+        .difficulty-btn, .difficulty-btn2 {
+            background-color: #302e8b;
+            color: white;
+            font-size: 18px;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            min-width: 200px;
+            font-weight: bold;
+            margin: 10px;
+            display: inline-block;
+        }
+        .difficulty-btn2 { background-color: #8b2e2e; }
+        .difficulty-btn:hover, .difficulty-btn2:hover { background-color: #226622; transform: scale(1.1); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6); }
         .option-input {
             padding: 10px;
             font-size: 18px;
@@ -322,15 +285,22 @@
             box-sizing: border-box;
             text-align: center;
         }
-        .quiz-container > * {
-            display: none;
-        }
-        .quiz-container > .difficulty-selection {
-            display: block;
-        }
+        .quiz-container > * { display: none; }
+        .quiz-container > .difficulty-selection { display: block; }
     </style>
 </head>
 <body>
+    <!-- Modal for Name and Password -->
+    <div id="nameModal" class="name-modal">
+        <div class="name-box">
+            <h2 style="color: #ffd700; margin-bottom: 15px;">Вхід</h2>
+            <input type="text" id="usernameInput" class="name-input" placeholder="Прізвище та ініціали">
+            <input type="password" id="passwordInput" class="name-input" placeholder="Пароль">
+            <button id="startGameBtn" class="difficulty-btn">Почати</button>
+            <div id="loginError" style="color: #ff6b6b; display: none; margin-top: 10px;">Невірний пароль або пусте ім'я</div>
+        </div>
+    </div>
+
     <div class="quiz-container">
         <div class="difficulty-selection" id="difficultySelection">
             <h2 style="color: #ffd700; margin-bottom: 20px;">Оберіть рівень складності:</h2>
@@ -346,6 +316,7 @@
         <div class="question" id="question"></div>
         <div class="options" id="options"></div>
         <div class="result" id="result"></div>
+        <button class="next-button" id="nextButton">Далі</button>
         <div class="errors-list" id="errorsList"></div>
         <button class="restart-button" id="restartButton">Почати знову</button>
         <audio id="soundRight" src="right.mp3"></audio>
@@ -356,6 +327,39 @@
     </div>
     <script>
         let quizInstance = null;
+        let currentUser = "";
+
+        // Helper function to send data
+        function sendData(action, score = "-", total = "-") {
+            const payload = {
+                username: currentUser,
+                action: action,
+                testName: "ПЗРК (Test 01)",
+                score: score,
+                total: total
+            };
+            console.log("Attempting to send data:", payload);
+            
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify(payload)
+            })
+            .then(response => console.log("Data sent successfully"))
+            .catch(error => console.error("Error sending data:", error));
+        }
+
+        document.getElementById('startGameBtn').addEventListener('click', function() {
+            const name = document.getElementById('usernameInput').value;
+            const pass = document.getElementById('passwordInput').value;
+            
+            if(name.trim().length > 1 && pass === USER_PASSWORD) {
+                currentUser = name;
+                document.getElementById('nameModal').style.display = 'none';
+                sendData("Login");
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        });
         
         function startQuiz(mode) {
             document.getElementById("difficultySelection").style.display = "none";
@@ -367,17 +371,19 @@
         document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("easyMode").addEventListener("click", () => startQuiz("multiple-choice"));
             document.getElementById("hardMode").addEventListener("click", () => startQuiz("numeric-input"));
-            // Заменяем только эту строку:
-        document.getElementById('restartButton').onclick = function() {
-            window.location.href = "index.html";
-        };
+            document.getElementById('restartButton').onclick = function() {
+                window.location.href = "index.html";
+            };
+             document.getElementById('nextButton').onclick = function() {
+                if (quizInstance) quizInstance.moveToNextQuestion();
+            };
         });
 
         document.getElementById('recordDisplay').addEventListener('click', function() {
-        if (quizInstance && confirm("Ви впевнені, що хочете скинути рекорд?")) {
-            quizInstance.resetRecord();
-        }
-    });
+            if (quizInstance && confirm("Ви впевнені, що хочете скинути рекорд?")) {
+                quizInstance.resetRecord();
+            }
+        });
 
         class Quiz {
             constructor(questions, mode = "multiple-choice") {
@@ -389,6 +395,7 @@
                 this.shuffleQuestions();
                 this.showQuestion();
                 this.initRecordDisplay();
+                this.awaitingNext = false;
             }
             initRecordDisplay() {
                 const recordDisplay = document.getElementById('recordDisplay');
@@ -408,6 +415,7 @@
                 }
             }
             showQuestion() {
+                this.awaitingNext = false;
                 const currentQuestion = this.questions[this.currentQuestionIndex];
                 document.getElementById('question').innerText = currentQuestion.question;
                 this.showOptions(currentQuestion.options);
@@ -415,59 +423,58 @@
                 document.getElementById('result').innerText = '';
                 document.getElementById('result').className = 'result';
                 document.getElementById('restartButton').style.display = 'none';
+                document.getElementById('nextButton').style.display = 'none';
                 document.getElementById('errorsList').innerHTML = '';
-                 document.getElementById('errorsList').style.display = 'none'; // Явно скрываем при каждом новом вопросе
+                 document.getElementById('errorsList').style.display = 'none';
                 this.updateProgress();
             }
-showOptions(options) {
-  const optionsContainer = document.getElementById("options");
-  optionsContainer.innerHTML = "";
-  
-  if (this.mode === "numeric-input") {
-    // Код для числового ввода (сложный уровень)
-    const input = document.createElement("input");
-    input.type = "tel";
-    input.inputMode = "decimal";
-    input.placeholder = "Введіть число";
-    input.className = "option-input";
-    
-    input.addEventListener("input", function() {
-      const cursorPos = this.selectionStart;
-      let value = this.value.replace(/\./g, ',');
-      value = value.replace(/[^0-9,]/g, '');
-      const commaIndex = value.indexOf(',');
-      if (commaIndex !== -1) {
-        value = value.substring(0, commaIndex + 1) + 
-                value.substring(commaIndex + 1).replace(/,/g, '');
-      }
-      this.value = value;
-      this.setSelectionRange(cursorPos, cursorPos);
-    });
+            showOptions(options) {
+              const optionsContainer = document.getElementById("options");
+              optionsContainer.innerHTML = "";
+              
+              if (this.mode === "numeric-input") {
+                const input = document.createElement("input");
+                input.type = "tel";
+                input.inputMode = "decimal";
+                input.placeholder = "Введіть число";
+                input.className = "option-input";
+                
+                input.addEventListener("input", function() {
+                  const cursorPos = this.selectionStart;
+                  let value = this.value.replace(/\./g, ',');
+                  value = value.replace(/[^0-9,]/g, '');
+                  const commaIndex = value.indexOf(',');
+                  if (commaIndex !== -1) {
+                    value = value.substring(0, commaIndex + 1) + 
+                            value.substring(commaIndex + 1).replace(/,/g, '');
+                  }
+                  this.value = value;
+                  this.setSelectionRange(cursorPos, cursorPos);
+                });
 
-    input.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") this.checkAnswerInput(input.value);
-    });
+                input.addEventListener("keydown", (e) => {
+                  if (e.key === "Enter") this.checkAnswerInput(input.value);
+                });
 
-    optionsContainer.appendChild(input);
+                optionsContainer.appendChild(input);
 
-    const submitBtn = document.createElement("button");
-    submitBtn.innerText = "Перевірити";
-    submitBtn.className = "option";
-    submitBtn.onclick = () => this.checkAnswerInput(input.value);
-    optionsContainer.appendChild(submitBtn);
-    
-  } else {
-    // Код для множественного выбора (легкий уровень)
-    this.shuffleOptions(options);
-    options.forEach(option => {
-      const button = document.createElement("button");
-      button.className = "option";
-      button.innerHTML = option.text;
-      button.onclick = () => this.checkAnswer(option);
-      optionsContainer.appendChild(button);
-    });
-  }
-}
+                const submitBtn = document.createElement("button");
+                submitBtn.innerText = "Перевірити";
+                submitBtn.className = "option";
+                submitBtn.onclick = () => this.checkAnswerInput(input.value);
+                optionsContainer.appendChild(submitBtn);
+                
+              } else {
+                this.shuffleOptions(options);
+                options.forEach(option => {
+                  const button = document.createElement("button");
+                  button.className = "option";
+                  button.innerHTML = option.text;
+                  button.onclick = () => this.checkAnswer(option);
+                  optionsContainer.appendChild(button);
+                });
+              }
+            }
             shuffleOptions(options) {
                 for (let i = options.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
@@ -475,79 +482,92 @@ showOptions(options) {
                 }
             }
             checkAnswer(selectedOption) {
-                const soundRight = document.getElementById("soundRight");
-                const soundWrong = document.getElementById("soundWrong");
+                if (this.awaitingNext) return;
+
                 const currentQuestion = this.questions[this.currentQuestionIndex];
                 const selectedText = selectedOption.text;
                 const correctOption = currentQuestion.options.find(option => option.correct);
                 const correctText = correctOption.text;
+
                 if (selectedOption.correct) {
                     this.score++;
-                    document.getElementById('result').innerText = 'Вірно!';
-                    document.getElementById('result').className = 'result correct';
-                    soundRight.currentTime = 0;
-                    soundRight.play();
+                    this.showResultMessage('Вірно!', 'correct');
                 } else {
                     this.errors.push({ question: currentQuestion.question, user: selectedText, correct: correctText });
-                    document.getElementById('result').innerText = `Невірно. Правильна відповідь: ${correctText}`;
-                    document.getElementById('result').className = 'result incorrect';
-                    soundWrong.currentTime = 0;
-                    soundWrong.play();
+                    this.showResultMessage(`Невірно. Правильна відповідь: ${correctText}`, 'incorrect');
                 }
-                this.currentQuestionIndex++;
-                this.moveToNextQuestion();
+                this.finalizeAnswerStep();
             }
-   checkAnswerInput(userAnswer) {
-  // Заменяем запятую на точку для корректного парсинга
-  const normalizedAnswer = userAnswer.replace(',', '.');
-  const currentQuestion = this.questions[this.currentQuestionIndex];
-  const correctOption = currentQuestion.options.find(option => option.correct);
-  
-  // Парсим числа с учетом локали
-  const correctNumber = parseFloat(
-    correctOption.text.replace(',', '.').replace(/\s/g, '')
-  );
-  
-  const userNumber = parseFloat(normalizedAnswer);
+            checkAnswerInput(userAnswer) {
+              if (this.awaitingNext) return;
 
-  // Сравниваем с допуском 0.01 для плавающих чисел
-  if (!isNaN(userNumber) && Math.abs(userNumber - correctNumber) < 0.01) {
-    this.score++;
-    this.showResultMessage("Вірно!", "correct");
-  } else {
-    this.errors.push({ 
-      question: currentQuestion.question, 
-      user: userAnswer, 
-      correct: correctOption.text 
-    });
-    this.showResultMessage(`Невірно. Правильна відповідь: ${correctOption.text}`, "incorrect");
-  }
-  
-  this.currentQuestionIndex++;
-  this.moveToNextQuestion();
-}
+              const normalizedAnswer = userAnswer.replace(',', '.');
+              const currentQuestion = this.questions[this.currentQuestionIndex];
+              const correctOption = currentQuestion.options.find(option => option.correct);
+              
+              const correctNumber = parseFloat(
+                correctOption.text.replace(',', '.').replace(/\s/g, '')
+              );
+              
+              const userNumber = parseFloat(normalizedAnswer);
 
-
+              if (!isNaN(userNumber) && Math.abs(userNumber - correctNumber) < 0.01) {
+                this.score++;
+                this.showResultMessage("Вірно!", "correct");
+              } else {
+                this.errors.push({ 
+                  question: currentQuestion.question, 
+                  user: userAnswer, 
+                  correct: correctOption.text 
+                });
+                this.showResultMessage(`Невірно. Правильна відповідь: ${correctOption.text}`, "incorrect");
+              }
+              this.finalizeAnswerStep();
+            }
+            
             showResultMessage(text, type) {
                 const result = document.getElementById("result");
                 result.innerText = text;
                 result.className = `result ${type}`;
-                document.getElementById("sound" + (type === "correct" ? "Right" : "Wrong")).play();
+                try {
+                    const sound = document.getElementById("sound" + (type === "correct" ? "Right" : "Wrong"));
+                    if(sound) {
+                        sound.currentTime = 0;
+                        sound.play().catch(e => console.log("Sound error:", e));
+                    }
+                } catch(e) { console.log("Audio not found"); }
             }
+
+            finalizeAnswerStep() {
+                // Disable inputs/buttons
+                const inputs = document.querySelectorAll('.option, .option-input');
+                inputs.forEach(el => el.disabled = true);
+                
+                document.getElementById('nextButton').style.display = 'block';
+                this.awaitingNext = true;
+            }
+
             moveToNextQuestion() {
+                this.currentQuestionIndex++;
                 if (this.currentQuestionIndex < this.questions.length) {
-                    setTimeout(() => this.showQuestion(), 1200);
+                    this.showQuestion();
                 } else {
-                    setTimeout(() => this.showResult(), 200);
+                    this.showResult();
                 }
                 this.updateProgress();
             }
             showResult() {
                 const total = this.questions.length;
                 const score = this.score;
+                
+                // GOOGLE SHEETS SAVE LOGIC
+                sendData("Finish", score, total);
+
                 document.getElementById('question').innerText = `Ваш результат: ${score} з ${total}`;
                 document.getElementById('options').innerHTML = '';
                 document.getElementById('result').style.display = 'none';
+                document.getElementById('nextButton').style.display = 'none';
+
                 const errorsList = document.getElementById('errorsList');
                 errorsList.style.display = 'block';
                 errorsList.innerHTML = '<strong>Помилки:</strong><br>';
@@ -588,12 +608,9 @@ showOptions(options) {
                 bgImage.style.backgroundImage = imageUrl ? `url(${imageUrl})` : 'none';
                 bgImage.style.opacity = imageUrl ? '0.15' : '0';
             }
-
-            
             resetRecord() {
                 const recordKey = this.mode === "numeric-input" ? "quizRecord_hard" : "quizRecord_easy";
                 const recordCountKey = this.mode === "numeric-input" ? "quizRecordCount_hard" : "quizRecordCount_easy";
-
                 localStorage.removeItem(recordKey);
                 localStorage.removeItem(recordCountKey);
                 this.initRecordDisplay();
@@ -601,8 +618,7 @@ showOptions(options) {
         }
 
        const questions = [
-
- {
+             {
                 question: "Максимальна дальність ураження цілей ПЗРК Stinger навздогін, в метрах?",
                 options: [
                     { text: "6400 м", correct: false },
@@ -746,13 +762,9 @@ showOptions(options) {
                     { text: "1,17 кг", correct: false }
                 ]
             },
-
-            ////////////////
-         
-
         ];
 
 
  </script>
 </body>
-</html> 
+</html>
