@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,59 +9,346 @@
     <script src="config.js"></script>
     <style>
         /* Styles same as original, plus modal */
-        body { margin: 0; font-family: Arial, sans-serif; min-height: 100vh; background: #234b30; background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.02) 0px, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 20px), linear-gradient(to bottom right, #2e5a3f, #1f442c); background-size: 100% 100%, cover; display: flex; align-items: center; justify-content: center; }
-        .quiz-container { box-sizing: border-box; position: relative; width: 100%; max-width: 700px; text-align: center; padding: 20px; border: 3px solid #228B22; background: rgba(0, 50, 0, 0.85); border-radius: 20px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); margin: 0px; display: flex; flex-direction: column; min-height: 95vh; }
-        .background-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; z-index: -1; opacity: 0.1; filter: grayscale(0.7); }
-        .progress-bar { width: 100%; height: 25px; background: rgba(255, 255, 255, 0.1); border-radius: 15px; overflow: hidden; margin-bottom: 20px; position: relative; box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3); }
-        .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #2d88b3, #1e4d5b); transition: width 0.3s ease; box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5); }
-        .progress-text { position: absolute; width: 100%; top: 0; font-size: 16px; font-weight: bold; padding: 3px 0; color: #fff; text-shadow: 0 0 3px rgba(0, 0, 0, 0.7); }
-        .question { font-size: 22px; margin-bottom: 25px; font-weight: bold; background-color: rgba(255, 255, 255, 0.15); color: #fff; padding: 15px 20px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); display: flex; align-items: center; justify-content: center; text-align: center; }
-        .options { display: flex; flex-direction: column; margin-bottom: 20px; flex-grow: 1; }
-        .option { background-color: #228B22; color: #fff; font-size: 16px; padding: 14px 20px; border: none; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; text-align: left; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); font-weight: bold; text-shadow: 0 0 2px rgba(0, 0, 0, 0.5); display: flex; align-items: flex-start; margin-bottom: 15px; width: 100%; box-sizing: border-box; }
-        .option:last-child { margin-bottom: 0; }
-        .option:hover { background-color: #1ac21a; transform: scale(1.02); transform-origin: center; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6); }
-        .option-letter { font-weight: bold; margin-right: 12px; min-width: 24px; color: #ffd700; }
-        .result { font-size: 18px; background-color: rgba(0, 50, 0, 0.95); color: #f0f0f0; padding: 10px; border-radius: 12px; margin-bottom: 20px; border: 1px solid rgba(34, 139, 34, 0.5); box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4); font-weight: bold; min-height: 30px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .next-button { display: none; padding: 10px 35px; font-size: 16px; background-color: #1e4d5b; color: white; border: none; border-radius: 18px; cursor: pointer; font-weight: bold; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); margin-top: 0px; margin-bottom: 10px; }
-        .next-button:hover { background-color: #163842; transform: scale(1.05); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7); }
-        .restart-button { display: none; padding: 14px 35px; font-size: 18px; background-color: #2e8b57; color: white; border: none; border-radius: 18px; cursor: pointer; font-weight: bold; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); margin: 0 auto; }
-        .restart-button:hover { background-color: #226633; transform: scale(1.05); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7); }
-        footer { margin-top: auto; margin-bottom: 10px; font-size: 13px; color: #aaa; }
-        .result.correct { background-color: rgba(46, 139, 87, 0.9); color: #e0ffe0; border: 1px solid rgba(46, 139, 87, 0.7); }
-        .result.incorrect { background-color: rgba(178, 34, 34, 0.9); color: #ffe0e0; border: 1px solid rgba(178, 34, 34, 0.7); }
-        .record-display { font-size: 10px; font-weight: bold; color: #ffd700; margin-bottom: 15px; text-shadow: 0 0 4px rgba(0, 0, 0, 0.7); padding: 8px 16px; border-radius: 12px; display: inline-block; min-width: 200px; cursor: pointer; transition: all 0.3s ease; }
-        .record-display:hover { background-color: rgba(255, 215, 0, 0.2); transform: scale(1.05); }
-        .errors-list { text-align: left; color: #fff; font-size: 16px; margin-top: 20px; background: rgba(0, 0, 0, 0.3); padding: 10px; border-radius: 12px; max-height: 300px; overflow-y: auto; display: none; }
-        .difficulty-selection { text-align: center; padding: 40px 20px; background: transparent; border-radius: 20px; margin: 20px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); display: none; }
-        .difficulty-btn, .difficulty-btn2 { background-color: #302e8b; color: white; font-size: 18px; padding: 15px 25px; border: none; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); min-width: 200px; font-weight: bold; margin: 10px; display: inline-block; }
-        .difficulty-btn2 { background-color: #8b2e2e; }
-        .difficulty-btn:hover, .difficulty-btn2:hover { background-color: #226622; transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6); }
-        @media (max-width: 600px) { .quiz-container { max-width: 95%; padding: 15px; } .question { font-size: 18px; padding: 12px 15px; } .option { font-size: 14px; padding: 12px 16px; } .difficulty-btn, .difficulty-btn2 { display: block; width: 100%; margin: 10px 0; } }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            background: #234b30;
+            background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.02) 0px, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 20px), linear-gradient(to bottom right, #2e5a3f, #1f442c);
+            background-size: 100% 100%, cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quiz-container {
+            box-sizing: border-box;
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            text-align: center;
+            padding: 20px;
+            border: 3px solid #228B22;
+            background: rgba(0, 50, 0, 0.85);
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            margin: 0px;
+            display: flex;
+            flex-direction: column;
+            min-height: 95vh;
+        }
+
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            opacity: 0.1;
+            filter: grayscale(0.7);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            position: relative;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #2d88b3, #1e4d5b);
+            transition: width 0.3s ease;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .progress-text {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 3px 0;
+            color: #fff;
+            text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
+        }
+
+        .question {
+            font-size: 22px;
+            margin-bottom: 25px;
+            font-weight: bold;
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            padding: 15px 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .option {
+            background-color: #228B22;
+            color: #fff;
+            font-size: 16px;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            font-weight: bold;
+            text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .option:last-child {
+            margin-bottom: 0;
+        }
+
+        .option:hover {
+            background-color: #1ac21a;
+            transform: scale(1.02);
+            transform-origin: center;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+        }
+
+        .option-letter {
+            font-weight: bold;
+            margin-right: 12px;
+            min-width: 24px;
+            color: #ffd700;
+        }
+
+        .result {
+            font-size: 18px;
+            background-color: rgba(0, 50, 0, 0.95);
+            color: #f0f0f0;
+            padding: 10px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(34, 139, 34, 0.5);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+            font-weight: bold;
+            min-height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .next-button {
+            display: none;
+            padding: 10px 35px;
+            font-size: 16px;
+            background-color: #1e4d5b;
+            color: white;
+            border: none;
+            border-radius: 18px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            margin-top: 0px;
+            margin-bottom: 10px;
+        }
+
+        .next-button:hover {
+            background-color: #163842;
+            transform: scale(1.05);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
+        }
+
+        .restart-button {
+            display: none;
+            padding: 14px 35px;
+            font-size: 18px;
+            background-color: #2e8b57;
+            color: white;
+            border: none;
+            border-radius: 18px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            margin: 0 auto;
+        }
+
+        .restart-button:hover {
+            background-color: #226633;
+            transform: scale(1.05);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
+        }
+
+        footer {
+            margin-top: auto;
+            margin-bottom: 10px;
+            font-size: 13px;
+            color: #aaa;
+        }
+
+        .result.correct {
+            background-color: rgba(46, 139, 87, 0.9);
+            color: #e0ffe0;
+            border: 1px solid rgba(46, 139, 87, 0.7);
+        }
+
+        .result.incorrect {
+            background-color: rgba(178, 34, 34, 0.9);
+            color: #ffe0e0;
+            border: 1px solid rgba(178, 34, 34, 0.7);
+        }
+
+        .record-display {
+            font-size: 10px;
+            font-weight: bold;
+            color: #ffd700;
+            margin-bottom: 15px;
+            text-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
+            padding: 8px 16px;
+            border-radius: 12px;
+            display: inline-block;
+            min-width: 200px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .record-display:hover {
+            background-color: rgba(255, 215, 0, 0.2);
+            transform: scale(1.05);
+        }
+
+        .errors-list {
+            text-align: left;
+            color: #fff;
+            font-size: 16px;
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+        }
+
+      
+        .difficulty-btn,
+        .difficulty-btn2 {
+            background-color: #302e8b;
+            color: white;
+            font-size: 18px;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            min-width: 200px;
+            font-weight: bold;
+            margin: 10px;
+            display: inline-block;
+        }
+
+        .difficulty-btn2 {
+            background-color: #8b2e2e;
+        }
+
+        .difficulty-btn:hover,
+        .difficulty-btn2:hover {
+            background-color: #226622;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+        }
+
+        @media (max-width: 600px) {
+            .quiz-container {
+                max-width: 95%;
+                padding: 15px;
+            }
+
+            .question {
+                font-size: 18px;
+                padding: 12px 15px;
+            }
+
+            .option {
+                font-size: 14px;
+                padding: 12px 16px;
+            }
+
+            .difficulty-btn,
+            .difficulty-btn2 {
+                display: block;
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+
         /* Modal */
-        .name-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; display: flex; align-items: center; justify-content: center; }
-        .name-box { background: #1a472a; padding: 30px; border-radius: 15px; border: 2px solid #ffd700; text-align: center; max-width: 400px; width: 90%; }
-        .name-input { width: 100%; padding: 10px; margin: 10px 0; font-size: 18px; border-radius: 5px; border: none; box-sizing: border-box; }
+        .name-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .name-box {
+            background: #1a472a;
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #ffd700;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .name-input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 18px;
+            border-radius: 5px;
+            border: none;
+            box-sizing: border-box;
+        }
+        .quiz-container > * { display: block; }
     </style>
 </head>
 
 <body>
-    <!-- Modal for Name and Password -->
-    <div id="nameModal" class="name-modal">
-        <div class="name-box">
-            <h2 style="color: #ffd700; margin-bottom: 15px;">Вхід</h2>
-            <input type="text" id="usernameInput" class="name-input" placeholder="Позивний">
-            <input type="password" id="passwordInput" class="name-input" placeholder="Пароль">
-            <button id="startGameBtn" class="difficulty-btn">Почати</button>
-            <div id="loginError" style="color: #ff6b6b; display: none; margin-top: 10px;">Невірний пароль або пусте ім'я</div>
-        </div>
-    </div>
+
 
     <div class="quiz-container">
-        <div class="difficulty-selection" id="difficultySelection">
-            <h2 style="color: #ffd700; margin-bottom: 20px;">Оберіть рівень складності:</h2>
-            <button id="easyMode" class="difficulty-btn">Легше</button>
-            <button id="hardMode" class="difficulty-btn2">Складніше</button>
-        </div>
+       
         <div class="background-image" id="backgroundImage"></div>
         <div class="record-display" id="recordDisplay"></div>
         <div class="progress-bar">
@@ -83,62 +369,71 @@
         </footer>
     </div>
     <script>
-        let quizInstance = null;
-        let currentUser = "";
+           let currentUser = "";
+    let quizInstance = null;
 
-        // Helper function to send data
-        function sendData(action, score = "-", total = "-") {
-            const payload = {
-                username: currentUser,
-                action: action,
-                testName: "RBS-70 (Test 02)",
-                score: score,
-                total: total
-            };
-            console.log("Attempting to send data:", payload);
-            
-            fetch(GOOGLE_SCRIPT_URL, {
-                method: 'POST',
-                body: JSON.stringify(payload)
-            })
-            .then(response => console.log("Data sent successfully"))
-            .catch(error => console.error("Error sending data:", error));
+    // === Проверка сессии ===
+    (function () {
+        const authData = sessionStorage.getItem('nato_quiz_auth');
+        if (!authData) {
+            alert('Сесія не знайдена. Увійдіть через головну сторінку.');
+            window.location.href = 'index.html';
+            return;
         }
+        try {
+            const data = JSON.parse(authData);
+            currentUser = data.name || "Анонім";
+        } catch (e) {
+            sessionStorage.removeItem('nato_quiz_auth');
+            window.location.href = 'index.html';
+            return;
+        }
+    })();
 
-        document.getElementById('startGameBtn').addEventListener('click', function() {
-            const name = document.getElementById('usernameInput').value;
-            const pass = document.getElementById('passwordInput').value;
-            
-            if(name.trim().length > 1 && pass === USER_PASSWORD) {
-                currentUser = name;
-                document.getElementById('nameModal').style.display = 'none';
-                // Start quiz
-                startQuiz("multiple-choice");
-                sendData("Login");
-            } else {
-                document.getElementById('loginError').style.display = 'block';
+    // === Отправка данных ===
+    function sendData(action, score = "-", total = "-") {
+        const payload = {
+            username: currentUser,
+            action: action,
+            testName: "Mistral",
+            score: score,
+            total: total
+        };
+        fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        }).catch(e => console.error("Send error:", e));
+    }
+
+    // === Запуск теста ===
+    function startQuiz() {
+        document.querySelectorAll(".quiz-container > *").forEach(el => {
+            el.style.display = "block";
+        });
+        quizInstance = new Quiz(questions, "multiple-choice");
+    }
+
+    // === Инициализация после загрузки DOM ===
+    document.addEventListener("DOMContentLoaded", function () {
+        startQuiz();
+
+        document.getElementById('restartButton').onclick = () => {
+            window.location.href = "index.html";
+        };
+
+        document.getElementById('nextButton').onclick = () => {
+            if (quizInstance) {
+                quizInstance.moveToNextQuestion();
             }
-        });
+        };
 
-        function startQuiz(mode) {
-            document.getElementById("difficultySelection").style.display = "none";
-            document.querySelectorAll(".quiz-container > *").forEach(el => {
-                if (el.id !== "difficultySelection") el.style.display = "block";
-            });
-            quizInstance = new Quiz(questions, mode);
-        }
-
-        document.addEventListener("DOMContentLoaded", function () {
-            document.getElementById('restartButton').onclick = function () {
-                window.location.href = "index.html";
-            };
-        });
-
-        document.getElementById('recordDisplay').addEventListener('click', function () {
-            if (quizInstance && confirm("Ви впевнені, що хочете скинути рекорд?")) {
+        document.getElementById('recordDisplay').addEventListener('click', () => {
+            if (quizInstance && confirm("Скинути рекорд?")) {
                 quizInstance.resetRecord();
             }
         });
+    });
+    
         class Quiz {
             constructor(questions, mode = "multiple-choice") {
                 this.questions = questions;
@@ -248,7 +543,7 @@
             playSound(type) {
                 try {
                     const sound = document.getElementById("sound" + type);
-                    if(sound) {
+                    if (sound) {
                         sound.currentTime = 0;
                         sound.play().catch(e => console.log("Sound play failed", e));
                     }
@@ -268,7 +563,7 @@
             showResult() {
                 const total = this.questions.length;
                 const score = this.score;
-                
+
                 // GOOGLE SHEETS SAVE LOGIC
                 sendData("Finish", score, total);
 
@@ -328,80 +623,128 @@
             };
         });
 
+window.addEventListener("load", () => {
+    startQuiz("multiple-choice");
+});
 
         const questions = [
-
 {
-    question: "Яка максимальна висота ураження цілі для системи 'Mistral'?",
+    question: "Яка маса ракети LMM Martlet?",
     options: [
-        { text: "5200 м", correct: false },
-        { text: "4500 м", correct: false },
-        { text: "3000 м", correct: true },
-        { text: "3800 м", correct: false }
-    ]
-},
-
-{
-    question: "Час роботи блоку EPR перед стрільбою після його активації?",
-    options: [
-        { text: "30 секунд", correct: false },
-        { text: "45 секунд", correct: true },
-        { text: "60 секунд", correct: false },
-        { text: "90 секунд", correct: false }
-    ]
-},
-
-{
-    question: "Яку максимальну швидкість розвиває ракета 'Mistral'?",
-    options: [
-        { text: "3 Маха", correct: false },
-        { text: "1,5 Маха", correct: false },
-        { text: "850 м/с", correct: true },
-        { text: "570 м/с", correct: false }
-    ]
-},
-
-{
-    question: "Яка мінімальна дальність стрільби для ПЗРК 'Mistral'?",
-    options: [
-        { text: "400 м", correct: false },
-        { text: "300 м", correct: false },
-        { text: "500 м", correct: false },
-        { text: "600 м", correct: true }
-    ]
-},
-
-{
-    question: "Яка максимальна швидкість цілі, яку може ефективно вражати 'Mistral'?",
-    options: [
-        { text: "720 м/с", correct: false },
-        { text: "360 м/с", correct: false },
-        { text: "270 м/с", correct: false },
-        { text: "410 м/с", correct: true }
-    ]
-},  
-
-
-{
-    question: "Що сигналізує загоряння світлодіода 'BAT' у прицілі під час бойової роботи?",
-    options: [
-        { text: "Несправність у електричному колі ракети.", correct: false },
-        { text: "Система успішно пройшла самодіагностику.", correct: false },
-        { text: "Батарея повністю заряджена і готова до роботи.", correct: false },
-        { text: "Залишилося 5 секунд до закінчення роботи джерела живлення.", correct: true }
+        { text: "17 кг", correct: false },
+        { text: "21 кг", correct: false },
+        { text: "13 кг", correct: true },
+        { text: "11 кг", correct: false }
     ]
 },
 
 
 {
-    question: "У разі якої несправності ракета виштовхується з пускової труби, і падає в 15-30 метрах від позиції?",
+    question: "Який тип підривника використовується в бойовій частині ракети Martlet?",
     options: [
-        { text: "Незахват цілі", correct: false },
-        { text: "Несправність двигуна", correct: true },
-        { text: "Несправність ГСН", correct: false },
-        { text: "Зрив захвату цілі", correct: false }
+        { text: "Контактний", correct: false },
+        { text: "Неконтактний лазерний", correct: true },
+        { text: "Тепловий", correct: false },
+        { text: "Радіолокаційний", correct: false }
     ]
 },
+
+
+// {
+//     question: "Яка перевага дає двоканальна система наведення LMM Martlet?",
+//     options: [
+//         { text: "Вона дозволяє ракеті летіти швидше", correct: false },
+//         { text: "Комплекс оборони цілі може не спрацювати автоматичним відстрілом ІЧ-пасток", correct: true },
+//         { text: "Вона збільшує масу бойової частини", correct: false },
+//         { text: "Вона не вимагає участі оператора після пуску", correct: false }
+//     ]
+// },
+
+{
+    question: "Яку дію необхідно виконати оператору протягом трьох секунд безпосередньо перед пуском?",
+    options: [
+        { text: "Перевірити колір індикатора вологості", correct: false },
+        { text: "Супроводжувати ціль, щоб лазер запам'ятав траєкторію", correct: true },
+        { text: "Приєднати джерело живлення", correct: false },
+        { text: "Натиснути на пристрій для стравлювання повітря", correct: false }
+    ]
+},
+
+
+{
+    question: "Скільки часу є у оператора для здійснення пуску після включення системи і супроводження цілі?",
+    options: [
+        { text: "23  секунди", correct: false },
+        { text: "16 секунд", correct: false },
+        { text: "12 секунд", correct: true },
+        { text: "Необмежений час, поки ціль у прицілі", correct: false }
+    ]
+},
+
+
+{
+    question: "Яку початкову перевірку необхідно провести з тубусом ракети після розпакування, окрім огляду на механічні пошкодження?",
+    options: [
+        { text: "Перевірити, що індикатор вологості синього кольору", correct: true },
+        { text: "Перевірити заряд джерела живлення", correct: false },
+        { text: "Перевірити термін придатності ракети", correct: false },
+        { text: "Зважити тубус для перевірки маси", correct: false }
+    ]
+},
+
+
+{
+    question: "Яка маса кумулятивно-осколочної бойової частини ракети LMM Martlet?",
+    options: [
+        { text: "13 кг", correct: false },
+        { text: "3 кг", correct: true },
+        { text: "5 кг", correct: false },
+        { text: "1,5 кг", correct: false }
+    ]
+},
+
+
+{
+    question: "Яка система наведення використовується ракетою Martlet на кінцевому ділянці траєкторії?",
+    options: [
+        { text: "Інфрачервона", correct: true },
+        { text: "Тільки лазерна променева", correct: false },
+        { text: "Радіокомандна", correct: false },
+        { text: "Супутникова (GPS)", correct: false }
+    ]
+},
+
+{
+    question: "Яка максимальна дальність стрільби ПЗРК LMM Martlet?",
+    options: [
+        { text: "До 1,5 км", correct: false },
+        { text: "До 13 км", correct: false },
+        { text: "До 8 км", correct: true },
+        { text: "До 3 км", correct: false }
+    ]
+},
+
+{
+    question: "Що потрібно зробити з пристроєм для виведення зайвого повітря перед пуском?",
+    options: [
+        { text: "Тримати 3 секунди", correct: false },
+        { text: "Натиснути і негайно відпустити", correct: false },
+        { text: "Тримати 6 секунд", correct: true },
+        { text: "Тримати 12 секунд", correct: false }
+    ]
+},
+
+
+{
+    question: "Які довжина та діаметр корпусу ракети LMM Martlet?",
+    options: [
+        { text: "Довжина 1,3 м, діаметр 67 мм", correct: false },
+        { text: "Довжина 1,5 м, діаметр 83 мм", correct: false },
+        { text: "Довжина 1,6 м, діаметр 76 мм", correct: false },
+        { text: "Довжина 1,3 м, діаметр 76 мм", correct: true }
+    ]
+},
+
 
 
 
@@ -409,7 +752,7 @@
 
 
         ];
-    </script>
+     </script>
 </body>
 
 </html>

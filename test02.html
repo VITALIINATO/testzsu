@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,59 +9,346 @@
     <script src="config.js"></script>
     <style>
         /* Styles same as original, plus modal */
-        body { margin: 0; font-family: Arial, sans-serif; min-height: 100vh; background: #234b30; background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.02) 0px, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 20px), linear-gradient(to bottom right, #2e5a3f, #1f442c); background-size: 100% 100%, cover; display: flex; align-items: center; justify-content: center; }
-        .quiz-container { box-sizing: border-box; position: relative; width: 100%; max-width: 700px; text-align: center; padding: 20px; border: 3px solid #228B22; background: rgba(0, 50, 0, 0.85); border-radius: 20px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); margin: 0px; display: flex; flex-direction: column; min-height: 95vh; }
-        .background-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; z-index: -1; opacity: 0.1; filter: grayscale(0.7); }
-        .progress-bar { width: 100%; height: 25px; background: rgba(255, 255, 255, 0.1); border-radius: 15px; overflow: hidden; margin-bottom: 20px; position: relative; box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3); }
-        .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #2d88b3, #1e4d5b); transition: width 0.3s ease; box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5); }
-        .progress-text { position: absolute; width: 100%; top: 0; font-size: 16px; font-weight: bold; padding: 3px 0; color: #fff; text-shadow: 0 0 3px rgba(0, 0, 0, 0.7); }
-        .question { font-size: 22px; margin-bottom: 25px; font-weight: bold; background-color: rgba(255, 255, 255, 0.15); color: #fff; padding: 15px 20px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); display: flex; align-items: center; justify-content: center; text-align: center; }
-        .options { display: flex; flex-direction: column; margin-bottom: 20px; flex-grow: 1; }
-        .option { background-color: #228B22; color: #fff; font-size: 16px; padding: 14px 20px; border: none; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; text-align: left; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); font-weight: bold; text-shadow: 0 0 2px rgba(0, 0, 0, 0.5); display: flex; align-items: flex-start; margin-bottom: 15px; width: 100%; box-sizing: border-box; }
-        .option:last-child { margin-bottom: 0; }
-        .option:hover { background-color: #1ac21a; transform: scale(1.02); transform-origin: center; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6); }
-        .option-letter { font-weight: bold; margin-right: 12px; min-width: 24px; color: #ffd700; }
-        .result { font-size: 18px; background-color: rgba(0, 50, 0, 0.95); color: #f0f0f0; padding: 10px; border-radius: 12px; margin-bottom: 20px; border: 1px solid rgba(34, 139, 34, 0.5); box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4); font-weight: bold; min-height: 30px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .next-button { display: none; padding: 10px 35px; font-size: 16px; background-color: #1e4d5b; color: white; border: none; border-radius: 18px; cursor: pointer; font-weight: bold; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); margin-top: 0px; margin-bottom: 10px; }
-        .next-button:hover { background-color: #163842; transform: scale(1.05); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7); }
-        .restart-button { display: none; padding: 14px 35px; font-size: 18px; background-color: #2e8b57; color: white; border: none; border-radius: 18px; cursor: pointer; font-weight: bold; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); margin: 0 auto; }
-        .restart-button:hover { background-color: #226633; transform: scale(1.05); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7); }
-        footer { margin-top: auto; margin-bottom: 10px; font-size: 13px; color: #aaa; }
-        .result.correct { background-color: rgba(46, 139, 87, 0.9); color: #e0ffe0; border: 1px solid rgba(46, 139, 87, 0.7); }
-        .result.incorrect { background-color: rgba(178, 34, 34, 0.9); color: #ffe0e0; border: 1px solid rgba(178, 34, 34, 0.7); }
-        .record-display { font-size: 10px; font-weight: bold; color: #ffd700; margin-bottom: 15px; text-shadow: 0 0 4px rgba(0, 0, 0, 0.7); padding: 8px 16px; border-radius: 12px; display: inline-block; min-width: 200px; cursor: pointer; transition: all 0.3s ease; }
-        .record-display:hover { background-color: rgba(255, 215, 0, 0.2); transform: scale(1.05); }
-        .errors-list { text-align: left; color: #fff; font-size: 16px; margin-top: 20px; background: rgba(0, 0, 0, 0.3); padding: 10px; border-radius: 12px; max-height: 300px; overflow-y: auto; display: none; }
-        .difficulty-selection { text-align: center; padding: 40px 20px; background: transparent; border-radius: 20px; margin: 20px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); display: none; }
-        .difficulty-btn, .difficulty-btn2 { background-color: #302e8b; color: white; font-size: 18px; padding: 15px 25px; border: none; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); min-width: 200px; font-weight: bold; margin: 10px; display: inline-block; }
-        .difficulty-btn2 { background-color: #8b2e2e; }
-        .difficulty-btn:hover, .difficulty-btn2:hover { background-color: #226622; transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6); }
-        @media (max-width: 600px) { .quiz-container { max-width: 95%; padding: 15px; } .question { font-size: 18px; padding: 12px 15px; } .option { font-size: 14px; padding: 12px 16px; } .difficulty-btn, .difficulty-btn2 { display: block; width: 100%; margin: 10px 0; } }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            background: #234b30;
+            background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.02) 0px, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 20px), linear-gradient(to bottom right, #2e5a3f, #1f442c);
+            background-size: 100% 100%, cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quiz-container {
+            box-sizing: border-box;
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            text-align: center;
+            padding: 20px;
+            border: 3px solid #228B22;
+            background: rgba(0, 50, 0, 0.85);
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            margin: 0px;
+            display: flex;
+            flex-direction: column;
+            min-height: 95vh;
+        }
+
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            opacity: 0.1;
+            filter: grayscale(0.7);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            position: relative;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #2d88b3, #1e4d5b);
+            transition: width 0.3s ease;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .progress-text {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 3px 0;
+            color: #fff;
+            text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
+        }
+
+        .question {
+            font-size: 22px;
+            margin-bottom: 25px;
+            font-weight: bold;
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            padding: 15px 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .option {
+            background-color: #228B22;
+            color: #fff;
+            font-size: 16px;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            font-weight: bold;
+            text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .option:last-child {
+            margin-bottom: 0;
+        }
+
+        .option:hover {
+            background-color: #1ac21a;
+            transform: scale(1.02);
+            transform-origin: center;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+        }
+
+        .option-letter {
+            font-weight: bold;
+            margin-right: 12px;
+            min-width: 24px;
+            color: #ffd700;
+        }
+
+        .result {
+            font-size: 18px;
+            background-color: rgba(0, 50, 0, 0.95);
+            color: #f0f0f0;
+            padding: 10px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(34, 139, 34, 0.5);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+            font-weight: bold;
+            min-height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .next-button {
+            display: none;
+            padding: 10px 35px;
+            font-size: 16px;
+            background-color: #1e4d5b;
+            color: white;
+            border: none;
+            border-radius: 18px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            margin-top: 0px;
+            margin-bottom: 10px;
+        }
+
+        .next-button:hover {
+            background-color: #163842;
+            transform: scale(1.05);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
+        }
+
+        .restart-button {
+            display: none;
+            padding: 14px 35px;
+            font-size: 18px;
+            background-color: #2e8b57;
+            color: white;
+            border: none;
+            border-radius: 18px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            margin: 0 auto;
+        }
+
+        .restart-button:hover {
+            background-color: #226633;
+            transform: scale(1.05);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
+        }
+
+        footer {
+            margin-top: auto;
+            margin-bottom: 10px;
+            font-size: 13px;
+            color: #aaa;
+        }
+
+        .result.correct {
+            background-color: rgba(46, 139, 87, 0.9);
+            color: #e0ffe0;
+            border: 1px solid rgba(46, 139, 87, 0.7);
+        }
+
+        .result.incorrect {
+            background-color: rgba(178, 34, 34, 0.9);
+            color: #ffe0e0;
+            border: 1px solid rgba(178, 34, 34, 0.7);
+        }
+
+        .record-display {
+            font-size: 10px;
+            font-weight: bold;
+            color: #ffd700;
+            margin-bottom: 15px;
+            text-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
+            padding: 8px 16px;
+            border-radius: 12px;
+            display: inline-block;
+            min-width: 200px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .record-display:hover {
+            background-color: rgba(255, 215, 0, 0.2);
+            transform: scale(1.05);
+        }
+
+        .errors-list {
+            text-align: left;
+            color: #fff;
+            font-size: 16px;
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+        }
+
+      
+        .difficulty-btn,
+        .difficulty-btn2 {
+            background-color: #302e8b;
+            color: white;
+            font-size: 18px;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            min-width: 200px;
+            font-weight: bold;
+            margin: 10px;
+            display: inline-block;
+        }
+
+        .difficulty-btn2 {
+            background-color: #8b2e2e;
+        }
+
+        .difficulty-btn:hover,
+        .difficulty-btn2:hover {
+            background-color: #226622;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+        }
+
+        @media (max-width: 600px) {
+            .quiz-container {
+                max-width: 95%;
+                padding: 15px;
+            }
+
+            .question {
+                font-size: 18px;
+                padding: 12px 15px;
+            }
+
+            .option {
+                font-size: 14px;
+                padding: 12px 16px;
+            }
+
+            .difficulty-btn,
+            .difficulty-btn2 {
+                display: block;
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+
         /* Modal */
-        .name-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; display: flex; align-items: center; justify-content: center; }
-        .name-box { background: #1a472a; padding: 30px; border-radius: 15px; border: 2px solid #ffd700; text-align: center; max-width: 400px; width: 90%; }
-        .name-input { width: 100%; padding: 10px; margin: 10px 0; font-size: 18px; border-radius: 5px; border: none; box-sizing: border-box; }
+        .name-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .name-box {
+            background: #1a472a;
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #ffd700;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .name-input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 18px;
+            border-radius: 5px;
+            border: none;
+            box-sizing: border-box;
+        }
+        .quiz-container > * { display: block; }
     </style>
 </head>
 
 <body>
-    <!-- Modal for Name and Password -->
-    <div id="nameModal" class="name-modal">
-        <div class="name-box">
-            <h2 style="color: #ffd700; margin-bottom: 15px;">Вхід</h2>
-            <input type="text" id="usernameInput" class="name-input" placeholder="Позивний">
-            <input type="password" id="passwordInput" class="name-input" placeholder="Пароль">
-            <button id="startGameBtn" class="difficulty-btn">Почати</button>
-            <div id="loginError" style="color: #ff6b6b; display: none; margin-top: 10px;">Невірний пароль або пусте ім'я</div>
-        </div>
-    </div>
+
 
     <div class="quiz-container">
-        <div class="difficulty-selection" id="difficultySelection">
-            <h2 style="color: #ffd700; margin-bottom: 20px;">Оберіть рівень складності:</h2>
-            <button id="easyMode" class="difficulty-btn">Легше</button>
-            <button id="hardMode" class="difficulty-btn2">Складніше</button>
-        </div>
+       
         <div class="background-image" id="backgroundImage"></div>
         <div class="record-display" id="recordDisplay"></div>
         <div class="progress-bar">
@@ -83,62 +369,71 @@
         </footer>
     </div>
     <script>
-        let quizInstance = null;
-        let currentUser = "";
+           let currentUser = "";
+    let quizInstance = null;
 
-        // Helper function to send data
-        function sendData(action, score = "-", total = "-") {
-            const payload = {
-                username: currentUser,
-                action: action,
-                testName: "RBS-70 (Test 02)",
-                score: score,
-                total: total
-            };
-            console.log("Attempting to send data:", payload);
-            
-            fetch(GOOGLE_SCRIPT_URL, {
-                method: 'POST',
-                body: JSON.stringify(payload)
-            })
-            .then(response => console.log("Data sent successfully"))
-            .catch(error => console.error("Error sending data:", error));
+    // === Проверка сессии ===
+    (function () {
+        const authData = sessionStorage.getItem('nato_quiz_auth');
+        if (!authData) {
+            alert('Сесія не знайдена. Увійдіть через головну сторінку.');
+            window.location.href = 'index.html';
+            return;
         }
+        try {
+            const data = JSON.parse(authData);
+            currentUser = data.name || "Анонім";
+        } catch (e) {
+            sessionStorage.removeItem('nato_quiz_auth');
+            window.location.href = 'index.html';
+            return;
+        }
+    })();
 
-        document.getElementById('startGameBtn').addEventListener('click', function() {
-            const name = document.getElementById('usernameInput').value;
-            const pass = document.getElementById('passwordInput').value;
-            
-            if(name.trim().length > 1 && pass === USER_PASSWORD) {
-                currentUser = name;
-                document.getElementById('nameModal').style.display = 'none';
-                // Start quiz
-                startQuiz("multiple-choice");
-                sendData("Login");
-            } else {
-                document.getElementById('loginError').style.display = 'block';
+    // === Отправка данных ===
+    function sendData(action, score = "-", total = "-") {
+        const payload = {
+            username: currentUser,
+            action: action,
+            testName: "RBS-70 (Test 02)",
+            score: score,
+            total: total
+        };
+        fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        }).catch(e => console.error("Send error:", e));
+    }
+
+    // === Запуск теста ===
+    function startQuiz() {
+        document.querySelectorAll(".quiz-container > *").forEach(el => {
+            el.style.display = "block";
+        });
+        quizInstance = new Quiz(questions, "multiple-choice");
+    }
+
+    // === Инициализация после загрузки DOM ===
+    document.addEventListener("DOMContentLoaded", function () {
+        startQuiz();
+
+        document.getElementById('restartButton').onclick = () => {
+            window.location.href = "index.html";
+        };
+
+        document.getElementById('nextButton').onclick = () => {
+            if (quizInstance) {
+                quizInstance.moveToNextQuestion();
             }
-        });
+        };
 
-        function startQuiz(mode) {
-            document.getElementById("difficultySelection").style.display = "none";
-            document.querySelectorAll(".quiz-container > *").forEach(el => {
-                if (el.id !== "difficultySelection") el.style.display = "block";
-            });
-            quizInstance = new Quiz(questions, mode);
-        }
-
-        document.addEventListener("DOMContentLoaded", function () {
-            document.getElementById('restartButton').onclick = function () {
-                window.location.href = "index.html";
-            };
-        });
-
-        document.getElementById('recordDisplay').addEventListener('click', function () {
-            if (quizInstance && confirm("Ви впевнені, що хочете скинути рекорд?")) {
+        document.getElementById('recordDisplay').addEventListener('click', () => {
+            if (quizInstance && confirm("Скинути рекорд?")) {
                 quizInstance.resetRecord();
             }
         });
+    });
+    
         class Quiz {
             constructor(questions, mode = "multiple-choice") {
                 this.questions = questions;
@@ -248,7 +543,7 @@
             playSound(type) {
                 try {
                     const sound = document.getElementById("sound" + type);
-                    if(sound) {
+                    if (sound) {
                         sound.currentTime = 0;
                         sound.play().catch(e => console.log("Sound play failed", e));
                     }
@@ -268,7 +563,7 @@
             showResult() {
                 const total = this.questions.length;
                 const score = this.score;
-                
+
                 // GOOGLE SHEETS SAVE LOGIC
                 sendData("Finish", score, total);
 
@@ -328,213 +623,216 @@
             };
         });
 
+window.addEventListener("load", () => {
+    startQuiz("multiple-choice");
+});
 
         const questions = [
 
-{
-        question: "Що відбувається в системі, коли оператор встановлює перемикач вибору швидкості вітру в положення, що відповідає вітру більше 5 м/с?",
-        options: [
-            { text: "Активується додаткова стабілізація гіро-платформи для компенсації вібрацій.", correct: false },
-            { text: "У телескопі з'являється додаткова прицільна марка для упреждення.", correct: false },
-            { text: "Замикаються мікроперемикачі в стійці, які передають дані про напрямок вітру для внесення поправки кермами ракети.", correct: true },
-            { text: "Збільшується інтенсивність променя наведення для кращого проходження через повітряні потоки.", correct: false }
-        ]
-    },
+            {
+                question: "Що відбувається в системі, коли оператор встановлює перемикач вибору швидкості вітру в положення, що відповідає вітру більше 5 м/с?",
+                options: [
+                    { text: "Активується додаткова стабілізація гіро-платформи для компенсації вібрацій.", correct: false },
+                    { text: "У телескопі з'являється додаткова прицільна марка для упреждення.", correct: false },
+                    { text: "Замикаються мікроперемикачі в стійці, які передають дані про напрямок вітру для внесення поправки кермами ракети.", correct: true },
+                    { text: "Збільшується інтенсивність променя наведення для кращого проходження через повітряні потоки.", correct: false }
+                ]
+            },
 
-{
-        question: "При яких умовах оператору слід використовувати перемикач автоматичного підйому траєкторії (TRAJ. ELEV.) і коли його необхідно активувати в ході передпускової послідовності?",
-        options: [
-            { text: "Для ураження низьколітаючих цілей уникнення зіткнення з землею; вмикається після зняття з запобіжника.", correct: true },
-            { text: "Для збільшення максимальної дальності польоту ракети; вмикається до зняття з запобіжника.", correct: false },
-            { text: "Для поліпшення захоплення цілі в нічних умовах; вмикається разом із приладом COND.", correct: false },
-            { text: "Для компенсації сильного бічного вітру; вмикається одночасно з натисканням кнопки спуску.", correct: false }
-        ]
-    },
+            {
+                question: "При яких умовах оператору слід використовувати перемикач автоматичного підйому траєкторії (TRAJ. ELEV.) і коли його необхідно активувати в ході передпускової послідовності?",
+                options: [
+                    { text: "Для ураження низьколітаючих цілей уникнення зіткнення з землею; вмикається після зняття з запобіжника.", correct: true },
+                    { text: "Для збільшення максимальної дальності польоту ракети; вмикається до зняття з запобіжника.", correct: false },
+                    { text: "Для поліпшення захоплення цілі в нічних умовах; вмикається разом із приладом COND.", correct: false },
+                    { text: "Для компенсації сильного бічного вітру; вмикається одночасно з натисканням кнопки спуску.", correct: false }
+                ]
+            },
 
-    {
-        question: "Який основний принцип керування лінією прицілювання та променем наведення за допомогою джойстика для великого пальця після пуску ракети?",
-        options: [
-            { text: "Рух джойстика безпосередньо змінює кутове положення серво-керованого дзеркала.", correct: false },
-            { text: "Рух джойстика активує сервоприводи для грубого наведення всієї пускової установки.", correct: false },
-            { text: "Рух джойстика калібрує гіро-платформу відповідно до руху цілі.", correct: false },
-            { text: "Рух джойстика викликає зміну швидкості та прискорення лінії прицілювання та променя наведення.", correct: true }
-        ]
-    },
+            {
+                question: "Який основний принцип керування лінією прицілювання та променем наведення за допомогою джойстика для великого пальця після пуску ракети?",
+                options: [
+                    { text: "Рух джойстика безпосередньо змінює кутове положення серво-керованого дзеркала.", correct: false },
+                    { text: "Рух джойстика активує сервоприводи для грубого наведення всієї пускової установки.", correct: false },
+                    { text: "Рух джойстика калібрує гіро-платформу відповідно до руху цілі.", correct: false },
+                    { text: "Рух джойстика викликає зміну швидкості та прискорення лінії прицілювання та променя наведення.", correct: true }
+                ]
+            },
 
-{
-        question: "Яка функція перемикача День/Сутінки/Ніч активується лише в положенні Ніч при підключеному приладі нічного бачення (COND)?",
-        options: [
-            { text: "Інтенсивність світлодіодного індикатора залишається нормальною.", correct: false },
-            { text: "Зменшується інтенсивність світлодіодного індикатора Стрільба дозволена.", correct: true },
-            { text: "Відключається підсвітка прицільної сітки телескопа.", correct: false },
-            { text: "Вмикається підсвітка прицільної сітки телескопа.", correct: false }
-        ]
-    },
+            {
+                question: "Яка функція перемикача День/Сутінки/Ніч активується лише в положенні Ніч при підключеному приладі нічного бачення (COND)?",
+                options: [
+                    { text: "Інтенсивність світлодіодного індикатора залишається нормальною.", correct: false },
+                    { text: "Зменшується інтенсивність світлодіодного індикатора Стрільба дозволена.", correct: true },
+                    { text: "Відключається підсвітка прицільної сітки телескопа.", correct: false },
+                    { text: "Вмикається підсвітка прицільної сітки телескопа.", correct: false }
+                ]
+            },
 
-    {
-        question: "Мигаючий світловий сигнал у телескопі, що вказує напрямок для грубого прицілювання, з’являється, коли кероване дзеркало наближається до свого крайнього положення. Наскільки воно має відхилитися від центру, щоб спрацювала індикація?",
-        options: [
-            { text: "На 90% від максимального ходу.", correct: false },
-            { text: "На 12° по горизонталі або 9° по вертикалі.", correct: true },
-            { text: "На 2° по вертикалі.", correct: false },
-            { text: "На 7.5° по вертикалі.", correct: false }
-        ]
-    },
+            {
+                question: "Мигаючий світловий сигнал у телескопі, що вказує напрямок для грубого прицілювання, з’являється, коли кероване дзеркало наближається до свого крайнього положення. Наскільки воно має відхилитися від центру, щоб спрацювала індикація?",
+                options: [
+                    { text: "На 90% від максимального ходу.", correct: false },
+                    { text: "На 12° по горизонталі або 9° по вертикалі.", correct: true },
+                    { text: "На 2° по вертикалі.", correct: false },
+                    { text: "На 7.5° по вертикалі.", correct: false }
+                ]
+            },
 
-    {
-        question: "Яка з перелічених дій є безпосереднім механічним наслідком повороту нижньої частини лівої рукоятки для зняття системи з запобіжника?",
-        options: [
-            { text: "Замикається запобіжний вимикач для активації електроніки прицілу.", correct: false },
-            { text: "Подается живлення на батарею ракети.", correct: false },
-            { text: "Активується лазерний випромінювач променя наведення.", correct: false },
-            { text: "Тросовий спусковий механізм розблоковує механічну фіксацію гіро-платформи.", correct: true }
-        ]
-    },
+            {
+                question: "Яка з перелічених дій є безпосереднім механічним наслідком повороту нижньої частини лівої рукоятки для зняття системи з запобіжника?",
+                options: [
+                    { text: "Замикається запобіжний вимикач для активації електроніки прицілу.", correct: false },
+                    { text: "Подается живлення на батарею ракети.", correct: false },
+                    { text: "Активується лазерний випромінювач променя наведення.", correct: false },
+                    { text: "Тросовий спусковий механізм розблоковує механічну фіксацію гіро-платформи.", correct: true }
+                ]
+            },
 
-{
-        question: "Для чого використовується перемикач TEST TRANSMISSION і яка тривалість тестової передачі променя наведення?",
-        options: [
-            { text: "Для тренування або з тактичних міркувань, коли потрібно передати промінь наведення без бойової ракети; тривалість 23 секунди.", correct: true },
-            { text: "Для синхронізації з іншими пусковими установками; тривалість не обмежена.", correct: false },
-            { text: "Для перевірки калібрування оптичної системи; тривалість 10 секунд.", correct: false },
-            { text: "Для прогріву лазерного діода в холодних умовах; тривалість 60 секунд.", correct: false }
-        ]
-    },
-{
-        question: "Чим принципово відрізняється процес прицілювання до моменту пуску ракети від процесу прицілювання після пуску?",
-        options: [
-            { text: "До пуску лінія прицілювання телескопа зміщена на 2°, після пуску вона збігається з ціллю.", correct: false },
-            { text: "До пуску використовується лише діоптричне кільце, після пуску — лише телескоп.", correct: false },
-            { text: "До пуску прицілювання здійснюється автоматично, після пуску — вручну.", correct: false },
-            { text: "До пуску використовується грубе прицілювання поворотом всієї установки, після пуску — точне прицілювання серво-керованим дзеркалом.", correct: true }
-        ]
-    },
+            {
+                question: "Для чого використовується перемикач TEST TRANSMISSION і яка тривалість тестової передачі променя наведення?",
+                options: [
+                    { text: "Для тренування або з тактичних міркувань, коли потрібно передати промінь наведення без бойової ракети; тривалість 23 секунди.", correct: true },
+                    { text: "Для синхронізації з іншими пусковими установками; тривалість не обмежена.", correct: false },
+                    { text: "Для перевірки калібрування оптичної системи; тривалість 10 секунд.", correct: false },
+                    { text: "Для прогріву лазерного діода в холодних умовах; тривалість 60 секунд.", correct: false }
+                ]
+            },
+            {
+                question: "Чим принципово відрізняється процес прицілювання до моменту пуску ракети від процесу прицілювання після пуску?",
+                options: [
+                    { text: "До пуску лінія прицілювання телескопа зміщена на 2°, після пуску вона збігається з ціллю.", correct: false },
+                    { text: "До пуску використовується лише діоптричне кільце, після пуску — лише телескоп.", correct: false },
+                    { text: "До пуску прицілювання здійснюється автоматично, після пуску — вручну.", correct: false },
+                    { text: "До пуску використовується грубе прицілювання поворотом всієї установки, після пуску — точне прицілювання серво-керованим дзеркалом.", correct: true }
+                ]
+            },
 
-    {
-        question: "Який стан гіро-платформи з дзеркалом у момент одразу після зняття з запобіжника, але до натискання кнопки спуску?",
-        options: [
-            { text: "Платформа починає відстежувати ціль автоматично за допомогою гіроскопів.", correct: false },
-            { text: "Механічна блокування припиняється, і платформа утримується в нульовому положенні за допомогою сервопривода (електрична блокування).", correct: true },
-            { text: "Платформа залишається механічно заблокованою до моменту вильоту ракети.", correct: false },
-            { text: "Платформа повністю розблокована і вільно слідує за рухами прицілу.", correct: false }
-        ]
-    },
-{
-        question: "Що відбувається з гіроскопами гіро-платформи в режимі грубого прицілювання до моменту пострілу?",
-        options: [
-            { text: "Вони використовуються для автоматичного супроводження цілі.", correct: false },
-            { text: "Вони відключені для економії енергії.", correct: false },
-            { text: "Вони вільно обертаються, щоб стабілізувати платформу.", correct: false },
-            { text: "Вони заблоковані в нульовому положенні, і на них впливають обертові моменти, пропорційні кутовій швидкості руху прицілу.", correct: true }
-        ]
-    },
+            {
+                question: "Який стан гіро-платформи з дзеркалом у момент одразу після зняття з запобіжника, але до натискання кнопки спуску?",
+                options: [
+                    { text: "Платформа починає відстежувати ціль автоматично за допомогою гіроскопів.", correct: false },
+                    { text: "Механічна блокування припиняється, і платформа утримується в нульовому положенні за допомогою сервопривода (електрична блокування).", correct: true },
+                    { text: "Платформа залишається механічно заблокованою до моменту вильоту ракети.", correct: false },
+                    { text: "Платформа повністю розблокована і вільно слідує за рухами прицілу.", correct: false }
+                ]
+            },
+            {
+                question: "Що відбувається з гіроскопами гіро-платформи в режимі грубого прицілювання до моменту пострілу?",
+                options: [
+                    { text: "Вони використовуються для автоматичного супроводження цілі.", correct: false },
+                    { text: "Вони відключені для економії енергії.", correct: false },
+                    { text: "Вони вільно обертаються, щоб стабілізувати платформу.", correct: false },
+                    { text: "Вони заблоковані в нульовому положенні, і на них впливають обертові моменти, пропорційні кутовій швидкості руху прицілу.", correct: true }
+                ]
+            },
 
-    {
-        question: "При тренуванні з прицілювання без бойової ракети (з навчальною ракетою), які умови мають бути дотримані, щоб можна було практикувати точне прицілювання за допомогою джойстика?",
-        options: [
-            { text: "Тренування точного прицілювання можливе лише за наявності спеціального тренувального модуля, підключеного до роз’єму TEST.", correct: false },
-            { text: "Перемикач TEST TRANSMISSION має бути в положенні ON.", correct: false },
-            { text: "Достатньо просто зняти систему з запобіжника.", correct: false },
-            { text: "Необхідно натиснути кнопку спуску при знятому запобіжнику, при цьому перемикач TEST TRANSMISSION має бути в положенні OFF.", correct: true }
-        ]
-    },
-{
-        question: "З якою метою лінія прицілювання приціла номінально встановлюється з вертикальною похибкою в 2° відносно напрямку пуску ракети?",
-        options: [
-            { text: "Щоб компенсувати балістичне зниження ракети на початковому етапі польоту.", correct: false },
-            { text: "Щоб оператор бачив ціль над ракетою в момент пуску.", correct: false },
-            { text: "Щоб зменшити вплив віддачі на точність прицілювання.", correct: false },
-            { text: "Щоб запобігти падінню ракети нижче коридору наведення одразу після пуску.", correct: true }
-        ]
-    },
+            {
+                question: "При тренуванні з прицілювання без бойової ракети (з навчальною ракетою), які умови мають бути дотримані, щоб можна було практикувати точне прицілювання за допомогою джойстика?",
+                options: [
+                    { text: "Тренування точного прицілювання можливе лише за наявності спеціального тренувального модуля, підключеного до роз’єму TEST.", correct: false },
+                    { text: "Перемикач TEST TRANSMISSION має бути в положенні ON.", correct: false },
+                    { text: "Достатньо просто зняти систему з запобіжника.", correct: false },
+                    { text: "Необхідно натиснути кнопку спуску при знятому запобіжнику, при цьому перемикач TEST TRANSMISSION має бути в положенні OFF.", correct: true }
+                ]
+            },
+            {
+                question: "З якою метою лінія прицілювання приціла номінально встановлюється з вертикальною похибкою в 2° відносно напрямку пуску ракети?",
+                options: [
+                    { text: "Щоб компенсувати балістичне зниження ракети на початковому етапі польоту.", correct: false },
+                    { text: "Щоб оператор бачив ціль над ракетою в момент пуску.", correct: false },
+                    { text: "Щоб зменшити вплив віддачі на точність прицілювання.", correct: false },
+                    { text: "Щоб запобігти падінню ракети нижче коридору наведення одразу після пуску.", correct: true }
+                ]
+            },
 
-    {
-        question: "Чому після пуску ракети оператору може знадобитися виконати грубе прицілювання, незважаючи на працюючу систему точного наведення?",
-        options: [
-            { text: "Тому що джойстик точного наведення працює лише на дальностях до 3 км.", correct: false },
-            { text: "Тому що дзеркало точного наведення має обмежений діапазон відхилення.", correct: true },
-            { text: "Тому що після пуску гіро-платформа блокується.", correct: false },
-            { text: "Тому що система точного наведення вимикається через 23 секунди.", correct: false }
-        ]
-    },
-{
-        question: "Максимальна висота ураження для ракети Mk-0?",
-        options: [
-            { text: "5000 м", correct: false },
-            { text: "4000 м", correct: false },
-            { text: "3000 м", correct: true },
-            { text: "2000 м", correct: false }
-        ]
-    },
+            {
+                question: "Чому після пуску ракети оператору може знадобитися виконати грубе прицілювання, незважаючи на працюючу систему точного наведення?",
+                options: [
+                    { text: "Тому що джойстик точного наведення працює лише на дальностях до 3 км.", correct: false },
+                    { text: "Тому що дзеркало точного наведення має обмежений діапазон відхилення.", correct: true },
+                    { text: "Тому що після пуску гіро-платформа блокується.", correct: false },
+                    { text: "Тому що система точного наведення вимикається через 23 секунди.", correct: false }
+                ]
+            },
+            {
+                question: "Максимальна висота ураження для ракети Mk-0?",
+                options: [
+                    { text: "5000 м", correct: false },
+                    { text: "4000 м", correct: false },
+                    { text: "3000 м", correct: true },
+                    { text: "2000 м", correct: false }
+                ]
+            },
 
-    {
-        question: "Максимальна дальність ураження для ракети Mk-0?",
-        options: [
-            { text: "3000 м", correct: false },
-            { text: "4000 м", correct: false },
-            { text: "5000 м", correct: true },
-            { text: "2000 м", correct: false }
-        ]
-    },
-{
-        question: "Яка модель ЗУР була прийнята на озброєння в 1977 році?",
-        options: [
-            { text: "Rb-70 Mk2", correct: false },
-            { text: "Bolide", correct: false },
-            { text: "Rb-70 Mk0", correct: true },
-            { text: "Rb-70 Mk1", correct: false },
-        ]
-    },
+            {
+                question: "Максимальна дальність ураження для ракети Mk-0?",
+                options: [
+                    { text: "3000 м", correct: false },
+                    { text: "4000 м", correct: false },
+                    { text: "5000 м", correct: true },
+                    { text: "2000 м", correct: false }
+                ]
+            },
+            {
+                question: "Яка модель ЗУР була прийнята на озброєння в 1977 році?",
+                options: [
+                    { text: "Rb-70 Mk2", correct: false },
+                    { text: "Bolide", correct: false },
+                    { text: "Rb-70 Mk0", correct: true },
+                    { text: "Rb-70 Mk1", correct: false },
+                ]
+            },
 
-        {
-        question: "Мінімальна дальність ураження для моделей Mk0, Mk1, Mk2?",
-        options: [
-            { text: "300 м", correct: false },
-            { text: "250 м", correct: false },
-            { text: "200 м", correct: true },
-            { text: "350 м", correct: false }
-        ]
-    },
+            {
+                question: "Мінімальна дальність ураження для моделей Mk0, Mk1, Mk2?",
+                options: [
+                    { text: "300 м", correct: false },
+                    { text: "250 м", correct: false },
+                    { text: "200 м", correct: true },
+                    { text: "350 м", correct: false }
+                ]
+            },
 
-    {
-        question: "Ракета з максимальною швидкістю 525 м/с — це яка модель?",
-        options: [
-            { text: "Rb-70 Mk2", correct: false },
-            { text: "Bolide", correct: false },
-            { text: "Rb-70 Mk1", correct: false },
-            { text: "Rb-70 Mk0", correct: true }
-        ]
-    },
+            {
+                question: "Ракета з максимальною швидкістю 525 м/с — це яка модель?",
+                options: [
+                    { text: "Rb-70 Mk2", correct: false },
+                    { text: "Bolide", correct: false },
+                    { text: "Rb-70 Mk1", correct: false },
+                    { text: "Rb-70 Mk0", correct: true }
+                ]
+            },
 
-    {
-        question: "Діаметр Mk-0, Mk-1, Mk-2, Bolide в мм?",
-        options: [
-            { text: "70", correct: false },
-            { text: "75", correct: false },
-            { text: "86", correct: false },
-            { text: "106", correct: true }
-        ]
-    },
+            {
+                question: "Діаметр Mk-0, Mk-1, Mk-2, Bolide в мм?",
+                options: [
+                    { text: "70", correct: false },
+                    { text: "75", correct: false },
+                    { text: "86", correct: false },
+                    { text: "106", correct: true }
+                ]
+            },
 
-     {
-        question: "Маса Mk-0?",
-        options: [
-            { text: "15", correct: true },
-            { text: "17", correct: false },
-            { text: "12", correct: false },
-            { text: "21", correct: false }
-        ]
-    },
+            {
+                question: "Маса Mk-0?",
+                options: [
+                    { text: "15", correct: true },
+                    { text: "17", correct: false },
+                    { text: "12", correct: false },
+                    { text: "21", correct: false }
+                ]
+            },
 
-     {
-        question: "Маса бойової частини Mk-0?",
-        options: [
-            { text: "1", correct: true },
-            { text: "1,27", correct: false },
-            { text: "1,1", correct: false },
-            { text: "2,1", correct: false }
-        ]
-    },
+            {
+                question: "Маса бойової частини Mk-0?",
+                options: [
+                    { text: "1", correct: true },
+                    { text: "1,27", correct: false },
+                    { text: "1,1", correct: false },
+                    { text: "2,1", correct: false }
+                ]
+            },
         ];
     </script>
 </body>
