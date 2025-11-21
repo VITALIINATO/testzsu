@@ -627,124 +627,79 @@ window.addEventListener("load", () => {
     startQuiz("multiple-choice");
 });
 
-        const questions = [
+       const questions = [
+
 {
-    question: "Яка маса ракети LMM Martlet?",
+    question: "Яка максимальна висота ураження цілі для системи 'Mistral'?",
     options: [
-        { text: "17 кг", correct: false },
-        { text: "21 кг", correct: false },
-        { text: "13 кг", correct: true },
-        { text: "11 кг", correct: false }
+        { text: "5200 м", correct: false },
+        { text: "4500 м", correct: false },
+        { text: "3000 м", correct: true },
+        { text: "3800 м", correct: false }
+    ]
+},
+
+{
+    question: "Час роботи блоку EPR перед стрільбою після його активації?",
+    options: [
+        { text: "30 секунд", correct: false },
+        { text: "45 секунд", correct: true },
+        { text: "60 секунд", correct: false },
+        { text: "90 секунд", correct: false }
+    ]
+},
+
+{
+    question: "Яку максимальну швидкість розвиває ракета 'Mistral'?",
+    options: [
+        { text: "3 Маха", correct: false },
+        { text: "1,5 Маха", correct: false },
+        { text: "850 м/с", correct: true },
+        { text: "570 м/с", correct: false }
+    ]
+},
+
+{
+    question: "Яка мінімальна дальність стрільби для ПЗРК 'Mistral'?",
+    options: [
+        { text: "400 м", correct: false },
+        { text: "300 м", correct: false },
+        { text: "500 м", correct: false },
+        { text: "600 м", correct: true }
+    ]
+},
+
+{
+    question: "Яка максимальна швидкість цілі, яку може ефективно вражати 'Mistral'?",
+    options: [
+        { text: "720 м/с", correct: false },
+        { text: "360 м/с", correct: false },
+        { text: "270 м/с", correct: false },
+        { text: "410 м/с", correct: true }
+    ]
+},  
+
+
+{
+    question: "Що сигналізує загоряння світлодіода 'BAT' у прицілі під час бойової роботи?",
+    options: [
+        { text: "Несправність у електричному колі ракети.", correct: false },
+        { text: "Система успішно пройшла самодіагностику.", correct: false },
+        { text: "Батарея повністю заряджена і готова до роботи.", correct: false },
+        { text: "Залишилося 5 секунд до закінчення роботи джерела живлення.", correct: true }
     ]
 },
 
 
 {
-    question: "Який тип підривника використовується в бойовій частині ракети Martlet?",
+    question: "У разі якої несправності ракета виштовхується з пускової труби, і падає в 15-30 метрах від позиції?",
     options: [
-        { text: "Контактний", correct: false },
-        { text: "Неконтактний лазерний", correct: true },
-        { text: "Тепловий", correct: false },
-        { text: "Радіолокаційний", correct: false }
+        { text: "Незахват цілі", correct: false },
+        { text: "Несправність двигуна", correct: true },
+        { text: "Несправність ГСН", correct: false },
+        { text: "Зрив захвату цілі", correct: false }
     ]
 },
-
-
-// {
-//     question: "Яка перевага дає двоканальна система наведення LMM Martlet?",
-//     options: [
-//         { text: "Вона дозволяє ракеті летіти швидше", correct: false },
-//         { text: "Комплекс оборони цілі може не спрацювати автоматичним відстрілом ІЧ-пасток", correct: true },
-//         { text: "Вона збільшує масу бойової частини", correct: false },
-//         { text: "Вона не вимагає участі оператора після пуску", correct: false }
-//     ]
-// },
-
-{
-    question: "Яку дію необхідно виконати оператору протягом трьох секунд безпосередньо перед пуском?",
-    options: [
-        { text: "Перевірити колір індикатора вологості", correct: false },
-        { text: "Супроводжувати ціль, щоб лазер запам'ятав траєкторію", correct: true },
-        { text: "Приєднати джерело живлення", correct: false },
-        { text: "Натиснути на пристрій для стравлювання повітря", correct: false }
-    ]
-},
-
-
-{
-    question: "Скільки часу є у оператора для здійснення пуску після включення системи і супроводження цілі?",
-    options: [
-        { text: "23  секунди", correct: false },
-        { text: "16 секунд", correct: false },
-        { text: "12 секунд", correct: true },
-        { text: "Необмежений час, поки ціль у прицілі", correct: false }
-    ]
-},
-
-
-{
-    question: "Яку початкову перевірку необхідно провести з тубусом ракети після розпакування, окрім огляду на механічні пошкодження?",
-    options: [
-        { text: "Перевірити, що індикатор вологості синього кольору", correct: true },
-        { text: "Перевірити заряд джерела живлення", correct: false },
-        { text: "Перевірити термін придатності ракети", correct: false },
-        { text: "Зважити тубус для перевірки маси", correct: false }
-    ]
-},
-
-
-{
-    question: "Яка маса кумулятивно-осколочної бойової частини ракети LMM Martlet?",
-    options: [
-        { text: "13 кг", correct: false },
-        { text: "3 кг", correct: true },
-        { text: "5 кг", correct: false },
-        { text: "1,5 кг", correct: false }
-    ]
-},
-
-
-{
-    question: "Яка система наведення використовується ракетою Martlet на кінцевому ділянці траєкторії?",
-    options: [
-        { text: "Інфрачервона", correct: true },
-        { text: "Тільки лазерна променева", correct: false },
-        { text: "Радіокомандна", correct: false },
-        { text: "Супутникова (GPS)", correct: false }
-    ]
-},
-
-{
-    question: "Яка максимальна дальність стрільби ПЗРК LMM Martlet?",
-    options: [
-        { text: "До 1,5 км", correct: false },
-        { text: "До 13 км", correct: false },
-        { text: "До 8 км", correct: true },
-        { text: "До 3 км", correct: false }
-    ]
-},
-
-{
-    question: "Що потрібно зробити з пристроєм для виведення зайвого повітря перед пуском?",
-    options: [
-        { text: "Тримати 3 секунди", correct: false },
-        { text: "Натиснути і негайно відпустити", correct: false },
-        { text: "Тримати 6 секунд", correct: true },
-        { text: "Тримати 12 секунд", correct: false }
-    ]
-},
-
-
-{
-    question: "Які довжина та діаметр корпусу ракети LMM Martlet?",
-    options: [
-        { text: "Довжина 1,3 м, діаметр 67 мм", correct: false },
-        { text: "Довжина 1,5 м, діаметр 83 мм", correct: false },
-        { text: "Довжина 1,6 м, діаметр 76 мм", correct: false },
-        { text: "Довжина 1,3 м, діаметр 76 мм", correct: true }
-    ]
-},
-
 
 
 
@@ -752,7 +707,7 @@ window.addEventListener("load", () => {
 
 
         ];
-     </script>
+      </script>
 </body>
 
 </html>
