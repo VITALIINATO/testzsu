@@ -1,335 +1,63 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <link rel="icon" href="icon.png" type="image/png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oerlikon</title>
+    <title>ЦІЛІ</title>
+    <script src="config.js"></script>
     <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            min-height: 100vh;
-            background: #234b30;
-            background-image:
-                repeating-linear-gradient(45deg,
-                    rgba(255, 255, 255, 0.02) 0px,
-                    rgba(255, 255, 255, 0.02) 1px,
-                    transparent 1px,
-                    transparent 20px),
-                linear-gradient(to bottom right, #2e5a3f, #1f442c);
-            background-size: 100% 100%, cover;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .quiz-container {
-            box-sizing: border-box;
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            text-align: center;
-            padding: 20px;
-            border: 3px solid #228B22;
-            background: rgba(0, 50, 0, 0.85);
-            border-radius: 20px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(5px);
-            margin: 10px;
-        }
-        .background-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            z-index: -1;
-            opacity: 0.1;
-            filter: grayscale(0.7);
-        }
-        .progress-bar {
-            width: 100%;
-            height: 25px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            position: relative;
-            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
-        }
-        .progress-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #2d88b3, #1e4d5b);
-            transition: width 0.3s ease;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-        .progress-text {
-            position: absolute;
-            width: 100%;
-            top: 0;
-            font-size: 16px;
-            font-weight: bold;
-            padding: 3px 0;
-            color: #fff;
-            text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
-        }
-        .question {
-            font-size: 26px;
-            margin-bottom: 20px;
-            font-weight: bold;
-            background-color: rgba(255, 255, 255, 0.15);
-            color: #fff;
-            padding: 12px 15px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-            min-height: 90px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            
-        }
-
-/* Десктопная версия (2 колонки) */
-.options {
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-}
-
-.option {
-    width: calc(50% - 10px);
-    margin-right: 20px;
-    margin-bottom: 20px;
-   background-color: #228B22;
-    color: #fff;
-    font-size: 18px;
-    padding: 14px 25px;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    flex: 1 1 45%;
-    min-width: 130px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-    font-weight: bold;
-    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-}
-
-.option:hover {
-    background-color: #1ac21a;
-   transform: scale(1.05); /* Увеличение на 2% вместо смещения */
-    transform-origin: center; /* Центр трансформации */
-    transition: all 0.3s ease;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
-}
-
-.option:nth-child(2n) {
-    margin-right: 0;
-}
-
-.option:nth-last-child(-n+2) {
-    margin-bottom: 0;
-}
-
-/* Мобильная версия (1 колонка) */
-@media (max-width: 600px) {
-    .options {
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .option {
-        width: 100%;
-        margin-right: 0;
-        margin-bottom: 15px !important; /* Принудительный отступ */
-    }
-    
-    .option:last-child {
-        margin-bottom: 0 !important;
-    }
-}
-
-        .result {
-            font-size: 22px;
-            background-color: rgba(0, 50, 0, 0.95);
-            color: #f0f0f0;
-            padding: 12px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(34, 139, 34, 0.5);
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
-            font-weight: bold;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-        .restart-button {
-            display: none;
-            padding: 14px 35px;
-            font-size: 18px;
-            background-color: #2e8b57;
-            color: white;
-            border: none;
-            border-radius: 18px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-            margin: 0 auto;
-        }
-        .restart-button:hover {
-            background-color: #226633;
-            transform: scale(1.05);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
-        }
-        footer {
-            margin-top: 25px;
-            font-size: 13px;
-            color: #aaa;
-        }
-        .result.correct {
-            background-color: rgba(46, 139, 87, 0.9);
-            color: #e0ffe0;
-            border: 1px solid rgba(46, 139, 87, 0.7);
-        }
-        .result.incorrect {
-            background-color: rgba(178, 34, 34, 0.9);
-            color: #ffe0e0;
-            border: 1px solid rgba(178, 34, 34, 0.7);
-        }
-        @media (max-width: 600px) {
-            .option {
-                flex: 1 1 100%;
-                font-size: 16px;
-                padding: 12px 18px;
-            }
-        }
-        .record-display {
-            font-size: 12px;
-            font-weight: bold;
-            color: #ffd700;
-            margin-bottom: 15px;
-            text-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
-            padding: 8px 16px;
-            border-radius: 12px;
-            display: inline-block;
-            min-width: 200px;
-        }
-
-        .record-display {
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-.record-display:hover {
-    background-color: rgba(255, 215, 0, 0.2);
-    transform: scale(1.05);
-}
-
-        .errors-list {
-            text-align: left;
-            color: #fff;
-            font-size: 16px;
-            margin-top: 20px;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 10px;
-            border-radius: 12px;
-            max-height: 300px;
-            overflow-y: auto;
-            display: none;
-        }
-
-
-.difficulty-selection {
-    text-align: center;
-    padding: 40px 20px;
-   background: transparent;
-    border-radius: 20px;
-    margin: 20px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-}
-
-.difficulty-btn {
-    background-color: #302e8b;
-    color: white;
-    font-size: 18px;
-    padding: 15px 25px;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-    min-width: 200px;
-    font-weight: bold;
-    margin: 10px; /* Добавляем отступы вокруг кнопок */
-    display: inline-block; /* Для правильного применения margin */
-}
-
-.difficulty-btn:hover {
-    background-color: #226622;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
-}
-
-.difficulty-btn2 {
-    background-color: #8b2e2e;
-    color: white;
-    font-size: 18px;
-    padding: 15px 25px;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-    min-width: 200px;
-    font-weight: bold;
-    margin: 10px; /* Добавляем отступы вокруг кнопок */
-    display: inline-block; /* Для правильного применения margin */
-}
-
-.difficulty-btn2:hover {
-    background-color: #226622;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
-}
-
-
-@media (max-width: 600px) {
-    .difficulty-btn {
-        display: block; /* На мобильных - одна кнопка под другой */
-        width: 100%;
-        margin: 10px 0; /* Отступы только сверху и снизу */
-    }
-}
-
-
-
-        .option-input {
-            padding: 10px;
-            font-size: 18px;
-            width: 100%;
-            border-radius: 10px;
-            border: none;
-            outline: none;
-            margin-bottom: 15px;
-            box-sizing: border-box;
-            text-align: center;
-        }
-        .quiz-container > * {
-            display: none;
-        }
-        .quiz-container > .difficulty-selection {
-            display: block;
-        }
+        /* Reusing styles plus modal */
+        body { margin: 0; font-family: Arial, sans-serif; min-height: 100vh; background: #234b30; background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.02) 0px, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 20px), linear-gradient(to bottom right, #2e5a3f, #1f442c); background-size: 100% 100%, cover; display: flex; align-items: center; justify-content: center; }
+        .quiz-container { box-sizing: border-box; position: relative; width: 100%; max-width: 700px; text-align: center; padding: 20px; border: 3px solid #228B22; background: rgba(0, 50, 0, 0.85); border-radius: 20px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); margin: 10px; display: flex; flex-direction: column; min-height: 95vh; }
+        .background-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; z-index: -1; opacity: 0.1; filter: grayscale(0.7); }
+        .progress-bar { width: 100%; height: 25px; background: rgba(255, 255, 255, 0.1); border-radius: 15px; overflow: hidden; margin-bottom: 20px; position: relative; box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3); }
+        .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #2d88b3, #1e4d5b); transition: width 0.3s ease; box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5); }
+        .progress-text { position: absolute; width: 100%; top: 0; font-size: 16px; font-weight: bold; padding: 3px 0; color: #fff; text-shadow: 0 0 3px rgba(0, 0, 0, 0.7); }
+        .question { font-size: 22px; margin-bottom: 25px; font-weight: bold; background-color: rgba(255, 255, 255, 0.15); color: #fff; padding: 15px 20px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); display: flex; align-items: center; justify-content: center; text-align: center; }
+        .options { display: flex; flex-direction: column; margin-bottom: 15px; flex-grow: 1; }
+        .option { background-color: #228B22; color: #fff; font-size: 16px; padding: 14px 20px; border: none; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; text-align: left; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); font-weight: bold; text-shadow: 0 0 2px rgba(0, 0, 0, 0.5); display: flex; align-items: flex-start; margin-bottom: 15px; width: 100%; box-sizing: border-box; }
+        .option:last-child { margin-bottom: 0; }
+        .option:hover { background-color: #1ac21a; transform: scale(1.02); transform-origin: center; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6); }
+        .option-letter { font-weight: bold; margin-right: 12px; min-width: 24px; color: #ffd700; }
+        .result { font-size: 18px; background-color: rgba(0, 50, 0, 0.95); color: #f0f0f0; padding: 10px; border-radius: 12px; margin-bottom: 15px; border: 1px solid rgba(34, 139, 34, 0.5); box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4); font-weight: bold; min-height: 30px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .next-button { display: none; padding: 10px 35px; font-size: 16px; background-color: #1e4d5b; color: white; border: none; border-radius: 18px; cursor: pointer; font-weight: bold; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); margin-bottom: 15px; }
+        .next-button:hover { background-color: #163842; transform: scale(1.05); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7); }
+        .restart-button { display: none; padding: 14px 35px; font-size: 18px; background-color: #2e8b57; color: white; border: none; border-radius: 18px; cursor: pointer; font-weight: bold; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); margin: 0 auto; }
+        .restart-button:hover { background-color: #226633; transform: scale(1.05); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7); }
+        footer { margin-top: auto; margin-bottom: 10px; font-size: 13px; color: #aaa; }
+        .result.correct { background-color: rgba(46, 139, 87, 0.9); color: #e0ffe0; border: 1px solid rgba(46, 139, 87, 0.7); }
+        .result.incorrect { background-color: rgba(178, 34, 34, 0.9); color: #ffe0e0; border: 1px solid rgba(178, 34, 34, 0.7); }
+        .record-display { font-size: 10px; font-weight: bold; color: #ffd700; margin-bottom: 15px; text-shadow: 0 0 4px rgba(0, 0, 0, 0.7); padding: 8px 16px; border-radius: 12px; display: inline-block; min-width: 200px; cursor: pointer; transition: all 0.3s ease; }
+        .record-display:hover { background-color: rgba(255, 215, 0, 0.2); transform: scale(1.05); }
+        .errors-list { text-align: left; color: #fff; font-size: 16px; margin-top: 20px; background: rgba(0, 0, 0, 0.3); padding: 10px; border-radius: 12px; max-height: 300px; overflow-y: auto; display: none; }
+        .difficulty-selection { text-align: center; padding: 40px 20px; background: transparent; border-radius: 20px; margin: 20px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); display: none; }
+        .difficulty-btn, .difficulty-btn2 { background-color: #302e8b; color: white; font-size: 18px; padding: 15px 25px; border: none; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); min-width: 200px; font-weight: bold; margin: 10px; display: inline-block; }
+        .difficulty-btn2 { background-color: #8b2e2e; }
+        .difficulty-btn:hover, .difficulty-btn2:hover { background-color: #226622; transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6); }
+        @media (max-width: 600px) { .quiz-container { max-width: 95%; padding: 15px; } .question { font-size: 18px; padding: 12px 15px; } .option { font-size: 14px; padding: 12px 16px; } .difficulty-btn, .difficulty-btn2 { display: block; width: 100%; margin: 10px 0; } }
+        .option-input { padding: 10px; font-size: 18px; width: 100%; border-radius: 10px; border: none; outline: none; margin-bottom: 15px; box-sizing: border-box; text-align: center; }
+        .quiz-container > * { display: none; }
+        .quiz-container > .difficulty-selection { display: block; }
+        /* Modal */
+        .name-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; display: flex; align-items: center; justify-content: center; }
+        .name-box { background: #1a472a; padding: 30px; border-radius: 15px; border: 2px solid #ffd700; text-align: center; max-width: 400px; width: 90%; }
+        .name-input { width: 100%; padding: 10px; margin: 10px 0; font-size: 18px; border-radius: 5px; border: none; box-sizing: border-box; }
     </style>
 </head>
 <body>
+    <!-- Modal for Name and Password -->
+    <div id="nameModal" class="name-modal">
+        <div class="name-box">
+            <h2 style="color: #ffd700; margin-bottom: 15px;">Вхід</h2>
+            <input type="text" id="usernameInput" class="name-input" placeholder="Прізвище та ініціали">
+            <input type="password" id="passwordInput" class="name-input" placeholder="Пароль">
+            <button id="startGameBtn" class="difficulty-btn">Почати</button>
+            <div id="loginError" style="color: #ff6b6b; display: none; margin-top: 10px;">Невірний пароль або пусте ім'я</div>
+        </div>
+    </div>
+
     <div class="quiz-container">
         <div class="difficulty-selection" id="difficultySelection">
             <h2 style="color: #ffd700; margin-bottom: 20px;">Оберіть рівень складності:</h2>
@@ -337,7 +65,7 @@
             <button id="hardMode" class="difficulty-btn2">Складніше</button>
         </div>
         <div class="background-image" id="backgroundImage"></div>
-      <div class="record-display" id="recordDisplay"></div>
+        <div class="record-display" id="recordDisplay"></div>
         <div class="progress-bar">
             <div class="progress-fill" id="progressFill"></div>
             <div class="progress-text" id="progressText">1 з 10</div>
@@ -345,6 +73,7 @@
         <div class="question" id="question"></div>
         <div class="options" id="options"></div>
         <div class="result" id="result"></div>
+        <button class="next-button" id="nextButton">Далі</button>
         <div class="errors-list" id="errorsList"></div>
         <button class="restart-button" id="restartButton">Почати знову</button>
         <audio id="soundRight" src="right.mp3"></audio>
@@ -355,6 +84,42 @@
     </div>
     <script>
         let quizInstance = null;
+        let currentUser = "";
+
+        // Helper function to send data
+        function sendData(action, score = "-", total = "-") {
+            const payload = {
+                username: currentUser,
+                action: action,
+                testName: "ЦІЛІ (Test 03)",
+                score: score,
+                total: total
+            };
+            console.log("Attempting to send data:", payload);
+            
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify(payload)
+            })
+            .then(response => console.log("Data sent successfully"))
+            .catch(error => console.error("Error sending data:", error));
+        }
+
+        document.getElementById('startGameBtn').addEventListener('click', function() {
+            const name = document.getElementById('usernameInput').value;
+            const pass = document.getElementById('passwordInput').value;
+            
+            if(name.trim().length > 1 && pass === USER_PASSWORD) {
+                currentUser = name;
+                document.getElementById('nameModal').style.display = 'none';
+                // Start quiz
+                startQuiz("multiple-choice");
+                sendData("Login");
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        });
+
         function startQuiz(mode) {
             document.getElementById("difficultySelection").style.display = "none";
             document.querySelectorAll(".quiz-container > *").forEach(el => {
@@ -365,18 +130,18 @@
         document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("easyMode").addEventListener("click", () => startQuiz("multiple-choice"));
             document.getElementById("hardMode").addEventListener("click", () => startQuiz("numeric-input"));
-            // Заменяем только эту строку:
-        document.getElementById('restartButton').onclick = function() {
-            window.location.href = "index.html";
-        };
+            document.getElementById('restartButton').onclick = function() {
+                window.location.href = "index.html";
+            };
+             document.getElementById('nextButton').onclick = function() {
+                if (quizInstance) quizInstance.moveToNextQuestion();
+            };
         });
-
         document.getElementById('recordDisplay').addEventListener('click', function() {
-        if (quizInstance && confirm("Ви впевнені, що хочете скинути рекорд?")) {
-            quizInstance.resetRecord();
-        }
-    });
-
+            if (quizInstance && confirm("Ви впевнені, що хочете скинути рекорд?")) {
+                quizInstance.resetRecord();
+            }
+        });
         class Quiz {
             constructor(questions, mode = "multiple-choice") {
                 this.questions = questions;
@@ -387,11 +152,12 @@
                 this.shuffleQuestions();
                 this.showQuestion();
                 this.initRecordDisplay();
+                this.awaitingNext = false;
             }
             initRecordDisplay() {
                 const recordDisplay = document.getElementById('recordDisplay');
                 const total = this.questions.length;
-                let recordKey = this.mode === "numeric-input" ? "quizRecord_hard" : "quizRecord_easy";
+                let recordKey = "quizRecord_easy";
                 const savedRecord = localStorage.getItem(recordKey);
                 if (savedRecord && total) {
                     recordDisplay.innerText = `Рекорд: ${savedRecord} з ${total}`;
@@ -406,6 +172,7 @@
                 }
             }
             showQuestion() {
+                this.awaitingNext = false;
                 const currentQuestion = this.questions[this.currentQuestionIndex];
                 document.getElementById('question').innerText = currentQuestion.question;
                 this.showOptions(currentQuestion.options);
@@ -413,80 +180,25 @@
                 document.getElementById('result').innerText = '';
                 document.getElementById('result').className = 'result';
                 document.getElementById('restartButton').style.display = 'none';
+                document.getElementById('nextButton').style.display = 'none';
                 document.getElementById('errorsList').innerHTML = '';
-                 document.getElementById('errorsList').style.display = 'none'; // Явно скрываем при каждом новом вопросе
+                document.getElementById('errorsList').style.display = 'none';
                 this.updateProgress();
             }
-   showOptions(options) {
-  const optionsContainer = document.getElementById("options");
-  optionsContainer.innerHTML = "";
-  if (this.mode === "numeric-input") {
-    const input = document.createElement("input");
-    input.type = "tel";
-    input.inputMode = "decimal";
-    input.placeholder = "Введіть число";
-    input.className = "option-input";
-    
-    input.addEventListener("input", function() {
-      const cursorPos = this.selectionStart;
-      let value = this.value;
-      
-      // Заменяем точки на запятые
-      value = value.replace(/\./g, ',');
-      
-      // Удаляем все символы, кроме цифр и запятых
-      value = value.replace(/[^0-9,]/g, '');
-      
-      // Разрешаем только одну запятую
-      const commaIndex = value.indexOf(',');
-      if (commaIndex !== -1) {
-        value = value.substring(0, commaIndex + 1) + 
-                value.substring(commaIndex + 1).replace(/,/g, '');
-      }
-      
-      // Удаляем лишние нули после запятой
-      if (commaIndex !== -1) {
-        const parts = value.split(',');
-        if (parts[1]) {
-          // Удаляем лишние нули в конце
-          parts[1] = parts[1].replace(/0+$/, '');
-          // Удаляем запятую, если после нее ничего нет
-          if (parts[1] === '') {
-            value = parts[0];
-          } else {
-            value = parts[0] + ',' + parts[1];
-          }
-        }
-      }
-      
-      this.value = value;
-      this.setSelectionRange(cursorPos, cursorPos);
-    });
-
-    input.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") this.checkAnswerInput(input.value);
-    });
-
-    optionsContainer.appendChild(input);
-
-    const submitBtn = document.createElement("button");
-    submitBtn.innerText = "Перевірити";
-    submitBtn.className = "option";
-    submitBtn.onclick = () => this.checkAnswerInput(input.value);
-    optionsContainer.appendChild(submitBtn);
-    
-  } else {
-    // Код для множественного выбора (легкий уровень)
-    this.shuffleOptions(options);
-    options.forEach(option => {
-      const button = document.createElement("button");
-      button.className = "option";
-      button.innerHTML = option.text;
-      button.onclick = () => this.checkAnswer(option);
-      optionsContainer.appendChild(button);
-    });
-  }
-}
+            showOptions(options) {
+                const optionsContainer = document.getElementById("options");
+                optionsContainer.innerHTML = "";
+                this.shuffleOptions(options);
+                const letters = ['A', 'B', 'C', 'D'];
+                options.forEach((option, index) => {
+                    const button = document.createElement("button");
+                    button.className = "option";
+                    const letter = letters[index] || String.fromCharCode(65 + index);
+                    button.innerHTML = `<span class="option-letter">${letter}.</span>${option.text}`;
+                    button.onclick = () => this.checkAnswer(option);
+                    optionsContainer.appendChild(button);
+                });
+            }
             shuffleOptions(options) {
                 for (let i = options.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
@@ -494,8 +206,8 @@
                 }
             }
             checkAnswer(selectedOption) {
-                const soundRight = document.getElementById("soundRight");
-                const soundWrong = document.getElementById("soundWrong");
+                if (this.awaitingNext) return;
+
                 const currentQuestion = this.questions[this.currentQuestionIndex];
                 const selectedText = selectedOption.text;
                 const correctOption = currentQuestion.options.find(option => option.correct);
@@ -504,69 +216,57 @@
                     this.score++;
                     document.getElementById('result').innerText = 'Вірно!';
                     document.getElementById('result').className = 'result correct';
-                    soundRight.currentTime = 0;
-                    soundRight.play();
+                    this.playSound("Right");
                 } else {
                     this.errors.push({ question: currentQuestion.question, user: selectedText, correct: correctText });
                     document.getElementById('result').innerText = `Невірно. Правильна відповідь: ${correctText}`;
                     document.getElementById('result').className = 'result incorrect';
-                    soundWrong.currentTime = 0;
-                    soundWrong.play();
+                    this.playSound("Wrong");
                 }
-                this.currentQuestionIndex++;
-                this.moveToNextQuestion();
+                
+                // Disable option buttons
+                const optionButtons = document.querySelectorAll('.option');
+                optionButtons.forEach(button => {
+                    button.disabled = true;
+                    button.style.opacity = '0.6';
+                    button.style.cursor = 'not-allowed';
+                });
+                
+                document.getElementById('nextButton').style.display = 'block';
+                this.awaitingNext = true;
             }
-   checkAnswerInput(userAnswer) {
-  // Заменяем запятую на точку для корректного парсинга
-  const normalizedAnswer = userAnswer.replace(',', '.');
-  const currentQuestion = this.questions[this.currentQuestionIndex];
-  const correctOption = currentQuestion.options.find(option => option.correct);
-  
-  // Парсим числа с учетом локали
-  const correctNumber = parseFloat(
-    correctOption.text.replace(',', '.').replace(/\s/g, '')
-  );
-  
-  const userNumber = parseFloat(normalizedAnswer);
-
-  // Сравниваем с допуском 0.01 для плавающих чисел
-  if (!isNaN(userNumber) && Math.abs(userNumber - correctNumber) < 0.01) {
-    this.score++;
-    this.showResultMessage("Вірно!", "correct");
-  } else {
-    this.errors.push({ 
-      question: currentQuestion.question, 
-      user: userAnswer, 
-      correct: correctOption.text 
-    });
-    this.showResultMessage(`Невірно. Правильна відповідь: ${correctOption.text}`, "incorrect");
-  }
-  
-  this.currentQuestionIndex++;
-  this.moveToNextQuestion();
-}
-
-
-            showResultMessage(text, type) {
-                const result = document.getElementById("result");
-                result.innerText = text;
-                result.className = `result ${type}`;
-                document.getElementById("sound" + (type === "correct" ? "Right" : "Wrong")).play();
+            
+            playSound(type) {
+                try {
+                    const sound = document.getElementById("sound" + type);
+                    if(sound) {
+                        sound.currentTime = 0;
+                        sound.play().catch(e => console.log("Sound play failed", e));
+                    }
+                } catch (e) {
+                    console.log("Audio system error");
+                }
             }
+
             moveToNextQuestion() {
+                this.currentQuestionIndex++;
                 if (this.currentQuestionIndex < this.questions.length) {
-                    setTimeout(() => this.showQuestion(), 1200);
+                    this.showQuestion();
                 } else {
-                    setTimeout(() => this.showResult(), 200);
+                    this.showResult();
                 }
-                this.updateProgress();
             }
             showResult() {
                 const total = this.questions.length;
                 const score = this.score;
+                
+                 // GOOGLE SHEETS SAVE LOGIC
+                sendData("Finish", score, total);
+
                 document.getElementById('question').innerText = `Ваш результат: ${score} з ${total}`;
                 document.getElementById('options').innerHTML = '';
                 document.getElementById('result').style.display = 'none';
+                document.getElementById('nextButton').style.display = 'none';
                 const errorsList = document.getElementById('errorsList');
                 errorsList.style.display = 'block';
                 errorsList.innerHTML = '<strong>Помилки:</strong><br>';
@@ -580,26 +280,22 @@
                 document.getElementById('progressText').innerText = '';
                 document.getElementById('progressFill').style.width = '100%';
                 document.getElementById('restartButton').style.display = 'block';
-                let recordKey = this.mode === "numeric-input" ? "quizRecord_hard" : "quizRecord_easy";
-                let recordCountKey = this.mode === "numeric-input" ? "quizRecordCount_hard" : "quizRecordCount_easy";
+                let recordKey = "quizRecord_easy";
                 const currentScore = score;
                 const savedRecord = localStorage.getItem(recordKey);
-                const savedRecordCount = localStorage.getItem(recordCountKey);
                 let record = savedRecord ? parseInt(savedRecord) : 0;
-                let recordCount = savedRecordCount ? parseInt(savedRecordCount) : 0;
                 const recordDisplay = document.getElementById('recordDisplay');
                 if (currentScore > record) {
                     localStorage.setItem(recordKey, currentScore);
-                    localStorage.setItem(recordCountKey, currentScore);
                     recordDisplay.innerText = `Рекорд: ${currentScore} з ${total}`;
                 } else {
-                    recordDisplay.innerText = `Рекорд: ${recordCount} з ${total}`;
+                    recordDisplay.innerText = `Рекорд: ${record} з ${total}`;
                 }
             }
             updateProgress() {
                 const totalQuestions = this.questions.length;
                 const progressPercent = totalQuestions === 0 ? 0 : (this.currentQuestionIndex / totalQuestions) * 100;
-                document.getElementById('progressText').innerText = `${this.currentQuestionIndex} з ${totalQuestions}`;
+                document.getElementById('progressText').innerText = `${this.currentQuestionIndex + 1} з ${totalQuestions}`;
                 document.getElementById('progressFill').style.width = `${progressPercent}%`;
             }
             setBackgroundImage(imageUrl) {
@@ -607,118 +303,61 @@
                 bgImage.style.backgroundImage = imageUrl ? `url(${imageUrl})` : 'none';
                 bgImage.style.opacity = imageUrl ? '0.15' : '0';
             }
-
             resetRecord() {
-        const recordKey = this.mode === "numeric-input" ? "quizRecord_hard" : "quizRecord_easy";
-        const recordCountKey = this.mode === "numeric-input" ? "quizRecordCount_hard" : "quizRecordCount_easy";
-        
-        localStorage.removeItem(recordKey);
-        localStorage.removeItem(recordCountKey);
-        this.initRecordDisplay();
-    }
-
+                const recordKey = "quizRecord_easy";
+                localStorage.removeItem(recordKey);
+                this.initRecordDisplay();
+            }
         }
-
-       const questions = [
-
+        
+        const questions = [
             {
-                question: "Довжина гармати Oerlikon в похідному положенні, в мм ?",
+                question: "Каков основной принцип наведения ракеты RBS-70?",
                 options: [
-                    { text: "3510 мм", correct: false },
-                    { text: "4100 мм", correct: true },
-                    { text: "4400 мм", correct: false },
-                    { text: "5100 мм", correct: false }
+                    { text: "Ракета получает координаты GPS от прицела и следует по ним к цели.", correct: false },
+                    { text: "Ракета следует за лучом наведения, который создается в прицеле..", correct: true },
+                    { text: "Наведение осуществляется по проводам, которые разматываются с ракеты после запуска.", correct: false },
+                    { text: "Ракета использует инфракрасную головку самонаведения для захвата тепловой сигнатуры цели.", correct: false }
                 ]
             },
-
-
            {
-                question: "Ширина гармати Oerlikon в похідному положенні, в мм ?",
+                question: "Каков основной принцип наведения ракеты RBS-70?",
                 options: [
-                    { text: "1300 мм", correct: false },
-                    { text: "1500 мм", correct: true },
-                    { text: "1400 мм", correct: false },
-                    { text: "1800 мм", correct: false }
-                ]
-            },
-
- {
-                question: "Висота гармати Oerlikon в похідному положенні, в мм?",
-                options: [
-                    { text: "1800 мм", correct: false },
-                    { text: "1600 мм", correct: true },
-                    { text: "1400 мм", correct: false },
-                    { text: "1900 мм", correct: false }
+                    { text: "Ракета получает координаты GPS от прицела и следует по ним к цели.", correct: false },
+                    { text: "Ракета следует за лучом наведения, который создается в прицеле..", correct: true },
+                    { text: "Наведение осуществляется по проводам, которые разматываются с ракеты после запуска.", correct: false },
+                    { text: "Ракета использует инфракрасную головку самонаведения для захвата тепловой сигнатуры цели.", correct: false }
                 ]
             },
             {
-                question: "Середня дальність срільби Oerlikon?",
+                question: "Каков основной принцип наведения ракеты RBS-70?",
                 options: [
-                    { text: "1000 м", correct: false },
-                    { text: "800 м", correct: true },
-                    { text: "600 м", correct: false },
-                    { text: "900 м", correct: false }
+                    { text: "Ракета получает координаты GPS от прицела и следует по ним к цели.", correct: false },
+                    { text: "Ракета следует за лучом наведения, который создается в прицеле..", correct: true },
+                    { text: "Наведение осуществляется по проводам, которые разматываются с ракеты после запуска.", correct: false },
+                    { text: "Ракета использует инфракрасную головку самонаведения для захвата тепловой сигнатуры цели.", correct: false }
                 ]
             },
             {
-                question: "Початкова швидкість снаряда Oerlikon, в м/c?",
+                question: "Каков основной принцип наведения ракеты RBS-70?",
                 options: [
-                    { text: "1200 м/c", correct: false },
-                    { text: "850 м/c", correct: true },
-                    { text: "750 м/c", correct: false },
-                    { text: "950 м/c", correct: false }
+                    { text: "Ракета получает координаты GPS от прицела и следует по ним к цели.", correct: false },
+                    { text: "Ракета следует за лучом наведения, который создается в прицеле..", correct: true },
+                    { text: "Наведение осуществляется по проводам, которые разматываются с ракеты после запуска.", correct: false },
+                    { text: "Ракета использует инфракрасную головку самонаведения для захвата тепловой сигнатуры цели.", correct: false }
                 ]
             },
-            {
-                question: "Скорострільність Oerlikon, п/х?",
+           {
+                question: "Каков основной принцип наведения ракеты RBS-70?",
                 options: [
-                    { text: "800-1000 п/х", correct: false },
-                    { text: "650-750 п/х", correct: true },
-                    { text: "900-100 п/х", correct: false },
-                    { text: "500-600 п/х", correct: false }
+                    { text: "Ракета получает координаты GPS от прицела и следует по ним к цели.", correct: false },
+                    { text: "Ракета следует за лучом наведения, который создается в прицеле..", correct: true },
+                    { text: "Наведение осуществляется по проводам, которые разматываются с ракеты после запуска.", correct: false },
+                    { text: "Ракета использует инфракрасную головку самонаведения для захвата тепловой сигнатуры цели.", correct: false }
                 ]
             },
-            {
-                question: "Максимальна дальність по горизонталі для Oerlikon?",
-                options: [
-                    { text: "4500 м", correct: false },
-                    { text: "5500 м", correct: true },
-                    { text: "4000 м", correct: false },
-                    { text: "3500 м", correct: false }
-                ]
-            },
-            {
-                question: "Максимальна вертикальна дальність для Oerlikon?",
-                options: [
-                    { text: "5500 м", correct: false },
-                    { text: "4000 м", correct: true },
-                    { text: "3500 м", correct: false },
-                    { text: "5000 м", correct: false }
-                ]
-            },
-            {
-                question: "Дальність успішної стрільби по цілі в повітрі для Oerlikon?",
-                options: [
-                    { text: "2000 м", correct: false },
-                    { text: "1500 м", correct: true },
-                    { text: "2500 м", correct: false },
-                    { text: "1900 м", correct: false }
-                ]
-            },
-            {
-                question: "Висота успішної стрільби по цілі по повітряних цілях для Oerlikon?",
-                options: [
-                    { text: "2000 м", correct: false },
-                    { text: "1000 м", correct: true },
-                    { text: "1500 м", correct: false },
-                    { text: "2500 м", correct: false }
-                ]
-            },
-         
-
+            
         ];
-
-
- </script>
+    </script>
 </body>
-</html> 
+</html>
