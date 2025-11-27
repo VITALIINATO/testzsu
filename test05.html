@@ -7,34 +7,52 @@
     <title>ЦІЛІ</title>
     <script src="config.js"></script>
     <style>
+        :root {
+            --bg-color: #050a07;
+            --panel-bg: rgba(13, 20, 15, 0.95);
+            --primary-green: #33ff33;
+            --dim-green: #1a5c1a;
+            --alert-red: #ff3333;
+            --text-color: #e0e8d0;
+            --gold: #d4af37;
+        }
+
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            min-height: 100vh;
-            background: #234b30;
-            background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.02) 0px, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 20px), linear-gradient(to bottom right, #2e5a3f, #1f442c);
-            background-size: 100% 100%, cover;
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--bg-color);
+            background-image: 
+                linear-gradient(rgba(51, 255, 51, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(51, 255, 51, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            color: var(--text-color);
             display: flex;
             align-items: center;
             justify-content: center;
+            min-height: 100vh;
         }
+
         .quiz-container {
             box-sizing: border-box;
             position: relative;
             width: 100%;
             max-width: 700px;
-            text-align: center;
-            padding: 20px;
-            border: 3px solid #228B22;
-            background: rgba(0, 50, 0, 0.85);
-            border-radius: 20px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(5px);
+            padding: 25px;
+            border: 1px solid var(--dim-green);
+            background: var(--panel-bg);
+            /* Tech corners */
+            clip-path: polygon(
+                20px 0, 100% 0, 
+                100% calc(100% - 20px), calc(100% - 20px) 100%, 
+                0 100%, 0 20px
+            );
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
             margin: 10px;
             display: flex;
             flex-direction: column;
-            min-height: 95vh;
+            min-height: 90vh;
         }
+
         .background-image {
             position: absolute;
             top: 0;
@@ -44,218 +62,264 @@
             background-size: cover;
             background-position: center;
             z-index: -1;
-            opacity: 0.1;
-            filter: grayscale(0.7);
+            opacity: 0.15;
+            filter: grayscale(1) contrast(1.2);
+            mix-blend-mode: overlay;
         }
+
+        /* HUD Progress Bar */
         .progress-bar {
             width: 100%;
-            height: 25px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            overflow: hidden;
-            margin-bottom: 20px;
+            height: 12px;
+            background: #000;
+            border: 1px solid var(--dim-green);
+            margin-bottom: 25px;
             position: relative;
-            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+            display: flex;
         }
+
         .progress-fill {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, #2d88b3, #1e4d5b);
+            background: repeating-linear-gradient(
+                45deg,
+                var(--dim-green),
+                var(--dim-green) 5px,
+                var(--primary-green) 5px,
+                var(--primary-green) 10px
+            );
             transition: width 0.3s ease;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 10px var(--primary-green);
         }
+
         .progress-text {
             position: absolute;
-            width: 100%;
-            top: 0;
-            font-size: 16px;
+            right: 0;
+            top: -20px;
+            font-size: 12px;
+            color: var(--primary-green);
             font-weight: bold;
-            padding: 3px 0;
-            color: #fff;
-            text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
         }
+
+        /* Question Box */
         .question {
-            font-size: 22px;
+            font-size: 18px;
+            line-height: 1.4;
             margin-bottom: 25px;
             font-weight: bold;
-            background-color: rgba(255, 255, 255, 0.15);
+            background-color: rgba(0, 0, 0, 0.6);
             color: #fff;
-            padding: 15px 20px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-left: 3px solid var(--gold);
+            border-bottom: 1px solid var(--dim-green);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            min-height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
         }
+
         .options {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 15px;
+            display: grid;
+            gap: 15px;
+            margin-bottom: 20px;
             flex-grow: 1;
         }
+
         .option {
-            background-color: #228B22;
-            color: #fff;
+            background-color: rgba(20, 40, 30, 0.8);
+            color: var(--text-color);
+            font-family: 'Courier New', monospace;
             font-size: 16px;
-            padding: 14px 20px;
-            border: none;
-            border-radius: 15px;
+            padding: 15px 20px;
+            border: 1px solid var(--dim-green);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             text-align: left;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
             font-weight: bold;
-            text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 15px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        .option:last-child { margin-bottom: 0; }
-        .option:hover {
-            background-color: #1ac21a;
-            transform: scale(1.02);
-            transform-origin: center;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
-        }
-        .option-letter {
-            font-weight: bold;
-            margin-right: 12px;
-            min-width: 24px;
-            color: #ffd700;
-        }
-        .result {
-            font-size: 18px;
-            background-color: rgba(0, 50, 0, 0.95);
-            color: #f0f0f0;
-            padding: 10px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            border: 1px solid rgba(34, 139, 34, 0.5);
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
-            font-weight: bold;
-            min-height: 30px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            overflow: hidden;
+            width: 100%;
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 10px 100%, 0 calc(100% - 10px));
         }
-        .next-button {
-            display: none;
-            padding: 10px 35px;
+
+        .option:hover {
+            background-color: var(--dim-green);
+            border-color: var(--primary-green);
+            color: #fff;
+            padding-left: 25px;
+        }
+        
+        .option:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .option-letter {
+            font-weight: bold;
+            margin-right: 15px;
+            color: var(--gold);
+            font-size: 14px;
+        }
+
+        /* Result Box */
+        .result {
             font-size: 16px;
-            background-color: #1e4d5b;
-            color: white;
-            border: none;
-            border-radius: 18px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            padding: 15px;
             margin-bottom: 15px;
+            border: 1px solid transparent;
+            font-weight: bold;
+            text-align: center;
+            text-transform: uppercase;
+            display: none; /* Hidden by default */
         }
-        .next-button:hover {
-            background-color: #163842;
-            transform: scale(1.05);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
+        
+        .result:not(:empty) {
+            display: block;
         }
-        .restart-button {
+
+        .result.correct { 
+            background: rgba(51, 255, 51, 0.1);
+            border-color: var(--primary-green);
+            color: var(--primary-green);
+            box-shadow: 0 0 15px rgba(51, 255, 51, 0.2);
+        }
+        
+        .result.incorrect { 
+            background: rgba(255, 51, 51, 0.1);
+            border-color: var(--alert-red);
+            color: var(--alert-red);
+            box-shadow: 0 0 15px rgba(255, 51, 51, 0.2);
+        }
+
+        /* Controls */
+        .next-button, .restart-button {
             display: none;
-            padding: 14px 35px;
-            font-size: 18px;
-            background-color: #2e8b57;
-            color: white;
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            font-family: 'Arial Black', sans-serif;
+            text-transform: uppercase;
+            background-color: var(--gold);
+            color: #000;
             border: none;
-            border-radius: 18px;
             cursor: pointer;
             font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-            margin: 0 auto;
+            margin-top: 10px;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+        }
+
+        .next-button:hover, .restart-button:hover {
+            background-color: #ffe066;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .restart-button {
+            background-color: var(--dim-green);
+            color: #fff;
+            margin-top: 20px;
         }
         .restart-button:hover {
-            background-color: #226633;
-            transform: scale(1.05);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
+            background-color: var(--primary-green);
+            color: #000;
         }
-        footer {
-            margin-top: auto;
-            margin-bottom: 10px;
-            font-size: 13px;
-            color: #aaa;
-        }
-        .result.correct { background-color: rgba(46, 139, 87, 0.9); color: #e0ffe0; border: 1px solid rgba(46, 139, 87, 0.7); }
-        .result.incorrect { background-color: rgba(178, 34, 34, 0.9); color: #ffe0e0; border: 1px solid rgba(178, 34, 34, 0.7); }
+
+        /* Record Tag */
         .record-display {
             font-size: 10px;
             font-weight: bold;
-            color: #ffd700;
+            color: #555;
+            background: #000;
+            border: 1px solid #333;
             margin-bottom: 15px;
-            text-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
-            padding: 8px 16px;
-            border-radius: 12px;
+            padding: 5px 10px;
             display: inline-block;
-            min-width: 200px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            letter-spacing: 1px;
         }
         .record-display:hover {
-            background-color: rgba(255, 215, 0, 0.2);
-            transform: scale(1.05);
+            border-color: var(--alert-red);
+            color: var(--alert-red);
         }
+
+        /* Errors Summary */
         .errors-list {
             text-align: left;
-            color: #fff;
-            font-size: 16px;
+            color: #aaa;
+            font-size: 14px;
             margin-top: 20px;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 10px;
-            border-radius: 12px;
-            max-height: 300px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #333;
+            padding: 15px;
+            max-height: 250px;
             overflow-y: auto;
             display: none;
+            font-family: monospace;
         }
-        .quiz-container > * { display: block; }
+
+        footer {
+            margin-top: auto;
+            padding-top: 10px;
+            font-size: 10px;
+            color: #444;
+            border-top: 1px solid #222;
+        }
+
+        /* Responsive */
+        @media (min-width: 600px) {
+            .options {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="quiz-container">
         <div class="background-image" id="backgroundImage"></div>
-        <div class="record-display" id="recordDisplay"></div>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+             <div class="record-display" id="recordDisplay">REC: --</div>
+             <div class="progress-text" id="progressText">0/0</div>
+        </div>
+       
         <div class="progress-bar">
             <div class="progress-fill" id="progressFill"></div>
-            <div class="progress-text" id="progressText">1 з 10</div>
         </div>
-        <div class="question" id="question"></div>
+
+        <div class="question" id="question">Initialize System...</div>
         <div class="options" id="options"></div>
+        
         <div class="result" id="result"></div>
-        <button class="next-button" id="nextButton">Далі</button>
+        <button class="next-button" id="nextButton">NEXT TARGET >></button>
+        
         <div class="errors-list" id="errorsList"></div>
-        <button class="restart-button" id="restartButton">Почати знову</button>
+        <button class="restart-button" id="restartButton">RESTART MISSION</button>
+
         <audio id="soundRight" src="right.mp3"></audio>
         <audio id="soundWrong" src="wrong.mp3"></audio>
+        
         <footer>
-            <a href="index.html" style="color: #aaa; text-decoration: none;">&copy; 2025 NATO</a>
+            <a href="index.html" style="color: #444; text-decoration: none;">&lt; MAIN MENU | NATO TRAINING SYS</a>
         </footer>
     </div>
+
     <script>
         let currentUser = "";
         let quizInstance = null;
 
-        // === Проверка сессии ===
+        // === Auth Check ===
         (function () {
             const authData = sessionStorage.getItem('nato_quiz_auth');
             if (!authData) {
-                alert('Сесія не знайдена. Увійдіть через головну сторінку.');
+                alert('AUTH REQUIRED.');
                 window.location.href = 'index.html';
                 return;
             }
             try {
                 const data = JSON.parse(authData);
-                currentUser = data.name || "Анонім";
+                currentUser = data.name || "Unknown";
             } catch (e) {
                 sessionStorage.removeItem('nato_quiz_auth');
                 window.location.href = 'index.html';
@@ -263,7 +327,7 @@
             }
         })();
 
-        // === Отправка данных ===
+        // === Send Data ===
         function sendData(action, score = "-", total = "-") {
             const payload = {
                 username: currentUser,
@@ -275,18 +339,14 @@
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
                 body: JSON.stringify(payload)
-            }).catch(e => console.error("Send error:", e));
+            }).catch(e => console.error("Comms Error:", e));
         }
 
-        // === Запуск теста ===
+        // === Init ===
         function startQuiz() {
-            document.querySelectorAll(".quiz-container > *").forEach(el => {
-                el.style.display = "block";
-            });
             quizInstance = new Quiz(questions, "multiple-choice");
         }
 
-        // === Инициализация после загрузки DOM ===
         document.addEventListener("DOMContentLoaded", function () {
             startQuiz();
 
@@ -301,13 +361,13 @@
             };
 
             document.getElementById('recordDisplay').addEventListener('click', () => {
-                if (quizInstance && confirm("Скинути рекорд?")) {
+                if (quizInstance && confirm("RESET RECORD?")) {
                     quizInstance.resetRecord();
                 }
             });
         });
 
-        // === Класс Quiz — без изменений ===
+        // === Quiz Class ===
         class Quiz {
             constructor(questions, mode = "multiple-choice") {
                 this.questions = questions;
@@ -323,13 +383,9 @@
             initRecordDisplay() {
                 const recordDisplay = document.getElementById('recordDisplay');
                 const total = this.questions.length;
-                let recordKey = "quizRecord_easy";
+                let recordKey = "quizRecord_targets"; // Unique key for this test
                 const savedRecord = localStorage.getItem(recordKey);
-                if (savedRecord && total) {
-                    recordDisplay.innerText = `Рекорд: ${savedRecord} з ${total}`;
-                } else {
-                    recordDisplay.innerText = `Рекорд: 0 з ${total || 10}`;
-                }
+                recordDisplay.innerText = savedRecord ? `REC: ${savedRecord}/${total}` : `REC: 0/${total}`;
             }
             shuffleQuestions() {
                 for (let i = this.questions.length - 1; i > 0; i--) {
@@ -347,7 +403,6 @@
                 document.getElementById('result').className = 'result';
                 document.getElementById('restartButton').style.display = 'none';
                 document.getElementById('nextButton').style.display = 'none';
-                document.getElementById('errorsList').innerHTML = '';
                 document.getElementById('errorsList').style.display = 'none';
                 this.updateProgress();
             }
@@ -376,24 +431,20 @@
                 const currentQuestion = this.questions[this.currentQuestionIndex];
                 const selectedText = selectedOption.text;
                 const correctOption = currentQuestion.options.find(option => option.correct);
-                const correctText = correctOption.text;
+                
                 if (selectedOption.correct) {
                     this.score++;
-                    document.getElementById('result').innerText = 'Вірно!';
+                    document.getElementById('result').innerText = 'TARGET DESTROYED';
                     document.getElementById('result').className = 'result correct';
                     this.playSound("Right");
                 } else {
-                    this.errors.push({ question: currentQuestion.question, user: selectedText, correct: correctText });
-                    document.getElementById('result').innerText = `Невірно. Правильна відповідь: ${correctText}`;
+                    this.errors.push({ question: currentQuestion.question, user: selectedText, correct: correctOption.text });
+                    document.getElementById('result').innerText = `MISS. CORRECT: ${correctOption.text}`;
                     document.getElementById('result').className = 'result incorrect';
                     this.playSound("Wrong");
                 }
                 const optionButtons = document.querySelectorAll('.option');
-                optionButtons.forEach(button => {
-                    button.disabled = true;
-                    button.style.opacity = '0.6';
-                    button.style.cursor = 'not-allowed';
-                });
+                optionButtons.forEach(button => button.disabled = true);
                 document.getElementById('nextButton').style.display = 'block';
                 this.awaitingNext = true;
             }
@@ -402,11 +453,9 @@
                     const sound = document.getElementById("sound" + type);
                     if (sound) {
                         sound.currentTime = 0;
-                        sound.play().catch(e => console.log("Sound play failed", e));
+                        sound.play().catch(() => {});
                     }
-                } catch (e) {
-                    console.log("Audio system error");
-                }
+                } catch (e) {}
             }
             moveToNextQuestion() {
                 this.currentQuestionIndex++;
@@ -418,57 +467,54 @@
             }
             showResult() {
                 const total = this.questions.length;
-                const score = this.score;
-                sendData("Finish", score, total);
-                document.getElementById('question').innerText = `Ваш результат: ${score} з ${total}`;
+                sendData("Finish", this.score, total);
+                
+                document.getElementById('question').innerText = `MISSION REPORT: ${this.score}/${total}`;
                 document.getElementById('options').innerHTML = '';
                 document.getElementById('result').style.display = 'none';
                 document.getElementById('nextButton').style.display = 'none';
+                
                 const errorsList = document.getElementById('errorsList');
                 errorsList.style.display = 'block';
-                errorsList.innerHTML = '<strong>Помилки:</strong><br>';
+                errorsList.innerHTML = '<div style="color:#fff; border-bottom:1px solid #333; padding-bottom:5px;">DEBRIEFING:</div>';
+                
                 if (this.errors.length === 0) {
-                    errorsList.innerHTML += '<br>Усі відповіді правильні!';
+                    errorsList.innerHTML += '<br><span style="color: #33ff33">PERFECT EXECUTION.</span>';
                 } else {
                     this.errors.forEach(err => {
-                        errorsList.innerHTML += `<br>Питання: "${err.question}"<br>Ваша відповідь: "${err.user}" — Правильна відповідь: "${err.correct}"<br>`;
+                        errorsList.innerHTML += `<br>Q: ${err.question}<br><span style="color:#ff3333">YOURS: ${err.user}</span><br><span style="color:#33ff33">CORRECT: ${err.correct}</span><br>---`;
                     });
                 }
-                document.getElementById('progressText').innerText = '';
+                
+                document.getElementById('progressText').innerText = 'COMPLETED';
                 document.getElementById('progressFill').style.width = '100%';
                 document.getElementById('restartButton').style.display = 'block';
-                let recordKey = "quizRecord_easy";
-                const currentScore = score;
-                const savedRecord = localStorage.getItem(recordKey);
-                let record = savedRecord ? parseInt(savedRecord) : 0;
-                const recordDisplay = document.getElementById('recordDisplay');
-                if (currentScore > record) {
-                    localStorage.setItem(recordKey, currentScore);
-                    recordDisplay.innerText = `Рекорд: ${currentScore} з ${total}`;
-                } else {
-                    recordDisplay.innerText = `Рекорд: ${record} з ${total}`;
+                
+                // Record Logic
+                let recordKey = "quizRecord_targets";
+                const savedRecord = parseInt(localStorage.getItem(recordKey) || "0");
+                if (this.score > savedRecord) {
+                    localStorage.setItem(recordKey, this.score);
+                    document.getElementById('recordDisplay').innerText = `REC: ${this.score}/${total}`;
                 }
             }
             updateProgress() {
-                const totalQuestions = this.questions.length;
-                const progressPercent = totalQuestions === 0 ? 0 : (this.currentQuestionIndex / totalQuestions) * 100;
-                document.getElementById('progressText').innerText = `${this.currentQuestionIndex + 1} з ${totalQuestions}`;
-                document.getElementById('progressFill').style.width = `${progressPercent}%`;
+                const total = this.questions.length;
+                const pct = total === 0 ? 0 : (this.currentQuestionIndex / total) * 100;
+                document.getElementById('progressText').innerText = `${this.currentQuestionIndex + 1}/${total}`;
+                document.getElementById('progressFill').style.width = `${pct}%`;
             }
             setBackgroundImage(imageUrl) {
                 const bgImage = document.getElementById('backgroundImage');
                 bgImage.style.backgroundImage = imageUrl ? `url(${imageUrl})` : 'none';
-                bgImage.style.opacity = imageUrl ? '0.15' : '0';
             }
             resetRecord() {
-                const recordKey = "quizRecord_easy";
-                localStorage.removeItem(recordKey);
+                localStorage.removeItem("quizRecord_targets");
                 this.initRecordDisplay();
             }
         }
 
-       const questions = [
-
+        const questions = [
             {
                 question: "Швидкість КР Х-101, в м/с?",
                 options: [
@@ -478,7 +524,6 @@
                     { text: "1050 м/с", correct: false }
                 ]
             },
-
             {
                 question: "Швидкість КР Калібр, в м/с?",
                 options: [
@@ -497,7 +542,6 @@
                     { text: "200 м/с", correct: false }
                 ]
             },
-
             {
                 question: "Швидкість КР Х-55, в м/с?",
                 options: [
@@ -507,7 +551,6 @@
                     { text: "200 м/с", correct: false }
                 ]
             },
-
             {
                 question: "Максимальна вага бойової частини КР Калібр?",
                 options: [
@@ -517,8 +560,6 @@
                     { text: "320 кг", correct: false }
                 ]
             },
-
-
             {
                 question: "Максимальна швидкість КР Іскандер-К в м/с?",
                 options: [
@@ -528,7 +569,6 @@
                     { text: "220 м/с", correct: false }
                 ]
             },
-
             {
                 question: "Максимальна вага бойової частини КР Іскандер-К?",
                 options: [
@@ -538,17 +578,6 @@
                     { text: "600 кг", correct: false }
                 ]
             },
-
-            {
-                question: "Максимальна вага бойової частини КР Калібр?",
-                options: [
-                    { text: "500 кг", correct: false },
-                    { text: "450 кг", correct: true },
-                    { text: "250 кг", correct: false },
-                    { text: "320 кг", correct: false }
-                ]
-            },
-
             {
                 question: "Вага бойової частини КР Х-101?",
                 options: [
@@ -558,7 +587,6 @@
                     { text: "310 кг", correct: false }
                 ]
             },
-
             {
                 question: "Вага бойової частини КР Х-59?",
                 options: [
@@ -568,7 +596,6 @@
                     { text: "500 кг", correct: false }
                 ]
             },
-
             {
                 question: "Вага бойової частини КР Х-55?",
                 options: [
@@ -578,7 +605,6 @@
                     { text: "500 кг", correct: false }
                 ]
             },
-
             {
                 question: "Вага бойової частини Іскандер-М?", 
                 options: [
@@ -588,7 +614,6 @@
                     { text: "580 кг", correct: false }
                 ]
             },
-
              {
                 question: "Максимальна швидкість Іскандер-М в м/с?",
                 options: [
@@ -598,9 +623,6 @@
                     { text: "3300 м/с", correct: false }
                 ]
             },
-
-            ///////////////////////////////////
-
             {
                 question: "Довжина БпЛА Шахед-136, в метрах?",
                 options: [
@@ -610,8 +632,6 @@
                     { text: "4 м", correct: false }
                 ]
             },
-
-
             {
                 question: "Розмах крил БпЛА Шахед-136, в метрах?",
                 options: [
@@ -621,7 +641,6 @@
                     { text: "4 м", correct: false }
                 ]
             },
-
             {
                 question: "Крейсерська швидкість БпЛА Шахед-136 у 2023р, в м/с?",
                 options: [
@@ -640,7 +659,6 @@
                     { text: "150 км/г", correct: false }
                 ]
             },
-
             {
                 question: "Вага бойової частини БпЛА Шахед-136 у 2023р?",
                 options: [
@@ -650,7 +668,6 @@
                     { text: "70 кг", correct: false }
                 ]
             },
-
             {
                 question: "Крейсерська швидкість БпЛА Орлан-10 в км/г",
                 options: [
@@ -660,7 +677,6 @@
                     { text: "70 км/г", correct: false }
                 ]
             },
-
             {
                 question: "Розмах крил БпЛА Орлан-10 в м?",
                 options: [
@@ -670,7 +686,6 @@
                     { text: "3 м", correct: false }
                 ]
             },
-
             {
                 question: "Довжина БпЛА Орлан-10 в м?",
                 options: [
@@ -680,7 +695,6 @@
                     { text: "3 м", correct: false }
                 ]
             },
-
              {
                 question: "Довжина БпЛА Гербера?",
                 options: [
@@ -690,7 +704,6 @@
                     { text: "1,5 м", correct: false }
                 ]
             },
-
              {
                 question: "Розмах крил БпЛА Гербера?",
                 options: [
@@ -700,7 +713,6 @@
                     { text: "1,5 м", correct: false }
                 ]
             },
-
              {
                 question: "Максимальна швидкість БпЛА Гербера, в км/г?",
                 options: [
@@ -710,7 +722,6 @@
                     { text: "200 км/г", correct: false }
                 ]
             },
-
             {
                 question: "Максимальна швидкість БпЛА Гербера, в м/с?",
                 options: [
@@ -720,14 +731,7 @@
                     { text: "35 м/c", correct: false }
                 ]
             },
-
-            ////////////////
-         
-
         ];
-
- 
     </script>
 </body>
 </html>
-
