@@ -1,84 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <link rel="icon" href="icon.png" type="image/png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ПЗРК</title>
-
-    <!-- Config -->
     <script src="config.js"></script>
-
     <style>
+        :root {
+            --bg-color: #050a07;
+            --panel-bg: rgba(13, 20, 15, 0.95);
+            --primary-green: #33ff33;
+            --dim-green: #1a5c1a;
+            --alert-red: #ff3333;
+            --text-color: #e0e8d0;
+            --gold: #d4af37;
+        }
+
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            min-height: 100vh;
-            background: #234b30;
-            background-image:
-                repeating-linear-gradient(45deg,
-                    rgba(255, 255, 255, 0.02) 0px,
-                    rgba(255, 255, 255, 0.02) 1px,
-                    transparent 1px,
-                    transparent 20px),
-                linear-gradient(to bottom right, #2e5a3f, #1f442c);
-            background-size: 100% 100%, cover;
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--bg-color);
+            background-image: 
+                linear-gradient(rgba(51, 255, 51, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(51, 255, 51, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            color: var(--text-color);
             display: flex;
             align-items: center;
             justify-content: center;
+            min-height: 100vh;
         }
 
         .quiz-container {
             box-sizing: border-box;
             position: relative;
             width: 100%;
-            max-width: 600px;
-            text-align: center;
-            padding: 20px;
-            border: 3px solid #228B22;
-            background: rgba(0, 50, 0, 0.85);
-            border-radius: 20px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(5px);
+            max-width: 700px;
+            padding: 25px;
+            border: 1px solid var(--dim-green);
+            background: var(--panel-bg);
+            clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
             margin: 10px;
-        }
-
-        /* Styles for Name Input Modal */
-        .name-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
             display: flex;
-            align-items: center;
-            justify-content: center;
+            flex-direction: column;
+            min-height: 90vh;
         }
 
-        .name-box {
-            background: #1a472a;
-            padding: 30px;
-            border-radius: 15px;
-            border: 2px solid #ffd700;
-            text-align: center;
-            max-width: 400px;
-            width: 90%;
-        }
-
-        .name-input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            font-size: 18px;
-            border-radius: 5px;
-            border: none;
-            box-sizing: border-box;
-        }
-
-        /* Existing Styles */
         .background-image {
             position: absolute;
             top: 0;
@@ -88,51 +57,59 @@
             background-size: cover;
             background-position: center;
             z-index: -1;
-            opacity: 0.1;
-            filter: grayscale(0.7);
+            opacity: 0.15;
+            filter: grayscale(1) contrast(1.2);
+            mix-blend-mode: overlay;
         }
 
+        /* HUD Progress Bar */
         .progress-bar {
             width: 100%;
-            height: 25px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            overflow: hidden;
-            margin-bottom: 20px;
+            height: 12px;
+            background: #000;
+            border: 1px solid var(--dim-green);
+            margin-bottom: 25px;
             position: relative;
-            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+            display: flex;
         }
 
         .progress-fill {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, #2d88b3, #1e4d5b);
+            background: repeating-linear-gradient(
+                45deg,
+                var(--dim-green),
+                var(--dim-green) 5px,
+                var(--primary-green) 5px,
+                var(--primary-green) 10px
+            );
             transition: width 0.3s ease;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 10px var(--primary-green);
         }
 
         .progress-text {
             position: absolute;
-            width: 100%;
-            top: 0;
-            font-size: 16px;
+            right: 0;
+            top: -20px;
+            font-size: 12px;
+            color: var(--primary-green);
             font-weight: bold;
-            padding: 3px 0;
-            color: #fff;
-            text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
         }
 
+        /* Question Box */
         .question {
-            font-size: 26px;
-            margin-bottom: 20px;
+            font-size: 18px;
+            line-height: 1.4;
+            margin-bottom: 25px;
             font-weight: bold;
-            background-color: rgba(255, 255, 255, 0.15);
+            background-color: rgba(0, 0, 0, 0.6);
             color: #fff;
-            padding: 12px 15px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-            min-height: 90px;
+            padding: 20px;
+            border-left: 3px solid var(--gold);
+            border-bottom: 1px solid var(--dim-green);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            min-height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -140,274 +117,203 @@
         }
 
         .options {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            gap: 15px;
             margin-bottom: 20px;
+            flex-grow: 1;
         }
 
         .option {
-            width: calc(50% - 10px);
-            margin-right: 20px;
-            margin-bottom: 20px;
-            background-color: #228B22;
-            color: #fff;
-            font-size: 18px;
-            padding: 14px 25px;
-            border: none;
-            border-radius: 15px;
+            background-color: rgba(20, 40, 30, 0.8);
+            color: var(--text-color);
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            padding: 15px 20px;
+            border: 1px solid var(--dim-green);
             cursor: pointer;
-            transition: all 0.3s ease;
-            flex: 1 1 45%;
-            min-width: 130px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            transition: all 0.2s ease;
+            text-align: left;
             font-weight: bold;
-            text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            width: 100%;
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 10px 100%, 0 calc(100% - 10px));
         }
 
         .option:hover {
-            background-color: #1ac21a;
-            transform: scale(1.05);
-            transition: all 0.3s ease;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+            background-color: var(--dim-green);
+            border-color: var(--primary-green);
+            color: #fff;
+            padding-left: 25px;
         }
-
+        
         .option:disabled {
-            opacity: 0.7;
+            opacity: 0.5;
             cursor: not-allowed;
         }
 
-        .option:nth-child(2n) {
-            margin-right: 0;
-        }
-
-        .option:nth-last-child(-n+2) {
-            margin-bottom: 0;
-        }
-
-        @media (max-width: 600px) {
-            .options {
-                display: flex;
-                flex-direction: column;
-            }
-
-            .option {
-                width: 100%;
-                margin-right: 0;
-                margin-bottom: 15px !important;
-            }
-
-            .option:last-child {
-                margin-bottom: 0 !important;
-            }
-        }
-
-        .result {
-            font-size: 22px;
-            background-color: rgba(0, 50, 0, 0.95);
-            color: #f0f0f0;
-            padding: 12px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(34, 139, 34, 0.5);
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+        .option-letter {
             font-weight: bold;
-            min-height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
+            margin-right: 15px;
+            color: var(--gold);
+            font-size: 14px;
         }
 
-        .next-button {
-            display: none;
-            padding: 10px 35px;
+        /* Result Box */
+        .result {
             font-size: 16px;
-            background-color: #1e4d5b;
-            color: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid transparent;
+            font-weight: bold;
+            text-align: center;
+            text-transform: uppercase;
+            display: none;
+        }
+        
+        .result:not(:empty) {
+            display: block;
+        }
+
+        .result.correct { 
+            background: rgba(51, 255, 51, 0.1);
+            border-color: var(--primary-green);
+            color: var(--primary-green);
+            box-shadow: 0 0 15px rgba(51, 255, 51, 0.2);
+        }
+        
+        .result.incorrect { 
+            background: rgba(255, 51, 51, 0.1);
+            border-color: var(--alert-red);
+            color: var(--alert-red);
+            box-shadow: 0 0 15px rgba(255, 51, 51, 0.2);
+        }
+
+        /* Controls */
+        .next-button, .restart-button {
+            display: none;
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            font-family: 'Arial Black', sans-serif;
+            text-transform: uppercase;
+            background-color: var(--gold);
+            color: #000;
             border: none;
-            border-radius: 18px;
             cursor: pointer;
             font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-            margin: 0 auto 20px;
+            margin-top: 10px;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
         }
 
-        .next-button:hover {
-            background-color: #163842;
-            transform: scale(1.05);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
+        .next-button:hover, .restart-button:hover {
+            background-color: #ffe066;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
         }
 
         .restart-button {
-            display: none;
-            padding: 14px 35px;
-            font-size: 18px;
-            background-color: #2e8b57;
-            color: white;
-            border: none;
-            border-radius: 18px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-            margin: 0 auto;
+            background-color: var(--dim-green);
+            color: #fff;
+            margin-top: 20px;
+        }
+        .restart-button:hover {
+            background-color: var(--primary-green);
+            color: #000;
         }
 
-        .restart-button:hover {
-            background-color: #226633;
-            transform: scale(1.05);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
+        /* Record Tag */
+        .record-display {
+            font-size: 10px;
+            font-weight: bold;
+            color: #555;
+            background: #000;
+            border: 1px solid #333;
+            margin-bottom: 15px;
+            padding: 5px 10px;
+            display: inline-block;
+            cursor: pointer;
+            letter-spacing: 1px;
+        }
+        .record-display:hover {
+            border-color: var(--alert-red);
+            color: var(--alert-red);
+        }
+
+        /* Errors Summary */
+        .errors-list {
+            text-align: left;
+            color: #aaa;
+            font-size: 14px;
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #333;
+            padding: 15px;
+            max-height: 250px;
+            overflow-y: auto;
+            display: none;
+            font-family: monospace;
         }
 
         footer {
-            margin-top: 25px;
-            font-size: 13px;
-            color: #aaa;
+            margin-top: auto;
+            padding-top: 10px;
+            font-size: 10px;
+            color: #444;
+            border-top: 1px solid #222;
         }
 
-        .result.correct {
-            background-color: rgba(46, 139, 87, 0.9);
-            color: #e0ffe0;
-            border: 1px solid rgba(46, 139, 87, 0.7);
-        }
-
-        .result.incorrect {
-            background-color: rgba(178, 34, 34, 0.9);
-            color: #ffe0e0;
-            border: 1px solid rgba(178, 34, 34, 0.7);
-        }
-
-        .record-display {
-            font-size: 12px;
-            font-weight: bold;
-            color: #ffd700;
-            margin-bottom: 15px;
-            text-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
-            padding: 8px 16px;
-            border-radius: 12px;
-            display: inline-block;
-            min-width: 200px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .record-display:hover {
-            background-color: rgba(255, 215, 0, 0.2);
-            transform: scale(1.05);
-        }
-
-        .errors-list {
-            text-align: left;
-            color: #fff;
-            font-size: 16px;
-            margin-top: 20px;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 10px;
-            border-radius: 12px;
-            max-height: 300px;
-            overflow-y: auto;
-            display: none;
-        }
-
-        .difficulty-selection {
-            text-align: center;
-            padding: 40px 20px;
-            background: transparent;
-            border-radius: 20px;
-            margin: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-        }
-
-        .difficulty-btn,
-        .difficulty-btn2 {
-            background-color: #302e8b;
-            color: white;
-            font-size: 18px;
-            padding: 15px 25px;
-            border: none;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-            min-width: 200px;
-            font-weight: bold;
-            margin: 10px;
-            display: inline-block;
-        }
-
-        .difficulty-btn2 {
-            background-color: #8b2e2e;
-        }
-
-        .difficulty-btn:hover,
-        .difficulty-btn2:hover {
-            background-color: #226622;
-            transform: scale(1.1);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
-        }
-
-        .option-input {
-            padding: 10px;
-            font-size: 18px;
-            width: 100%;
-            border-radius: 10px;
-            border: none;
-            outline: none;
-            margin-bottom: 15px;
-            box-sizing: border-box;
-            text-align: center;
-        }
-
-        .quiz-container>* {
-            display: none;
-        }
-
-        .quiz-container>.difficulty-selection {
-            display: block;
+        @media (min-width: 600px) {
+            .options {
+                grid-template-columns: 1fr 1fr;
+            }
         }
     </style>
 </head>
-
 <body>
-
-
     <div class="quiz-container">
-        <div class="difficulty-selection" id="difficultySelection">
-            <h2 style="color: #ffd700; margin-bottom: 20px;">Оберіть рівень складності:</h2>
-            <button id="easyMode" class="difficulty-btn">Легше</button>
-            <button id="hardMode" class="difficulty-btn2">Складніше</button>
-        </div>
         <div class="background-image" id="backgroundImage"></div>
-        <div class="record-display" id="recordDisplay"></div>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+             <div class="record-display" id="recordDisplay">REC: --</div>
+             <div class="progress-text" id="progressText">0/0</div>
+        </div>
+       
         <div class="progress-bar">
             <div class="progress-fill" id="progressFill"></div>
-            <div class="progress-text" id="progressText">1 з 10</div>
         </div>
-        <div class="question" id="question"></div>
+
+        <div class="question" id="question">System Initializing...</div>
         <div class="options" id="options"></div>
+        
         <div class="result" id="result"></div>
-        <button class="next-button" id="nextButton">Далі</button>
+        <button class="next-button" id="nextButton">NEXT SEQUENCE >></button>
+        
         <div class="errors-list" id="errorsList"></div>
-        <button class="restart-button" id="restartButton">Почати знову</button>
+        <button class="restart-button" id="restartButton">RESTART MODULE</button>
+
         <audio id="soundRight" src="right.mp3"></audio>
         <audio id="soundWrong" src="wrong.mp3"></audio>
+        
         <footer>
-            <a href="index.html" style="color: #aaa; text-decoration: none;">&copy; 2025 NATO</a>
+            <a href="index.html" style="color: #444; text-decoration: none;">&lt; MAIN MENU | NATO TRAINING SYS</a>
         </footer>
     </div>
+
     <script>
-          let currentUser = "";
+        let currentUser = "";
+        let quizInstance = null;
+
+        // === Auth Check ===
         (function () {
             const authData = sessionStorage.getItem('nato_quiz_auth');
             if (!authData) {
-                alert('Сесія не знайдена. Будь ласка, увійдіть через головну сторінку.');
+                alert('UNAUTHORIZED ACCESS.');
                 window.location.href = 'index.html';
                 return;
             }
             try {
                 const data = JSON.parse(authData);
-                currentUser = data.name || "Анонім";
+                currentUser = data.name || "Unknown";
             } catch (e) {
                 sessionStorage.removeItem('nato_quiz_auth');
                 window.location.href = 'index.html';
@@ -415,11 +321,7 @@
             }
         })();
 
-
-        let quizInstance = null;
-      
-
-        // Helper function to send data
+        // === Send Data ===
         function sendData(action, score = "-", total = "-") {
             const payload = {
                 username: currentUser,
@@ -428,42 +330,38 @@
                 score: score,
                 total: total
             };
-            console.log("Attempting to send data:", payload);
-
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
                 body: JSON.stringify(payload)
-            })
-                .then(response => console.log("Data sent successfully"))
-                .catch(error => console.error("Error sending data:", error));
+            }).catch(e => console.error("Comms Error:", e));
         }
 
-
-
-        function startQuiz(mode) {
-            document.getElementById("difficultySelection").style.display = "none";
-            document.querySelectorAll(".quiz-container > *").forEach(el => {
-                if (el.id !== "difficultySelection") el.style.display = "block";
-            });
-            quizInstance = new Quiz(questions, mode);
+        // === Init ===
+        function startQuiz() {
+            quizInstance = new Quiz(questions, "multiple-choice");
         }
+
         document.addEventListener("DOMContentLoaded", function () {
-            document.getElementById("easyMode").addEventListener("click", () => startQuiz("multiple-choice"));
-            document.getElementById("hardMode").addEventListener("click", () => startQuiz("numeric-input"));
-            document.getElementById('restartButton').onclick = function () {
+            startQuiz();
+
+            document.getElementById('restartButton').onclick = () => {
                 window.location.href = "index.html";
             };
-            document.getElementById('nextButton').onclick = function () {
-                if (quizInstance) quizInstance.moveToNextQuestion();
+
+            document.getElementById('nextButton').onclick = () => {
+                if (quizInstance) {
+                    quizInstance.moveToNextQuestion();
+                }
             };
+
+            document.getElementById('recordDisplay').addEventListener('click', () => {
+                if (quizInstance && confirm("PURGE RECORDS?")) {
+                    quizInstance.resetRecord();
+                }
+            });
         });
 
-        document.getElementById('recordDisplay').addEventListener('click', function () {
-            if (quizInstance && confirm("Ви впевнені, що хочете скинути рекорд?")) {
-                quizInstance.resetRecord();
-            }
-        });
-
+        // === Quiz Class ===
         class Quiz {
             constructor(questions, mode = "multiple-choice") {
                 this.questions = questions;
@@ -479,13 +377,9 @@
             initRecordDisplay() {
                 const recordDisplay = document.getElementById('recordDisplay');
                 const total = this.questions.length;
-                let recordKey = this.mode === "numeric-input" ? "quizRecord_hard" : "quizRecord_easy";
+                let recordKey = "quizRecord_easy"; // Standard key
                 const savedRecord = localStorage.getItem(recordKey);
-                if (savedRecord && total) {
-                    recordDisplay.innerText = `Рекорд: ${savedRecord} з ${total}`;
-                } else {
-                    recordDisplay.innerText = `Рекорд: 0 з ${total || 10}`;
-                }
+                recordDisplay.innerText = savedRecord ? `REC: ${savedRecord}/${total}` : `REC: 0/${total}`;
             }
             shuffleQuestions() {
                 for (let i = this.questions.length - 1; i > 0; i--) {
@@ -503,56 +397,22 @@
                 document.getElementById('result').className = 'result';
                 document.getElementById('restartButton').style.display = 'none';
                 document.getElementById('nextButton').style.display = 'none';
-                document.getElementById('errorsList').innerHTML = '';
                 document.getElementById('errorsList').style.display = 'none';
                 this.updateProgress();
             }
             showOptions(options) {
                 const optionsContainer = document.getElementById("options");
                 optionsContainer.innerHTML = "";
-
-                if (this.mode === "numeric-input") {
-                    const input = document.createElement("input");
-                    input.type = "tel";
-                    input.inputMode = "decimal";
-                    input.placeholder = "Введіть число";
-                    input.className = "option-input";
-
-                    input.addEventListener("input", function () {
-                        const cursorPos = this.selectionStart;
-                        let value = this.value.replace(/\./g, ',');
-                        value = value.replace(/[^0-9,]/g, '');
-                        const commaIndex = value.indexOf(',');
-                        if (commaIndex !== -1) {
-                            value = value.substring(0, commaIndex + 1) +
-                                value.substring(commaIndex + 1).replace(/,/g, '');
-                        }
-                        this.value = value;
-                        this.setSelectionRange(cursorPos, cursorPos);
-                    });
-
-                    input.addEventListener("keydown", (e) => {
-                        if (e.key === "Enter") this.checkAnswerInput(input.value);
-                    });
-
-                    optionsContainer.appendChild(input);
-
-                    const submitBtn = document.createElement("button");
-                    submitBtn.innerText = "Перевірити";
-                    submitBtn.className = "option";
-                    submitBtn.onclick = () => this.checkAnswerInput(input.value);
-                    optionsContainer.appendChild(submitBtn);
-
-                } else {
-                    this.shuffleOptions(options);
-                    options.forEach(option => {
-                        const button = document.createElement("button");
-                        button.className = "option";
-                        button.innerHTML = option.text;
-                        button.onclick = () => this.checkAnswer(option);
-                        optionsContainer.appendChild(button);
-                    });
-                }
+                this.shuffleOptions(options);
+                const numbers = ['A', 'B', 'C', 'D'];
+                options.forEach((option, index) => {
+                    const button = document.createElement("button");
+                    button.className = "option";
+                    const number = numbers[index] || String.fromCharCode(65 + index);
+                    button.innerHTML = `<span class="option-letter">${number}.</span>${option.text}`;
+                    button.onclick = () => this.checkAnswer(option);
+                    optionsContainer.appendChild(button);
+                });
             }
             shuffleOptions(options) {
                 for (let i = options.length - 1; i > 0; i--) {
@@ -562,70 +422,35 @@
             }
             checkAnswer(selectedOption) {
                 if (this.awaitingNext) return;
-
                 const currentQuestion = this.questions[this.currentQuestionIndex];
                 const selectedText = selectedOption.text;
-                const correctOption = currentQuestion.options.find(option => option.correct);
-                const correctText = correctOption.text;
-
+                const correctOption = currentQuestion.options.find(o => o.correct);
+                
                 if (selectedOption.correct) {
                     this.score++;
-                    this.showResultMessage('Вірно!', 'correct');
+                    document.getElementById('result').innerText = 'CORRECT';
+                    document.getElementById('result').className = 'result correct';
+                    this.playSound("Right");
                 } else {
-                    this.errors.push({ question: currentQuestion.question, user: selectedText, correct: correctText });
-                    this.showResultMessage(`Невірно. Правильна відповідь: ${correctText}`, 'incorrect');
+                    this.errors.push({ question: currentQuestion.question, user: selectedText, correct: correctOption.text });
+                    document.getElementById('result').innerText = `ERROR. EXPECTED: ${correctOption.text}`;
+                    document.getElementById('result').className = 'result incorrect';
+                    this.playSound("Wrong");
                 }
-                this.finalizeAnswerStep();
-            }
-            checkAnswerInput(userAnswer) {
-                if (this.awaitingNext) return;
-
-                const normalizedAnswer = userAnswer.replace(',', '.');
-                const currentQuestion = this.questions[this.currentQuestionIndex];
-                const correctOption = currentQuestion.options.find(option => option.correct);
-
-                const correctNumber = parseFloat(
-                    correctOption.text.replace(',', '.').replace(/\s/g, '')
-                );
-
-                const userNumber = parseFloat(normalizedAnswer);
-
-                if (!isNaN(userNumber) && Math.abs(userNumber - correctNumber) < 0.01) {
-                    this.score++;
-                    this.showResultMessage("Вірно!", "correct");
-                } else {
-                    this.errors.push({
-                        question: currentQuestion.question,
-                        user: userAnswer,
-                        correct: correctOption.text
-                    });
-                    this.showResultMessage(`Невірно. Правильна відповідь: ${correctOption.text}`, "incorrect");
-                }
-                this.finalizeAnswerStep();
-            }
-
-            showResultMessage(text, type) {
-                const result = document.getElementById("result");
-                result.innerText = text;
-                result.className = `result ${type}`;
-                try {
-                    const sound = document.getElementById("sound" + (type === "correct" ? "Right" : "Wrong"));
-                    if (sound) {
-                        sound.currentTime = 0;
-                        sound.play().catch(e => console.log("Sound error:", e));
-                    }
-                } catch (e) { console.log("Audio not found"); }
-            }
-
-            finalizeAnswerStep() {
-                // Disable inputs/buttons
-                const inputs = document.querySelectorAll('.option, .option-input');
-                inputs.forEach(el => el.disabled = true);
-
+                const optionButtons = document.querySelectorAll('.option');
+                optionButtons.forEach(button => button.disabled = true);
                 document.getElementById('nextButton').style.display = 'block';
                 this.awaitingNext = true;
             }
-
+            playSound(type) {
+                try {
+                    const sound = document.getElementById("sound" + type);
+                    if (sound) {
+                        sound.currentTime = 0;
+                        sound.play().catch(() => {});
+                    }
+                } catch (e) {}
+            }
             moveToNextQuestion() {
                 this.currentQuestionIndex++;
                 if (this.currentQuestionIndex < this.questions.length) {
@@ -633,65 +458,51 @@
                 } else {
                     this.showResult();
                 }
-                this.updateProgress();
             }
             showResult() {
                 const total = this.questions.length;
-                const score = this.score;
-
-                // GOOGLE SHEETS SAVE LOGIC
-                sendData("Finish", score, total);
-
-                document.getElementById('question').innerText = `Ваш результат: ${score} з ${total}`;
+                sendData("Finish", this.score, total);
+                
+                document.getElementById('question').innerText = `RESULT: ${this.score}/${total}`;
                 document.getElementById('options').innerHTML = '';
                 document.getElementById('result').style.display = 'none';
                 document.getElementById('nextButton').style.display = 'none';
-
+                
                 const errorsList = document.getElementById('errorsList');
                 errorsList.style.display = 'block';
-                errorsList.innerHTML = '<strong>Помилки:</strong><br>';
+                errorsList.innerHTML = '<div style="color:#fff; border-bottom:1px solid #333; padding-bottom:5px;">LOG:</div>';
+                
                 if (this.errors.length === 0) {
-                    errorsList.innerHTML += '<br>Усі відповіді правильні!';
+                    errorsList.innerHTML += '<br><span style="color: #33ff33">NO ERRORS DETECTED.</span>';
                 } else {
                     this.errors.forEach(err => {
-                        errorsList.innerHTML += `<br>Питання: "${err.question}"<br>Ваша відповідь: "${err.user}" — Правильна відповідь: "${err.correct}"<br>`;
+                        errorsList.innerHTML += `<br>Q: ${err.question}<br><span style="color:#ff3333">IN: ${err.user}</span><br><span style="color:#33ff33">REQ: ${err.correct}</span><br>---`;
                     });
                 }
-                document.getElementById('progressText').innerText = '';
+                
+                document.getElementById('progressText').innerText = 'DONE';
                 document.getElementById('progressFill').style.width = '100%';
                 document.getElementById('restartButton').style.display = 'block';
-                let recordKey = this.mode === "numeric-input" ? "quizRecord_hard" : "quizRecord_easy";
-                let recordCountKey = this.mode === "numeric-input" ? "quizRecordCount_hard" : "quizRecordCount_easy";
-                const currentScore = score;
-                const savedRecord = localStorage.getItem(recordKey);
-                const savedRecordCount = localStorage.getItem(recordCountKey);
-                let record = savedRecord ? parseInt(savedRecord) : 0;
-                let recordCount = savedRecordCount ? parseInt(savedRecordCount) : 0;
-                const recordDisplay = document.getElementById('recordDisplay');
-                if (currentScore > record) {
-                    localStorage.setItem(recordKey, currentScore);
-                    localStorage.setItem(recordCountKey, currentScore);
-                    recordDisplay.innerText = `Рекорд: ${currentScore} з ${total}`;
-                } else {
-                    recordDisplay.innerText = `Рекорд: ${recordCount} з ${total}`;
+                
+                let recordKey = "quizRecord_easy";
+                const savedRecord = parseInt(localStorage.getItem(recordKey) || "0");
+                if (this.score > savedRecord) {
+                    localStorage.setItem(recordKey, this.score);
+                    document.getElementById('recordDisplay').innerText = `REC: ${this.score}/${total}`;
                 }
             }
             updateProgress() {
-                const totalQuestions = this.questions.length;
-                const progressPercent = totalQuestions === 0 ? 0 : (this.currentQuestionIndex / totalQuestions) * 100;
-                document.getElementById('progressText').innerText = `${this.currentQuestionIndex} з ${totalQuestions}`;
-                document.getElementById('progressFill').style.width = `${progressPercent}%`;
+                const total = this.questions.length;
+                const pct = total === 0 ? 0 : (this.currentQuestionIndex / total) * 100;
+                document.getElementById('progressText').innerText = `${this.currentQuestionIndex + 1}/${total}`;
+                document.getElementById('progressFill').style.width = `${pct}%`;
             }
             setBackgroundImage(imageUrl) {
                 const bgImage = document.getElementById('backgroundImage');
                 bgImage.style.backgroundImage = imageUrl ? `url(${imageUrl})` : 'none';
-                bgImage.style.opacity = imageUrl ? '0.15' : '0';
             }
             resetRecord() {
-                const recordKey = this.mode === "numeric-input" ? "quizRecord_hard" : "quizRecord_easy";
-                const recordCountKey = this.mode === "numeric-input" ? "quizRecordCount_hard" : "quizRecordCount_easy";
-                localStorage.removeItem(recordKey);
-                localStorage.removeItem(recordCountKey);
+                localStorage.removeItem("quizRecord_easy");
                 this.initRecordDisplay();
             }
         }
@@ -706,7 +517,6 @@
                     { text: "7000 м", correct: false }
                 ]
             },
-
             {
                 question: "Максимальна дальність ураження цілей ПЗРК Piorun навздогін, в метрах?",
                 options: [
@@ -752,7 +562,6 @@
                     { text: "4000 м/с", correct: false }
                 ]
             },
-
             {
                 question: "Швидкість вражаємих цілей ПЗРК Stinger на зустрічних курсах, в м/с?",
                 options: [
@@ -762,7 +571,6 @@
                     { text: "750 м/с", correct: false }
                 ]
             },
-
             {
                 question: "Швидкість вражаємих цілей ПЗРК Piorun на зустрічних курсах, в м/с?",
                 options: [
@@ -772,7 +580,6 @@
                     { text: "750 м/с", correct: false }
                 ]
             },
-
             {
                 question: "Швидкість вражаємих цілей ПЗРК Ігла на зустрічних курсах, в м/с?",
                 options: [
@@ -782,7 +589,6 @@
                     { text: "470 м/с", correct: false }
                 ]
             },
-
             {
                 question: "Швидкість вражаємих цілей ПЗРК Stinger на догонних курсах, в м/с?",
                 options: [
@@ -792,7 +598,6 @@
                     { text: "400 м/с", correct: false }
                 ]
             },
-
             {
                 question: "Швидкість вражаємих цілей ПЗРК Piorun на догонних курсах, в м/с?",
                 options: [
@@ -802,7 +607,6 @@
                     { text: "450 м/с", correct: false }
                 ]
             },
-
             {
                 question: "Швидкість вражаємих цілей ПЗРК Ігла на догонних курсах, в м/с?",
                 options: [
@@ -812,7 +616,6 @@
                     { text: "450 м/с", correct: false }
                 ]
             },
-
             {
                 question: "Маса бойової частини ПЗРК Stinger, в кг?",
                 options: [
@@ -822,7 +625,6 @@
                     { text: "1,27 кг", correct: false }
                 ]
             },
-
             {
                 question: "Маса бойової частини ПЗРК Piorun, в кг?",
                 options: [
@@ -842,9 +644,6 @@
                 ]
             },
         ];
-
-
     </script>
 </body>
-
 </html>

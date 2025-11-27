@@ -1,368 +1,272 @@
 <!DOCTYPE html>
 <html lang="uk">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>Тести</title>
+    <title>NATO Опитування</title>
     <link rel="icon" href="icon.png" type="image/png">
     <script src="config.js"></script>
     <style>
-* {
-    box-sizing: border-box;
-}
+        :root {
+            --bg-color: #050a07;
+            --panel-bg: rgba(10, 20, 15, 0.85);
+            --primary-green: #33ff33;
+            --dim-green: #1a5c1a;
+            --alert-red: #ff3333;
+            --text-color: #e0e8d0;
+            --hud-border: 1px solid rgba(51, 255, 51, 0.3);
+            --scan-line: rgba(51, 255, 51, 0.03);
+        }
 
-body {
-    margin: 0;
-    font-family: 'Tahoma', 'Arial Narrow', sans-serif;
-    background-image: 
-        radial-gradient(circle at 10% 20%, rgba(20, 60, 20, 0.3) 0%, transparent 25%),
-        linear-gradient(45deg, rgba(139, 69, 19, 0.08) 0%, rgba(245, 222, 179, 0.08) 10%, transparent 90%),
-        linear-gradient(to bottom, #194619, #001400);
-    background-size: 300% 300%, 20px 20px, cover;
-    animation: bgScan 15s linear infinite;
-    color: #e0e8d0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 16px;
-    overflow-x: hidden;
-    position: relative;
-    
-}
+        * {
+            box-sizing: border-box;
+        }
 
-body::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: 
-        repeating-linear-gradient(0deg, 
-            rgba(0, 20, 0, 0.1) 0px, 
-            rgba(0, 40, 0, 0.2) 1px, 
-            transparent 1px, 
-            transparent 4px);
-    pointer-events: none;
-    z-index: -1;
-}
+        body {
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--bg-color);
+            background-image: 
+                linear-gradient(rgba(51, 255, 51, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(51, 255, 51, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
 
-@keyframes bgScan {
-    0% { background-position: 0% 0%, 0 0, 0 0; }
-    100% { background-position: 100% 100%, 20px 20px, 0 0; }
-}
+        /* Scanline Effect */
+        body::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(to bottom, transparent 50%, var(--scan-line) 51%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 10;
+        }
 
-.home-container {
-    width: 100%;
-    max-width: 620px;
-    text-align: center;
-    
-    /* background: 
-        radial-gradient(ellipse at center, rgba(0, 40, 0, 0.7) 0%, rgba(0, 20, 0, 0.9) 100%),
-        url('https://www.transparenttextures.com/patterns/dark-leather.png'); */
-    background-blend-mode: multiply;
-    border: 3px solid #2a5c38;
-    border-radius: 12px;
-    box-shadow:
-        0 0 20px rgba(0, 80, 0, 0.7),
-        inset 0 0 15px rgba(0, 30, 0, 0.8);
-    backdrop-filter: blur(3px);
-    padding: 30px 20px;
-    position: relative;
-    overflow: hidden;
-    transform: translateY(20px);
-    opacity: 0;
-    animation: containerEnter 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-   
-}
+        .home-container {
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            background: var(--panel-bg);
+            border: 1px solid var(--primary-green);
+            /* Tactical clipped corners */
+            clip-path: polygon(
+                0 0, 
+                100% 0, 
+                100% calc(100% - 20px), 
+                calc(100% - 20px) 100%, 
+                0 100%
+            );
+            padding: 40px 25px;
+            position: relative;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 15px rgba(51, 255, 51, 0.1);
+            animation: bootUp 0.5s ease-out forwards;
+        }
 
-@keyframes containerEnter {
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
+        @keyframes bootUp {
+            0% { opacity: 0; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1); }
+        }
 
-.home-container::after {
-    content: "";
-    position: absolute;
-    top: -10px;
-    left: -10px;
-    right: -10px;
-    bottom: -10px;
-    background: linear-gradient(45deg, 
-        rgba(40, 100, 40, 0.1) 0%, 
-        rgba(20, 60, 20, 0.3) 20%, 
-        transparent 50%);
-    z-index: -1;
-    animation: borderPulse 3s infinite alternate;
-}
+        /* Decorative HUD elements */
+        .home-container::before {
+            content: "SYS.READY";
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            font-size: 10px;
+            color: var(--primary-green);
+            opacity: 0.7;
+        }
 
-@keyframes borderPulse {
-    0% { opacity: 0.3; }
-    100% { opacity: 0.7; }
-}
+        .home-container::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 20px;
+            height: 1px;
+            background: var(--primary-green);
+        }
 
-h1 {
-    font-size: 28px;
-    margin-bottom: 30px;
-    font-weight: bold;
-    color: #ccc560;
-    text-shadow: 
-        0 0 8px rgba(60, 130, 60, 0.7),
-        0 1px 1px #000;
-    letter-spacing: 1px;
-    position: relative;
-    animation: titleGlow 2s infinite alternate;
-}
+        h1 {
+            font-family: 'Arial Black', sans-serif;
+            text-transform: uppercase;
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: var(--primary-green);
+            letter-spacing: 2px;
+            text-shadow: 0 0 5px var(--dim-green);
+            border-bottom: 1px dashed var(--dim-green);
+            padding-bottom: 10px;
+        }
 
-@keyframes titleGlow {
-    0% { text-shadow: 0 0 8px rgba(60, 130, 60, 0.7), 0 1px 1px #000; }
-    100% { text-shadow: 0 0 12px rgba(80, 180, 80, 0.9), 0 0 3px rgba(40, 100, 40, 0.8), 0 1px 1px #000; }
-}
+        .test-button, .test-button2 {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            text-transform: uppercase;
+            color: var(--text-color);
+            background: rgba(0, 20, 0, 0.6);
+            border: 1px solid var(--dim-green);
+            border-left: 4px solid var(--dim-green);
+            transition: all 0.2s ease;
+            position: relative;
+            letter-spacing: 1px;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
 
-.button-group {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin-bottom: 10px;
-}
+        .test-button:hover, .test-button2:hover {
+            background: var(--dim-green);
+            border-left-color: var(--primary-green);
+            color: #fff;
+            padding-left: 25px; /* Slide effect */
+            box-shadow: 0 0 15px rgba(51, 255, 51, 0.2);
+            text-shadow: 0 0 5px var(--primary-green);
+        }
 
-.test-button, .test-button2 {
-    display: block;
-    padding: 16px;
-    margin-bottom: 15px;
-    font-size: 17px;
-    font-weight: bold;
-    text-decoration: none;
-    border-radius: 10px;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 
-        0 4px 8px rgba(0, 0, 0, 0.5),
-        inset 0 1px 1px rgba(255, 255, 255, 0.1);
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
-    position: relative;
-    overflow: hidden;
-    transform: translateY(0);
-    opacity: 0;
-    animation: buttonEnter 0.6s forwards;
-}
+        /* Specific style for button type 2 to add variety */
+        .test-button2 {
+            border-left: 4px solid #8f998a;
+        }
+        .test-button2:hover {
+            border-left-color: #ffffff;
+            background: #2a3d2e;
+        }
 
-@keyframes buttonEnter {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+        footer {
+            margin-top: 30px;
+            font-size: 10px;
+            color: #556b55;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
 
-.test-button {
-    background-image:
-        repeating-linear-gradient(180deg,
-            rgba(255, 255, 255, 0.05) 0px,
-            rgba(255, 255, 255, 0.05) 1px,
-            transparent 1px,
-            transparent 20px),
-        linear-gradient(to bottom, #1a472a, #0d3b1d);
-    color: #d0e0c0;
-    border: 1px solid #2a5c38;
-    animation-delay: calc(0.1s * var(--i));
-}
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 5, 0, 0.95);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
 
-.test-button2 {
-    background-image:
-        repeating-linear-gradient(180deg,
-            rgba(255, 255, 255, 0.05) 0px,
-            rgba(255, 255, 255, 0.05) 1px,
-            transparent 1px,
-            transparent 20px),
-        linear-gradient(to bottom, #143214, #0a280a);
-    color: #c0d0b0;
-    border: 1px solid #1e4a2a;
-    animation-delay: calc(0.1s * var(--i));
-}
+        .modal-content {
+            background: #000;
+            padding: 30px;
+            border: 1px solid var(--primary-green);
+            width: 90%;
+            max-width: 350px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(51, 255, 51, 0.1);
+            position: relative;
+        }
 
-.test-button:hover, .test-button2:hover {
-    transform: translateY(-5px);
-    box-shadow: 
-        0 8px 20px rgba(0, 80, 0, 0.8),
-        0 0 20px rgba(40, 160, 40, 0.6),
-        inset 0 0 10px rgba(255, 255, 255, 0.1);
-    z-index: 2;
-}
+        .modal-content::before {
+            content: "SECURITY CLEARANCE";
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #000;
+            padding: 0 10px;
+            color: var(--primary-green);
+            font-size: 10px;
+            letter-spacing: 1px;
+        }
 
-.test-button:hover {
-    background: linear-gradient(to bottom, #206040, #0d4b2d);
-    color: #f0ffe0;
-    text-shadow: 0 0 8px rgba(200, 255, 200, 0.8);
-}
+        .modal-title {
+            color: #fff;
+            margin-bottom: 25px;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
 
-.test-button2:hover {
-    background: linear-gradient(to bottom, #1e4a2a, #0c361c);
-    color: #f0ffe0;
-    text-shadow: 0 0 8px rgba(200, 255, 200, 0.8);
-}
+        .modal-input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            background: #0a140d;
+            border: 1px solid #333;
+            color: var(--primary-green);
+            outline: none;
+            text-transform: uppercase;
+        }
 
-.test-button:active, .test-button2:active {
-    transform: translateY(2px);
-    transition: all 0.1s ease;
-    box-shadow: 
-        0 2px 5px rgba(0, 0, 0, 0.5),
-        inset 0 0 8px rgba(0, 0, 0, 0.4);
-}
+        .modal-input:focus {
+            border-color: var(--primary-green);
+            box-shadow: 0 0 5px rgba(51, 255, 51, 0.3);
+        }
 
-footer {
-    margin-top: 30px;
-    font-size: 14px;
-    color: #8a9a80;
-    text-shadow: 0 0 5px rgba(0, 30, 0, 0.8);
-    letter-spacing: 0.5px;
-    animation: fadeIn 1.5s forwards;
-    animation-delay: 0.8s;
-    opacity: 0;
-}
+        .modal-btn {
+            background: var(--primary-green);
+            color: #000;
+            font-size: 16px;
+            padding: 12px 0;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+        }
 
-@keyframes fadeIn {
-    to { opacity: 1; }
-}
+        .modal-btn:hover {
+            background: #fff;
+            box-shadow: 0 0 15px rgba(51, 255, 51, 0.5);
+        }
 
-/* Адаптация под маленькие экраны */
-@media (max-width: 650px) {
-    .button-group {
-        grid-template-columns: 1fr;
-    }
-    
-    h1 {
-        font-size: 24px;
-        margin-bottom: 25px;
-    }
+        .error-msg {
+            color: var(--alert-red);
+            margin-top: 15px;
+            font-size: 12px;
+            display: none;
+            border: 1px solid var(--alert-red);
+            padding: 5px;
+            background: rgba(255, 0, 0, 0.1);
+        }
 
-    .test-button, .test-button2 {
-        font-size: 16px;
-        padding: 14px;
-    }
+        .admin-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #334433;
+            text-decoration: none;
+            font-size: 10px;
+            border: 1px solid #1a2f23;
+            padding: 2px 8px;
+            transition: all 0.3s;
+        }
+        .admin-link:hover {
+            color: var(--primary-green);
+            border-color: var(--primary-green);
+        }
 
-    .home-container {
-        padding: 25px 15px;
-        border-radius: 10px;
-    }
-
-    footer {
-        font-size: 13px;
-    }
-}
-
-@media (max-width: 450px) {
-    h1 {
-        font-size: 22px;
-    }
-    
-    .test-button, .test-button2 {
-        font-size: 15px;
-        padding: 13px 12px;
-    }
-}
-
-/* Modal Styles */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.95);
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(5px);
-    transition: opacity 0.5s ease;
-}
-
-.modal-content {
-    background: #1a472a;
-    padding: 30px;
-    border-radius: 15px;
-    border: 2px solid #ffd700;
-    text-align: center;
-    max-width: 400px;
-    width: 90%;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-    position: relative;
-    animation: modalSlide 0.4s ease-out;
-}
-
-@keyframes modalSlide {
-    from { transform: translateY(-30px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-
-.modal-title {
-    color: #ffd700;
-    margin-bottom: 20px;
-    font-size: 24px;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-    margin-top: 0;
-}
-
-.modal-input {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    font-size: 16px;
-    border-radius: 8px;
-    border: 1px solid #2a5c38;
-    background: #0f2b19;
-    color: #e0e8d0;
-    outline: none;
-    transition: border-color 0.3s;
-}
-
-.modal-input::placeholder {
-    color: #8a9a80;
-}
-
-.modal-input:focus {
-    border-color: #ffd700;
-    box-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
-}
-
-.modal-btn {
-    background: linear-gradient(to bottom, #302e8b, #1a1955);
-    color: white;
-    font-size: 18px;
-    padding: 12px 30px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 15px;
-    width: 100%;
-    font-weight: bold;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-    transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
-}
-
-.modal-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.5);
-    background: linear-gradient(to bottom, #403ecb, #2a2975);
-}
-
-.modal-btn:active {
-    transform: translateY(1px);
-}
-
-.error-msg {
-    color: #ff6b6b;
-    margin-top: 15px;
-    font-size: 14px;
-    display: none;
-    background: rgba(0,0,0,0.3);
-    padding: 5px;
-    border-radius: 4px;
-}
     </style>
 <link rel="stylesheet" href="/index.css">
 </head>
@@ -371,29 +275,29 @@ footer {
     <!-- Login Modal -->
     <div id="loginModal" class="modal-overlay">
         <div class="modal-content">
-            <h2 class="modal-title">Авторизація</h2>
-            <input type="text" id="callsign" class="modal-input" placeholder="Позивний" autocomplete="off">
-            <input type="password" id="password" class="modal-input" placeholder="Пароль">
-            <button id="loginBtn" class="modal-btn">Увійти</button>
-            <div id="errorMsg" class="error-msg">Невірний пароль або пустий позивний</div>
+            <h2 class="modal-title">Identify</h2>
+            <input type="text" id="callsign" class="modal-input" placeholder="CALLSIGN" autocomplete="off">
+            <input type="password" id="password" class="modal-input" placeholder="PASSCODE">
+            <button id="loginBtn" class="modal-btn">Access</button>
+            <div id="errorMsg" class="error-msg">ACCESS DENIED</div>
         </div>
     </div>
 
     <div class="home-container" id="mainMenu">
-        <h1>Обрати тест:</h1>
+        <h1>Select Module</h1>
 
-        <a href="test01.html" class="test-button">Ігла Piorun Stinger</a>
-          <a href="test02.html" class="test-button2">Mistral</a>
+        <a href="test01.html" class="test-button">IGLA / PIORUN / STINGER</a>
+        <a href="test02.html" class="test-button2">MISTRAL</a>
         <a href="test03.html" class="test-button">RBS-70</a>
-        <a href="test04.html" class="test-button2">Martlet</a>       
-          <a href="test05.html" class="test-button">Повітряні цілі</a>
+        <a href="test04.html" class="test-button2">MARTLET</a>       
+        <a href="test05.html" class="test-button">AERIAL TARGETS</a>
         
-        <div style="margin-top: 20px; border-top: 1px solid #2a5c38; padding-top: 10px;">
-            <a href="admin.html" style="color: #556b55; text-decoration: none; font-size: 12px;">Admin</a>
+        <div style="margin-top: 30px;">
+            <a href="admin.html" class="admin-link">ADMIN_CONSOLE</a>
         </div>
 
         <footer>
-            &copy; 2025 NATO
+            NATO TRAINING SYS v2.5
         </footer>
     </div>
     
@@ -418,8 +322,6 @@ footer {
             const callsign = callsignInput.value.trim();
             const password = passwordInput.value.trim();
 
-            // Use USER_PASSWORD from config.js if available, otherwise fallback (or strict check)
-            // Note: config.js must be loaded before this script runs.
             const requiredPass = (typeof USER_PASSWORD !== 'undefined') ? USER_PASSWORD : '111';
 
             if (callsign.length > 0 && password === requiredPass) {
@@ -448,8 +350,7 @@ footer {
             if (e.key === 'Enter') attemptLogin();
         });
 
-        // Intercept links to enforce authentication before navigation
-        const links = document.querySelectorAll('.test-button, .test-button2, a[href="admin.html"]');
+        const links = document.querySelectorAll('.test-button, .test-button2, .admin-link');
         links.forEach(link => {
             link.addEventListener('click', (e) => {
                 const currentAuth = sessionStorage.getItem('nato_quiz_auth');
@@ -465,5 +366,4 @@ footer {
 </script>
 <script type="module" src="/index.tsx"></script>
 </body>
-
 </html>
