@@ -1,107 +1,282 @@
-
 <!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Адмін Панель</title>
+    <title>Admin Console</title>
     <link rel="icon" href="icon.png" type="image/png">
     <script src="config.js"></script>
     <style>
+        :root {
+            --bg-color: #050a07;
+            --panel-bg: rgba(13, 20, 15, 0.95);
+            --primary-green: #33ff33;
+            --dim-green: #1a5c1a;
+            --alert-red: #ff3333;
+            --text-color: #e0e8d0;
+            --gold: #d4af37;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #0f2415;
-            color: #e0e8d0;
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--bg-color);
+            background-image: 
+                linear-gradient(rgba(51, 255, 51, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(51, 255, 51, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            color: var(--text-color);
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             min-height: 100vh;
+            padding: 10px;
         }
+
+        /* Scanline Effect */
+        body::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 50%, rgba(51, 255, 51, 0.02) 51%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 10;
+        }
+
         .login-container, .admin-container {
             width: 100%;
-            max-width: 1000px;
-            padding: 20px;
+            max-width: 400px;
+            padding: 25px;
+            border: 1px solid var(--dim-green);
+            background: var(--panel-bg);
+            /* Tech corners */
+            clip-path: polygon(
+                20px 0, 100% 0, 
+                100% calc(100% - 20px), calc(100% - 20px) 100%, 
+                0 100%, 0 20px
+            );
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+            position: relative;
+            z-index: 20;
+            transition: all 0.3s ease;
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            height: 90vh;
+            display: none;
+            flex-direction: column;
+        }
+
+        h1, h2 {
+            font-family: 'Arial Black', sans-serif;
+            text-transform: uppercase;
+            color: var(--primary-green);
+            margin-top: 0;
+            letter-spacing: 1px;
+            border-bottom: 1px dashed var(--dim-green);
+            padding-bottom: 10px;
+            font-size: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            font-family: 'Courier New', monospace;
+            background: #000;
+            border: 1px solid var(--dim-green);
+            color: var(--primary-green);
+            margin-bottom: 20px;
+            outline: none;
             text-align: center;
         }
-        .admin-container { display: none; height: 90vh; }
-        
-        input {
-            padding: 10px;
-            font-size: 18px;
-            border-radius: 5px;
-            border: 1px solid #2a5c38;
-            margin: 10px;
-            background: #1a3b2a;
-            color: white;
+
+        input:focus {
+            border-color: var(--primary-green);
+            box-shadow: 0 0 10px rgba(51, 255, 51, 0.2);
         }
+
         button {
-            padding: 10px 20px;
-            font-size: 18px;
-            background: #2e8b57;
-            color: white;
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            background: var(--dim-green);
+            color: #fff;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            transition: all 0.2s;
         }
-        button:hover { background: #226633; }
+
+        button:hover {
+            background: var(--primary-green);
+            color: #000;
+            box-shadow: 0 0 15px rgba(51, 255, 51, 0.4);
+        }
+
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .header-bar h2 {
+            margin: 0;
+            border: none;
+            padding: 0;
+        }
+
+        .logout-btn {
+            width: auto;
+            padding: 8px 20px;
+            font-size: 12px;
+            background: var(--alert-red);
+        }
         
+        .logout-btn:hover {
+            background: #ff6666;
+            color: #000;
+            box-shadow: 0 0 10px rgba(255, 51, 51, 0.4);
+        }
+
+        .iframe-wrapper {
+            flex-grow: 1;
+            border: 1px solid var(--dim-green);
+            background: #000;
+            position: relative;
+            overflow: hidden;
+        }
+
         iframe {
             width: 100%;
             height: 100%;
-            border: 2px solid #2a5c38;
-            border-radius: 10px;
-            background: white;
-        }
-        .back-link {
-            color: #8a9a80;
-            margin-bottom: 20px;
+            border: none;
             display: block;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #556b55;
             text-decoration: none;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--primary-green);
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .admin-container {
+                height: 95vh;
+                padding: 15px;
+                clip-path: none; /* Remove clip path on mobile for max space */
+                border-radius: 4px;
+            }
+            
+            h1, h2 {
+                font-size: 16px;
+            }
+
+            .header-bar {
+                flex-direction: row;
+                gap: 10px;
+            }
         }
     </style>
 </head>
 <body>
     <div id="loginSection" class="login-container">
-        <h1 style="color: #ffd700;">Вхід в Адмін Панель</h1>
-        <input type="password" id="adminPass" placeholder="Пароль адміністратора">
-        <button onclick="checkAdmin()">Увійти</button>
-        <br><br>
-        <a href="index.html" class="back-link">← На головну</a>
+        <h1>АДМІН_КОНСОЛЬ</h1>
+        <p style="font-size: 12px; color: var(--gold); margin-bottom: 20px;">ВВЕДІТЬ КОД ДОСТУПУ</p>
+        <input type="password" id="adminPass" placeholder="******" autocomplete="off">
+        <button onclick="checkAdmin()">АВТОРИЗАЦІЯ</button>
+        <div style="text-align: center;">
+            <a href="index.html" class="back-link">&lt; ПОВЕРНУТИСЯ В МЕНЮ</a>
+        </div>
     </div>
 
     <div id="adminSection" class="admin-container">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-            <h2 style="margin: 0; color: #ffd700;">Статистика</h2>
-            <button onclick="location.reload()" style="padding: 5px 15px; font-size: 14px;">Вийти</button>
+        <div class="header-bar">
+            <h2>СТАТИСТИКА // LIVE</h2>
+            <button class="logout-btn" onclick="logout()">ВИХІД</button>
         </div>
-        <!-- Таблица будет загружена сюда -->
-        <iframe id="statsFrame"></iframe>
+        
+        <div class="iframe-wrapper">
+            <iframe id="statsFrame"></iframe>
+        </div>
+        
+        <div style="text-align: right; margin-top: 5px;">
+             <span style="font-size: 10px; color: var(--dim-green);">SECURE CONNECTION ESTABLISHED</span>
+        </div>
     </div>
 
     <script>
-       // Проверка при загрузке: если уже авторизован — показываем панель
+       // Check session on load
     window.addEventListener('DOMContentLoaded', function () {
         const isAdmin = sessionStorage.getItem('nato_admin_auth');
         if (isAdmin === 'true') {
-            document.getElementById('loginSection').style.display = 'none';
-            document.getElementById('adminSection').style.display = 'block';
-            document.getElementById('statsFrame').src = GOOGLE_SHEET_EMBED_URL;
+            showAdminPanel();
         }
     });
 
     function checkAdmin() {
         const input = document.getElementById('adminPass').value;
         if (input === ADMIN_PASSWORD) {
-            // Сохраняем факт авторизации в сессии
             sessionStorage.setItem('nato_admin_auth', 'true');
-            document.getElementById('loginSection').style.display = 'none';
-            document.getElementById('adminSection').style.display = 'block';
-            document.getElementById('statsFrame').src = GOOGLE_SHEET_EMBED_URL;
+            showAdminPanel();
         } else {
-            alert("Невірний пароль");
+            const inputField = document.getElementById('adminPass');
+            inputField.style.borderColor = 'var(--alert-red)';
+            inputField.value = '';
+            inputField.placeholder = "ВІДМОВА";
+            setTimeout(() => {
+                inputField.style.borderColor = 'var(--dim-green)';
+                inputField.placeholder = "******";
+            }, 1000);
         }
     }
+
+    function showAdminPanel() {
+        document.getElementById('loginSection').style.display = 'none';
+        const adminSection = document.getElementById('adminSection');
+        adminSection.style.display = 'flex';
+        
+        // Load iframe only after auth to save resources
+        const frame = document.getElementById('statsFrame');
+        if (!frame.src) {
+            frame.src = GOOGLE_SHEET_EMBED_URL;
+        }
+    }
+
+    function logout() {
+        sessionStorage.removeItem('nato_admin_auth');
+        location.reload();
+    }
+    
+    // Allow Enter key to submit
+    document.getElementById('adminPass').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            checkAdmin();
+        }
+    });
     </script>
 </body>
 </html>
