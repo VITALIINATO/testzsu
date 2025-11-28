@@ -379,7 +379,7 @@
                 const total = this.questions.length;
                 let recordKey = "quizRecord_easy"; // Standard key
                 const savedRecord = localStorage.getItem(recordKey);
-                recordDisplay.innerText = savedRecord ? `РЕК: ${savedRecord}/${total}` : `РЕК: 0/${total}`;
+                recordDisplay.innerText = savedRecord ? `РЕКОРД: ${savedRecord}/${total}` : `РЕКОРД: 0/${total}`;
             }
             shuffleQuestions() {
                 for (let i = this.questions.length - 1; i > 0; i--) {
@@ -488,7 +488,7 @@
                 const savedRecord = parseInt(localStorage.getItem(recordKey) || "0");
                 if (this.score > savedRecord) {
                     localStorage.setItem(recordKey, this.score);
-                    document.getElementById('recordDisplay').innerText = `РЕК: ${this.score}/${total}`;
+                    document.getElementById('recordDisplay').innerText = `РЕКОРД: ${this.score}/${total}`;
                 }
             }
             updateProgress() {
