@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="icon" href="icon.png" type="image/png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,16 +20,23 @@
             --text-color: #e0e8d0;
             --gold: #d4af37;
         }
-          * {
+
+        * {
             box-sizing: border-box;
-            font-style: normal !important; /* Force upright text */
+            font-style: normal !important;
+            /* Force upright text */
         }
 
         body {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 16px;
+            line-height: 1.4;
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
             margin: 0;
             font-family: 'Courier New', Courier, monospace;
             background-color: var(--bg-color);
-            background-image: 
+            background-image:
                 linear-gradient(rgba(51, 255, 51, 0.05) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(51, 255, 51, 0.05) 1px, transparent 1px);
             background-size: 30px 30px;
@@ -45,11 +56,9 @@
             border: 1px solid var(--dim-green);
             background: var(--panel-bg);
             /* Tech corners */
-            clip-path: polygon(
-                20px 0, 100% 0, 
-                100% calc(100% - 20px), calc(100% - 20px) 100%, 
-                0 100%, 0 20px
-            );
+            clip-path: polygon(20px 0, 100% 0,
+                    100% calc(100% - 20px), calc(100% - 20px) 100%,
+                    0 100%, 0 20px);
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
             margin: 10px;
             display: flex;
@@ -85,13 +94,11 @@
         .progress-fill {
             height: 100%;
             width: 0%;
-            background: repeating-linear-gradient(
-                45deg,
-                var(--dim-green),
-                var(--dim-green) 5px,
-                var(--primary-green) 5px,
-                var(--primary-green) 10px
-            );
+            background: repeating-linear-gradient(45deg,
+                    var(--dim-green),
+                    var(--dim-green) 5px,
+                    var(--primary-green) 5px,
+                    var(--primary-green) 10px);
             transition: width 0.3s ease;
             box-shadow: 0 0 10px var(--primary-green);
         }
@@ -156,7 +163,7 @@
             color: #fff;
             padding-left: 25px;
         }
-        
+
         .option:disabled {
             opacity: 0.5;
             cursor: not-allowed;
@@ -180,19 +187,19 @@
             text-transform: uppercase;
             display: none;
         }
-        
+
         .result:not(:empty) {
             display: block;
         }
 
-        .result.correct { 
+        .result.correct {
             background: rgba(51, 255, 51, 0.1);
             border-color: var(--primary-green);
             color: var(--primary-green);
             box-shadow: 0 0 15px rgba(51, 255, 51, 0.2);
         }
-        
-        .result.incorrect { 
+
+        .result.incorrect {
             background: rgba(255, 51, 51, 0.1);
             border-color: var(--alert-red);
             color: var(--alert-red);
@@ -200,7 +207,8 @@
         }
 
         /* Controls */
-        .next-button, .restart-button {
+        .next-button,
+        .restart-button {
             display: none;
             width: 100%;
             padding: 15px;
@@ -216,7 +224,8 @@
             clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
         }
 
-        .next-button:hover, .restart-button:hover {
+        .next-button:hover,
+        .restart-button:hover {
             background-color: #ffe066;
             box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
         }
@@ -226,6 +235,7 @@
             color: #fff;
             margin-top: 20px;
         }
+
         .restart-button:hover {
             background-color: var(--primary-green);
             color: #000;
@@ -244,6 +254,7 @@
             cursor: pointer;
             letter-spacing: 1px;
         }
+
         .record-display:hover {
             border-color: var(--alert-red);
             color: var(--alert-red);
@@ -279,30 +290,31 @@
         }
     </style>
 </head>
+
 <body>
     <div class="quiz-container">
         <div class="background-image" id="backgroundImage"></div>
         <div style="display:flex; justify-content:space-between; align-items:center;">
-             <div class="record-display" id="recordDisplay">РЕКОРД: --</div>
-             <div class="progress-text" id="progressText">0/0</div>
+            <div class="record-display" id="recordDisplay">РЕКОРД: --</div>
+            <div class="progress-text" id="progressText">0/0</div>
         </div>
-       
+
         <div class="progress-bar">
             <div class="progress-fill" id="progressFill"></div>
         </div>
 
         <div class="question" id="question">Завантаження...</div>
         <div class="options" id="options"></div>
-        
+
         <div class="result" id="result"></div>
         <button class="next-button" id="nextButton">ДАЛІ >></button>
-        
+
         <div class="errors-list" id="errorsList"></div>
         <button class="restart-button" id="restartButton">ПОВТОРИТИ ТЕСТ</button>
 
         <audio id="soundRight" src="right.mp3"></audio>
         <audio id="soundWrong" src="wrong.mp3"></audio>
-        
+
         <footer>
             <a href="index.html" style="color: #444; text-decoration: none;">&lt; ГОЛОВНЕ МЕНЮ</a>
         </footer>
@@ -434,7 +446,7 @@
                 const currentQuestion = this.questions[this.currentQuestionIndex];
                 const selectedText = selectedOption.text;
                 const correctOption = currentQuestion.options.find(o => o.correct);
-                
+
                 if (selectedOption.correct) {
                     this.score++;
                     document.getElementById('result').innerText = 'ВІРНО';
@@ -456,9 +468,9 @@
                     const sound = document.getElementById("sound" + type);
                     if (sound) {
                         sound.currentTime = 0;
-                        sound.play().catch(() => {});
+                        sound.play().catch(() => { });
                     }
-                } catch (e) {}
+                } catch (e) { }
             }
             moveToNextQuestion() {
                 this.currentQuestionIndex++;
@@ -471,16 +483,16 @@
             showResult() {
                 const total = this.questions.length;
                 sendData("Finish", this.score, total);
-                
+
                 document.getElementById('question').innerText = `РЕЗУЛЬТАТ: ${this.score}/${total}`;
                 document.getElementById('options').innerHTML = '';
                 document.getElementById('result').style.display = 'none';
                 document.getElementById('nextButton').style.display = 'none';
-                
+
                 const errorsList = document.getElementById('errorsList');
                 errorsList.style.display = 'block';
                 errorsList.innerHTML = '<div style="color:#fff; border-bottom:1px solid #333; padding-bottom:5px;">ЖУРНАЛ:</div>';
-                
+
                 if (this.errors.length === 0) {
                     errorsList.innerHTML += '<br><span style="color: #33ff33">БЕЗ ПОМИЛОК.</span>';
                 } else {
@@ -488,11 +500,11 @@
                         errorsList.innerHTML += `<br>П: ${err.question}<br><span style="color:#ff3333">ВАШ: ${err.user}</span><br><span style="color:#33ff33">ПРАВ: ${err.correct}</span><br>---`;
                     });
                 }
-                
+
                 document.getElementById('progressText').innerText = 'КІНЕЦЬ';
                 document.getElementById('progressFill').style.width = '100%';
                 document.getElementById('restartButton').style.display = 'block';
-                
+
                 let recordKey = "quizRecord_rbs70";
                 const savedRecord = parseInt(localStorage.getItem(recordKey) || "0");
                 if (this.score > savedRecord) {
@@ -725,4 +737,5 @@
         ];
     </script>
 </body>
+
 </html>
