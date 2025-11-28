@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tests</title>
+    <title>Тести</title>
     <link rel="icon" href="icon.png" type="image/png">
     <script src="config.js"></script>
     <style>
@@ -81,7 +81,7 @@
 
         /* Decorative HUD elements */
         .home-container::before {
-            content: "SYS.READY";
+            content: "";
             position: absolute;
             top: 5px;
             right: 10px;
@@ -184,7 +184,7 @@
         }
 
         .modal-content::before {
-            content: "SECURITY CLEARANCE";
+            content: "";
             position: absolute;
             top: -10px;
             left: 50%;
@@ -275,29 +275,29 @@
     <!-- Login Modal -->
     <div id="loginModal" class="modal-overlay">
         <div class="modal-content">
-            <h2 class="modal-title">Identify</h2>
-            <input type="text" id="callsign" class="modal-input" placeholder="NICKNAME" autocomplete="off">
-            <input type="password" id="password" class="modal-input" placeholder="PASSWORD">
-            <button id="loginBtn" class="modal-btn">Access</button>
-            <div id="errorMsg" class="error-msg">ACCESS DENIED</div>
+            <h2 class="modal-title">Авторизація</h2>
+            <input type="text" id="callsign" class="modal-input" placeholder="ПОЗИВНИЙ" autocomplete="off">
+            <input type="password" id="password" class="modal-input" placeholder="ПАРОЛЬ">
+            <button id="loginBtn" class="modal-btn">Вхід</button>
+            <div id="errorMsg" class="error-msg">Некоректний Позивний або Пароль</div>
         </div>
     </div>
 
     <div class="home-container" id="mainMenu">
-        <h1>Select Module</h1>
+        <h1>Оберіть Модуль</h1>
 
-        <a href="test01.html" class="test-button">IGLA / PIORUN / STINGER</a>
+        <a href="test01.html" class="test-button">ІГЛА / PIORUN / STINGER</a>
         <a href="test02.html" class="test-button2">MISTRAL</a>
         <a href="test03.html" class="test-button">RBS-70</a>
         <a href="test04.html" class="test-button2">MARTLET</a>       
-        <a href="test05.html" class="test-button">AERIAL TARGETS</a>
+        <a href="test05.html" class="test-button">ПОВІТРЯНІ ЦІЛІ</a>
         
         <div style="margin-top: 30px;">
-            <a href="admin.html" class="admin-link">ADMIN_CONSOLE</a>
+            <a href="admin.html" class="admin-link">АДМІН_КОНСОЛЬ</a>
         </div>
 
         <footer>
-            NATO TRAINING v2.5
+            NATO 2025
         </footer>
     </div>
     
