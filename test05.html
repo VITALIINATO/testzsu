@@ -436,7 +436,7 @@
                     const button = document.createElement("button");
                     button.className = "option";
                     const letter = letters[index] || String.fromCharCode(65 + index);
-                    button.innerHTML = `<span class="option-letter">${number}.</span>${option.text}`;
+                    button.innerHTML = `<span class="option-letter">${letter}.</span>${option.text}`;
                     button.onclick = () => this.checkAnswer(option);
                     optionsContainer.appendChild(button);
                 });
