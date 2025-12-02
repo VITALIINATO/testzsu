@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="icon" href="icon.png" type="image/png">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MARTLET</title>
     <script src="config.js"></script>
     <style>
@@ -24,13 +24,14 @@
         * {
             box-sizing: border-box;
             font-style: normal !important;
-            -webkit-tap-highlight-color: transparent;
+            /* Force upright text */
         }
 
         body {
             margin: 0;
+
             font-size: 16px;
-            line-height: 1.3;
+            line-height: 1.4;
             -webkit-text-size-adjust: 100%;
             text-size-adjust: 100%;
             background-color: var(--bg-color);
@@ -42,34 +43,26 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100dvh;
-            width: 100vw;
-            overflow: hidden;
-            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            min-height: 100vh;
         }
 
         .quiz-container {
             box-sizing: border-box;
             position: relative;
             width: 100%;
-            height: 100%;
             max-width: 700px;
-            padding: 15px;
+            padding: 25px;
+            border: 1px solid var(--dim-green);
             background: var(--panel-bg);
+            /* Tech corners */
+            clip-path: polygon(20px 0, 100% 0,
+                    100% calc(100% - 20px), calc(100% - 20px) 100%,
+                    0 100%, 0 20px);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+            margin: 10px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-        }
-
-        @media (min-width: 700px) {
-            .quiz-container {
-                height: auto;
-                min-height: 80vh;
-                margin: 20px;
-                border: 1px solid var(--dim-green);
-                clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
-                box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-            }
+            min-height: 90vh;
         }
 
         .background-image {
@@ -84,27 +77,17 @@
             opacity: 0.15;
             filter: grayscale(1) contrast(1.2);
             mix-blend-mode: overlay;
-            pointer-events: none;
-        }
-
-        .hud-header {
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center;
-            margin-bottom: 8px;
-            flex-shrink: 0;
         }
 
         /* HUD Progress Bar */
         .progress-bar {
             width: 100%;
-            height: 8px;
+            height: 12px;
             background: #000;
             border: 1px solid var(--dim-green);
-            margin-bottom: 15px;
+            margin-bottom: 25px;
             position: relative;
             display: flex;
-            flex-shrink: 0;
         }
 
         .progress-fill {
@@ -120,6 +103,9 @@
         }
 
         .progress-text {
+            position: absolute;
+            right: 0;
+            top: -20px;
             font-size: 12px;
             color: var(--primary-green);
             font-weight: bold;
@@ -127,47 +113,37 @@
 
         /* Question Box */
         .question {
-            font-size: clamp(14px, 4vw, 18px);
-            line-height: 1.3;
-            margin-bottom: 15px;
+            font-size: 18px;
+            line-height: 1.4;
+            margin-bottom: 25px;
             font-weight: bold;
             background-color: rgba(0, 0, 0, 0.6);
             color: #fff;
-            padding: 15px;
+            padding: 20px;
             border-left: 3px solid var(--gold);
             border-bottom: 1px solid var(--dim-green);
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            min-height: 60px;
+            min-height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            flex-shrink: 0;
         }
 
         .options {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 10px;
-            margin-bottom: 10px;
-            overflow-y: auto;
+            gap: 15px;
+            margin-bottom: 20px;
             flex-grow: 1;
-            align-content: center;
-        }
-
-        @media (min-width: 600px) {
-            .options {
-                grid-template-columns: 1fr 1fr;
-            }
         }
 
         .option {
             background-color: rgba(20, 40, 30, 0.8);
             color: var(--text-color);
             font-family: 'Courier New', monospace;
-            font-size: 14px;
-            padding: 12px 15px;
+            font-size: 16px;
+            padding: 15px 20px;
             border: 1px solid var(--dim-green);
             cursor: pointer;
             transition: all 0.2s ease;
@@ -177,16 +153,14 @@
             align-items: center;
             width: 100%;
             position: relative;
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 8px 100%, 0 calc(100% - 8px));
-        }
-
-        .option:active {
-            background-color: var(--dim-green);
-            color: #fff;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 10px 100%, 0 calc(100% - 10px));
         }
 
         .option:hover {
+            background-color: var(--dim-green);
             border-color: var(--primary-green);
+            color: #fff;
+            padding-left: 25px;
         }
 
         .option:disabled {
@@ -196,23 +170,22 @@
 
         .option-letter {
             font-weight: bold;
-            margin-right: 10px;
+            margin-right: 15px;
             color: var(--gold);
             font-size: 14px;
-            flex-shrink: 0;
         }
 
         /* Result Box */
         .result {
-            font-size: 14px;
-            padding: 10px;
-            margin-bottom: 10px;
+            font-size: 16px;
+            padding: 15px;
+            margin-bottom: 15px;
             border: 1px solid transparent;
             font-weight: bold;
             text-align: center;
             text-transform: uppercase;
             display: none;
-            flex-shrink: 0;
+            /* Hidden by default */
         }
 
         .result:not(:empty) {
@@ -223,12 +196,14 @@
             background: rgba(51, 255, 51, 0.1);
             border-color: var(--primary-green);
             color: var(--primary-green);
+            box-shadow: 0 0 15px rgba(51, 255, 51, 0.2);
         }
 
         .result.incorrect {
             background: rgba(255, 51, 51, 0.1);
             border-color: var(--alert-red);
             color: var(--alert-red);
+            box-shadow: 0 0 15px rgba(255, 51, 51, 0.2);
         }
 
         /* Controls */
@@ -245,19 +220,25 @@
             border: none;
             cursor: pointer;
             font-weight: bold;
-            margin-top: 5px;
+            margin-top: 10px;
             clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-            flex-shrink: 0;
         }
 
-        .next-button:active, .restart-button:active {
+        .next-button:hover,
+        .restart-button:hover {
             background-color: #ffe066;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
         }
 
         .restart-button {
             background-color: var(--dim-green);
             color: #fff;
-            margin-top: 10px;
+            margin-top: 20px;
+        }
+
+        .restart-button:hover {
+            background-color: var(--primary-green);
+            color: #000;
         }
 
         /* Record Tag */
@@ -267,6 +248,7 @@
             color: #555;
             background: #000;
             border: 1px solid #333;
+            margin-bottom: 15px;
             padding: 5px 10px;
             display: inline-block;
             cursor: pointer;
@@ -282,25 +264,30 @@
         .errors-list {
             text-align: left;
             color: #aaa;
-            font-size: 12px;
-            margin-top: 10px;
+            font-size: 14px;
+            margin-top: 20px;
             background: rgba(0, 0, 0, 0.8);
             border: 1px solid #333;
-            padding: 10px;
+            padding: 15px;
+            max-height: 250px;
             overflow-y: auto;
             display: none;
             font-family: monospace;
-            flex-grow: 1;
-            margin-bottom: 10px;
         }
 
         footer {
-            margin-top: 10px;
-            padding-top: 5px;
+            margin-top: auto;
+            padding-top: 10px;
             font-size: 10px;
             color: #444;
             border-top: 1px solid #222;
-            flex-shrink: 0;
+        }
+
+        /* Responsive */
+        @media (min-width: 600px) {
+            .options {
+                grid-template-columns: 1fr 1fr;
+            }
         }
     </style>
 </head>
@@ -308,7 +295,7 @@
 <body>
     <div class="quiz-container">
         <div class="background-image" id="backgroundImage"></div>
-        <div class="hud-header">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
             <div class="record-display" id="recordDisplay">РЕКОРД: --</div>
             <div class="progress-text" id="progressText">0/0</div>
         </div>
@@ -468,7 +455,7 @@
 
                 if (selectedOption.correct) {
                     this.score++;
-                    document.getElementById('result').innerText = 'ЦІЛЬ ЗНИЩЕНО';
+                    document.getElementById('result').innerText = 'ВІРНО';
                     document.getElementById('result').className = 'result correct';
                     this.playSound("Right");
                 } else {
