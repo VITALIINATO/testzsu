@@ -355,6 +355,10 @@
             };
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'text/plain'
+                },
                 body: JSON.stringify(payload)
             }).catch(e => console.error("Помилка зв'язку:", e));
         }
@@ -432,7 +436,7 @@
                     const button = document.createElement("button");
                     button.className = "option";
                     const letter = letters[index] || String.fromCharCode(65 + index);
-                    button.innerHTML = `<span class="option-letter">${letter}.</span>${option.text}`;
+                    button.innerHTML = `<span class="option-letter">${number}.</span>${option.text}`;
                     button.onclick = () => this.checkAnswer(option);
                     optionsContainer.appendChild(button);
                 });
