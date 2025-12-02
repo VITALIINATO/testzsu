@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="icon" href="icon.png" type="image/png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Martlet</title>
+    <title>RBS-70</title>
     <script src="config.js"></script>
     <style>
         :root {
@@ -19,21 +20,23 @@
             --text-color: #e0e8d0;
             --gold: #d4af37;
         }
-          * {
+
+        * {
             box-sizing: border-box;
-            font-style: normal !important; /* Force upright text */
+            font-style: normal !important;
+            /* Force upright text */
         }
 
         body {
-              font-family: 'JetBrains Mono', 'Courier New', monospace;
-    font-size: 16px;
-    line-height: 1.4;
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 16px;
+            line-height: 1.4;
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
             margin: 0;
-          
+            font-family: 'Courier New', Courier, monospace;
             background-color: var(--bg-color);
-            background-image: 
+            background-image:
                 linear-gradient(rgba(51, 255, 51, 0.05) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(51, 255, 51, 0.05) 1px, transparent 1px);
             background-size: 30px 30px;
@@ -53,11 +56,9 @@
             border: 1px solid var(--dim-green);
             background: var(--panel-bg);
             /* Tech corners */
-            clip-path: polygon(
-                20px 0, 100% 0, 
-                100% calc(100% - 20px), calc(100% - 20px) 100%, 
-                0 100%, 0 20px
-            );
+            clip-path: polygon(20px 0, 100% 0,
+                    100% calc(100% - 20px), calc(100% - 20px) 100%,
+                    0 100%, 0 20px);
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
             margin: 10px;
             display: flex;
@@ -93,13 +94,11 @@
         .progress-fill {
             height: 100%;
             width: 0%;
-            background: repeating-linear-gradient(
-                45deg,
-                var(--dim-green),
-                var(--dim-green) 5px,
-                var(--primary-green) 5px,
-                var(--primary-green) 10px
-            );
+            background: repeating-linear-gradient(45deg,
+                    var(--dim-green),
+                    var(--dim-green) 5px,
+                    var(--primary-green) 5px,
+                    var(--primary-green) 10px);
             transition: width 0.3s ease;
             box-shadow: 0 0 10px var(--primary-green);
         }
@@ -164,7 +163,7 @@
             color: #fff;
             padding-left: 25px;
         }
-        
+
         .option:disabled {
             opacity: 0.5;
             cursor: not-allowed;
@@ -188,19 +187,19 @@
             text-transform: uppercase;
             display: none;
         }
-        
+
         .result:not(:empty) {
             display: block;
         }
 
-        .result.correct { 
+        .result.correct {
             background: rgba(51, 255, 51, 0.1);
             border-color: var(--primary-green);
             color: var(--primary-green);
             box-shadow: 0 0 15px rgba(51, 255, 51, 0.2);
         }
-        
-        .result.incorrect { 
+
+        .result.incorrect {
             background: rgba(255, 51, 51, 0.1);
             border-color: var(--alert-red);
             color: var(--alert-red);
@@ -208,7 +207,8 @@
         }
 
         /* Controls */
-        .next-button, .restart-button {
+        .next-button,
+        .restart-button {
             display: none;
             width: 100%;
             padding: 15px;
@@ -224,7 +224,8 @@
             clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
         }
 
-        .next-button:hover, .restart-button:hover {
+        .next-button:hover,
+        .restart-button:hover {
             background-color: #ffe066;
             box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
         }
@@ -234,6 +235,7 @@
             color: #fff;
             margin-top: 20px;
         }
+
         .restart-button:hover {
             background-color: var(--primary-green);
             color: #000;
@@ -252,6 +254,7 @@
             cursor: pointer;
             letter-spacing: 1px;
         }
+
         .record-display:hover {
             border-color: var(--alert-red);
             color: var(--alert-red);
@@ -287,30 +290,31 @@
         }
     </style>
 </head>
+
 <body>
     <div class="quiz-container">
         <div class="background-image" id="backgroundImage"></div>
         <div style="display:flex; justify-content:space-between; align-items:center;">
-             <div class="record-display" id="recordDisplay">РЕКОРД: --</div>
-             <div class="progress-text" id="progressText">0/0</div>
+            <div class="record-display" id="recordDisplay">РЕКОРД: --</div>
+            <div class="progress-text" id="progressText">0/0</div>
         </div>
-       
+
         <div class="progress-bar">
             <div class="progress-fill" id="progressFill"></div>
         </div>
 
         <div class="question" id="question">Завантаження...</div>
         <div class="options" id="options"></div>
-        
+
         <div class="result" id="result"></div>
         <button class="next-button" id="nextButton">ДАЛІ >></button>
-        
+
         <div class="errors-list" id="errorsList"></div>
         <button class="restart-button" id="restartButton">ПОВТОРИТИ ТЕСТ</button>
 
         <audio id="soundRight" src="right.mp3"></audio>
         <audio id="soundWrong" src="wrong.mp3"></audio>
-        
+
         <footer>
             <a href="index.html" style="color: #444; text-decoration: none;">&lt; ГОЛОВНЕ МЕНЮ</a>
         </footer>
@@ -344,7 +348,7 @@
             const payload = {
                 username: currentUser,
                 action: action,
-                testName: "Martlet",
+                testName: "RBS-70",
                 score: score,
                 total: total
             };
@@ -399,7 +403,7 @@
             initRecordDisplay() {
                 const recordDisplay = document.getElementById('recordDisplay');
                 const total = this.questions.length;
-                let recordKey = "quizRecord_martlet";
+                let recordKey = "quizRecord_rbs70";
                 const savedRecord = localStorage.getItem(recordKey);
                 recordDisplay.innerText = savedRecord ? `РЕКОРД: ${savedRecord}/${total}` : `РЕКОРД: 0/${total}`;
             }
@@ -447,7 +451,7 @@
                 const currentQuestion = this.questions[this.currentQuestionIndex];
                 const selectedText = selectedOption.text;
                 const correctOption = currentQuestion.options.find(o => o.correct);
-                
+
                 if (selectedOption.correct) {
                     this.score++;
                     document.getElementById('result').innerText = 'ВІРНО';
@@ -469,9 +473,9 @@
                     const sound = document.getElementById("sound" + type);
                     if (sound) {
                         sound.currentTime = 0;
-                        sound.play().catch(() => {});
+                        sound.play().catch(() => { });
                     }
-                } catch (e) {}
+                } catch (e) { }
             }
             moveToNextQuestion() {
                 this.currentQuestionIndex++;
@@ -484,16 +488,16 @@
             showResult() {
                 const total = this.questions.length;
                 sendData("Finish", this.score, total);
-                
+
                 document.getElementById('question').innerText = `РЕЗУЛЬТАТ: ${this.score}/${total}`;
                 document.getElementById('options').innerHTML = '';
                 document.getElementById('result').style.display = 'none';
                 document.getElementById('nextButton').style.display = 'none';
-                
+
                 const errorsList = document.getElementById('errorsList');
                 errorsList.style.display = 'block';
                 errorsList.innerHTML = '<div style="color:#fff; border-bottom:1px solid #333; padding-bottom:5px;">ЖУРНАЛ:</div>';
-                
+
                 if (this.errors.length === 0) {
                     errorsList.innerHTML += '<br><span style="color: #33ff33">БЕЗ ПОМИЛОК.</span>';
                 } else {
@@ -501,12 +505,12 @@
                         errorsList.innerHTML += `<br>П: ${err.question}<br><span style="color:#ff3333">ВАШ: ${err.user}</span><br><span style="color:#33ff33">ПРАВ: ${err.correct}</span><br>---`;
                     });
                 }
-                
+
                 document.getElementById('progressText').innerText = 'КІНЕЦЬ';
                 document.getElementById('progressFill').style.width = '100%';
                 document.getElementById('restartButton').style.display = 'block';
-                
-                let recordKey = "quizRecord_martlet";
+
+                let recordKey = "quizRecord_rbs70";
                 const savedRecord = parseInt(localStorage.getItem(recordKey) || "0");
                 if (this.score > savedRecord) {
                     localStorage.setItem(recordKey, this.score);
@@ -524,103 +528,219 @@
                 bgImage.style.backgroundImage = imageUrl ? `url(${imageUrl})` : 'none';
             }
             resetRecord() {
-                localStorage.removeItem("quizRecord_martlet");
+                localStorage.removeItem("quizRecord_rbs70");
                 this.initRecordDisplay();
             }
         }
 
         const questions = [
+
             {
-                question: "Яка маса ракети LMM Martlet?",
+                question: "Що відбувається в системі, коли оператор встановлює перемикач вибору швидкості вітру в положення, що відповідає вітру більше 5 м/с?",
                 options: [
-                    { text: "17 кг", correct: false },
-                    { text: "21 кг", correct: false },
-                    { text: "13 кг", correct: true },
-                    { text: "11 кг", correct: false }
+                    { text: "Активується додаткова стабілізація гіро-платформи для компенсації вібрацій.", correct: false },
+                    { text: "У телескопі з'являється додаткова прицільна марка для упреждення.", correct: false },
+                    { text: "Замикаються мікроперемикачі в стійці, які передають дані про напрямок вітру для внесення поправки кермами ракети.", correct: true },
+                    { text: "Збільшується інтенсивність променя наведення для кращого проходження через повітряні потоки.", correct: false }
+                ]
+            },
+
+            {
+                question: "При яких умовах оператору слід використовувати перемикач автоматичного підйому траєкторії (TRAJ. ELEV.) і коли його необхідно активувати в ході передпускової послідовності?",
+                options: [
+                    { text: "Для ураження низьколітаючих цілей уникнення зіткнення з землею; вмикається після зняття з запобіжника.", correct: true },
+                    { text: "Для збільшення максимальної дальності польоту ракети; вмикається до зняття з запобіжника.", correct: false },
+                    { text: "Для поліпшення захоплення цілі в нічних умовах; вмикається разом із приладом COND.", correct: false },
+                    { text: "Для компенсації сильного бічного вітру; вмикається одночасно з натисканням кнопки спуску.", correct: false }
+                ]
+            },
+
+            {
+                question: "Який основний принцип керування лінією прицілювання та променем наведення за допомогою джойстика для великого пальця після пуску ракети?",
+                options: [
+                    { text: "Рух джойстика безпосередньо змінює кутове положення серво-керованого дзеркала.", correct: false },
+                    { text: "Рух джойстика активує сервоприводи для грубого наведення всієї пускової установки.", correct: false },
+                    { text: "Рух джойстика калібрує гіро-платформу відповідно до руху цілі.", correct: false },
+                    { text: "Рух джойстика викликає зміну швидкості та прискорення лінії прицілювання та променя наведення.", correct: true }
+                ]
+            },
+
+            {
+                question: "Яка функція перемикача День/Сутінки/Ніч активується лише в положенні Ніч при підключеному приладі нічного бачення (COND)?",
+                options: [
+                    { text: "Інтенсивність світлодіодного індикатора залишається нормальною.", correct: false },
+                    { text: "Зменшується інтенсивність світлодіодного індикатора Стрільба дозволена.", correct: true },
+                    { text: "Відключається підсвітка прицільної сітки телескопа.", correct: false },
+                    { text: "Вмикається підсвітка прицільної сітки телескопа.", correct: false }
+                ]
+            },
+
+            {
+                question: "Мигаючий світловий сигнал у телескопі, що вказує напрямок для грубого прицілювання, з’являється, коли кероване дзеркало наближається до свого крайнього положення. Наскільки воно має відхилитися від центру, щоб спрацювала індикація?",
+                options: [
+                    { text: "На 90% від максимального ходу.", correct: false },
+                    { text: "На 12° по горизонталі або 9° по вертикалі.", correct: true },
+                    { text: "На 2° по вертикалі.", correct: false },
+                    { text: "На 7.5° по вертикалі.", correct: false }
+                ]
+            },
+
+            {
+                question: "Яка з перелічених дій є безпосереднім механічним наслідком повороту нижньої частини лівої рукоятки для зняття системи з запобіжника?",
+                options: [
+                    { text: "Замикається запобіжний вимикач для активації електроніки прицілу.", correct: false },
+                    { text: "Подается живлення на батарею ракети.", correct: false },
+                    { text: "Активується лазерний випромінювач променя наведення.", correct: false },
+                    { text: "Тросовий спусковий механізм розблоковує механічну фіксацію гіро-платформи.", correct: true }
+                ]
+            },
+
+            {
+                question: "Для чого використовується перемикач TEST TRANSMISSION і яка тривалість тестової передачі променя наведення?",
+                options: [
+                    { text: "Для тренування або з тактичних міркувань, коли потрібно передати промінь наведення без бойової ракети; тривалість 23 секунди.", correct: true },
+                    { text: "Для синхронізації з іншими пусковими установками; тривалість не обмежена.", correct: false },
+                    { text: "Для перевірки калібрування оптичної системи; тривалість 10 секунд.", correct: false },
+                    { text: "Для прогріву лазерного діода в холодних умовах; тривалість 60 секунд.", correct: false }
                 ]
             },
             {
-                question: "Який тип підривника використовується в бойовій частині ракети Martlet?",
+                question: "Чим принципово відрізняється процес прицілювання до моменту пуску ракети від процесу прицілювання після пуску?",
                 options: [
-                    { text: "Контактний", correct: false },
-                    { text: "Неконтактний лазерний", correct: true },
-                    { text: "Тепловий", correct: false },
-                    { text: "Радіолокаційний", correct: false }
+                    { text: "До пуску лінія прицілювання телескопа зміщена на 2°, після пуску вона збігається з ціллю.", correct: false },
+                    { text: "До пуску використовується лише діоптричне кільце, після пуску — лише телескоп.", correct: false },
+                    { text: "До пуску прицілювання здійснюється автоматично, після пуску — вручну.", correct: false },
+                    { text: "До пуску використовується грубе прицілювання поворотом всієї установки, після пуску — точне прицілювання серво-керованим дзеркалом.", correct: true }
+                ]
+            },
+
+            {
+                question: "Який стан гіро-платформи з дзеркалом у момент одразу після зняття з запобіжника, але до натискання кнопки спуску?",
+                options: [
+                    { text: "Платформа починає відстежувати ціль автоматично за допомогою гіроскопів.", correct: false },
+                    { text: "Механічна блокування припиняється, і платформа утримується в нульовому положенні за допомогою сервопривода (електрична блокування).", correct: true },
+                    { text: "Платформа залишається механічно заблокованою до моменту вильоту ракети.", correct: false },
+                    { text: "Платформа повністю розблокована і вільно слідує за рухами прицілу.", correct: false }
                 ]
             },
             {
-                question: "Яку дію необхідно виконати оператору протягом трьох секунд безпосередньо перед пуском?",
+                question: "Що відбувається з гіроскопами гіро-платформи в режимі грубого прицілювання до моменту пострілу?",
                 options: [
-                    { text: "Перевірити колір індикатора вологості", correct: false },
-                    { text: "Супроводжувати ціль, щоб лазер запам'ятав траєкторію", correct: true },
-                    { text: "Приєднати джерело живлення", correct: false },
-                    { text: "Натиснути на пристрій для стравлювання повітря", correct: false }
+                    { text: "Вони використовуються для автоматичного супроводження цілі.", correct: false },
+                    { text: "Вони відключені для економії енергії.", correct: false },
+                    { text: "Вони вільно обертаються, щоб стабілізувати платформу.", correct: false },
+                    { text: "Вони заблоковані в нульовому положенні, і на них впливають обертові моменти, пропорційні кутовій швидкості руху прицілу.", correct: true }
+                ]
+            },
+
+            {
+                question: "При тренуванні з прицілювання без бойової ракети (з навчальною ракетою), які умови мають бути дотримані, щоб можна було практикувати точне прицілювання за допомогою джойстика?",
+                options: [
+                    { text: "Тренування точного прицілювання можливе лише за наявності спеціального тренувального модуля, підключеного до роз’єму TEST.", correct: false },
+                    { text: "Перемикач TEST TRANSMISSION має бути в положенні ON.", correct: false },
+                    { text: "Достатньо просто зняти систему з запобіжника.", correct: false },
+                    { text: "Необхідно натиснути кнопку спуску при знятому запобіжнику, при цьому перемикач TEST TRANSMISSION має бути в положенні OFF.", correct: true }
                 ]
             },
             {
-                question: "Скільки часу є у оператора для здійснення пуску після включення системи і супроводження цілі?",
+                question: "З якою метою лінія прицілювання приціла номінально встановлюється з вертикальною похибкою в 2° відносно напрямку пуску ракети?",
                 options: [
-                    { text: "23  секунди", correct: false },
-                    { text: "16 секунд", correct: false },
-                    { text: "12 секунд", correct: true },
-                    { text: "Необмежений час, поки ціль у прицілі", correct: false }
+                    { text: "Щоб компенсувати балістичне зниження ракети на початковому етапі польоту.", correct: false },
+                    { text: "Щоб оператор бачив ціль над ракетою в момент пуску.", correct: false },
+                    { text: "Щоб зменшити вплив віддачі на точність прицілювання.", correct: false },
+                    { text: "Щоб запобігти падінню ракети нижче коридору наведення одразу після пуску.", correct: true }
+                ]
+            },
+
+            {
+                question: "Чому після пуску ракети оператору може знадобитися виконати грубе прицілювання, незважаючи на працюючу систему точного наведення?",
+                options: [
+                    { text: "Тому що джойстик точного наведення працює лише на дальностях до 3 км.", correct: false },
+                    { text: "Тому що дзеркало точного наведення має обмежений діапазон відхилення.", correct: true },
+                    { text: "Тому що після пуску гіро-платформа блокується.", correct: false },
+                    { text: "Тому що система точного наведення вимикається через 23 секунди.", correct: false }
                 ]
             },
             {
-                question: "Яку початкову перевірку необхідно провести з тубусом ракети після розпакування, окрім огляду на механічні пошкодження?",
+                question: "Максимальна висота ураження для ракети Mk-0?",
                 options: [
-                    { text: "Перевірити, що індикатор вологості синього кольору", correct: true },
-                    { text: "Перевірити заряд джерела живлення", correct: false },
-                    { text: "Перевірити термін придатності ракети", correct: false },
-                    { text: "Зважити тубус для перевірки маси", correct: false }
+                    { text: "5000 м", correct: false },
+                    { text: "4000 м", correct: false },
+                    { text: "3000 м", correct: true },
+                    { text: "2000 м", correct: false }
+                ]
+            },
+
+            {
+                question: "Максимальна дальність ураження для ракети Mk-0?",
+                options: [
+                    { text: "3000 м", correct: false },
+                    { text: "4000 м", correct: false },
+                    { text: "5000 м", correct: true },
+                    { text: "2000 м", correct: false }
                 ]
             },
             {
-                question: "Яка маса кумулятивно-осколочної бойової частини ракети LMM Martlet?",
+                question: "Яка модель ЗУР була прийнята на озброєння в 1977 році?",
                 options: [
-                    { text: "2.18 кг", correct: false },
-                    { text: "3 кг", correct: true },
-                    { text: "5 кг", correct: false },
-                    { text: "1,5 кг", correct: false }
+                    { text: "Rb-70 Mk2", correct: false },
+                    { text: "Bolide", correct: false },
+                    { text: "Rb-70 Mk0", correct: true },
+                    { text: "Rb-70 Mk1", correct: false },
                 ]
             },
+
             {
-                question: "Яка система наведення використовується ракетою Martlet на кінцевому ділянці траєкторії?",
+                question: "Мінімальна дальність ураження для моделей Mk0, Mk1, Mk2?",
                 options: [
-                    { text: "Інфрачервона", correct: true },
-                    { text: "Тільки лазерна променева", correct: false },
-                    { text: "Радіокомандна", correct: false },
-                    { text: "Супутникова (GPS)", correct: false }
+                    { text: "300 м", correct: false },
+                    { text: "250 м", correct: false },
+                    { text: "200 м", correct: true },
+                    { text: "350 м", correct: false }
                 ]
             },
+
             {
-                question: "Яка максимальна дальність стрільби ПЗРК LMM Martlet?",
+                question: "Ракета з максимальною швидкістю 525 м/с — це яка модель?",
                 options: [
-                    { text: "2,5 км", correct: false },
-                    { text: "5 км", correct: false },
-                    { text: "8 км", correct: true },
-                    { text: "3 км", correct: false }
+                    { text: "Rb-70 Mk2", correct: false },
+                    { text: "Bolide", correct: false },
+                    { text: "Rb-70 Mk1", correct: false },
+                    { text: "Rb-70 Mk0", correct: true }
                 ]
             },
+
             {
-                question: "Що потрібно зробити з пристроєм для виведення зайвого повітря перед пуском?",
+                question: "Діаметр Mk-0, Mk-1, Mk-2, Bolide в мм?",
                 options: [
-                    { text: "Тримати 3 секунди", correct: false },
-                    { text: "Натиснути і негайно відпустити", correct: false },
-                    { text: "Тримати 6 секунд", correct: true },
-                    { text: "Тримати 12 секунд", correct: false }
+                    { text: "70", correct: false },
+                    { text: "75", correct: false },
+                    { text: "86", correct: false },
+                    { text: "106", correct: true }
                 ]
             },
+
             {
-                question: "Які довжина та діаметр корпусу ракети LMM Martlet?",
+                question: "Маса Mk-0?",
                 options: [
-                    { text: "Довжина 1,3 м, діаметр 67 мм", correct: false },
-                    { text: "Довжина 1,5 м, діаметр 83 мм", correct: false },
-                    { text: "Довжина 1,6 м, діаметр 76 мм", correct: false },
-                    { text: "Довжина 1,3 м, діаметр 76 мм", correct: true }
+                    { text: "15", correct: true },
+                    { text: "17", correct: false },
+                    { text: "12", correct: false },
+                    { text: "21", correct: false }
+                ]
+            },
+
+            {
+                question: "Маса бойової частини Mk-0?",
+                options: [
+                    { text: "1", correct: true },
+                    { text: "1,27", correct: false },
+                    { text: "1,1", correct: false },
+                    { text: "2,1", correct: false }
                 ]
             },
         ];
     </script>
 </body>
+
 </html>

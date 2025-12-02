@@ -2,13 +2,11 @@
 <html lang="en">
 
 <head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+
     <link rel="icon" href="icon.png" type="image/png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RBS-70</title>
+    <title>Mistral</title>
     <script src="config.js"></script>
     <style>
         :root {
@@ -28,13 +26,12 @@
         }
 
         body {
+            margin: 0;
             font-family: 'JetBrains Mono', 'Courier New', monospace;
             font-size: 16px;
             line-height: 1.4;
             -webkit-text-size-adjust: 100%;
             text-size-adjust: 100%;
-            margin: 0;
-            font-family: 'Courier New', Courier, monospace;
             background-color: var(--bg-color);
             background-image:
                 linear-gradient(rgba(51, 255, 51, 0.05) 1px, transparent 1px),
@@ -348,7 +345,7 @@
             const payload = {
                 username: currentUser,
                 action: action,
-                testName: "RBS-70",
+                testName: "Mistral",
                 score: score,
                 total: total
             };
@@ -403,7 +400,7 @@
             initRecordDisplay() {
                 const recordDisplay = document.getElementById('recordDisplay');
                 const total = this.questions.length;
-                let recordKey = "quizRecord_rbs70";
+                let recordKey = "quizRecord_mistral";
                 const savedRecord = localStorage.getItem(recordKey);
                 recordDisplay.innerText = savedRecord ? `РЕКОРД: ${savedRecord}/${total}` : `РЕКОРД: 0/${total}`;
             }
@@ -510,7 +507,7 @@
                 document.getElementById('progressFill').style.width = '100%';
                 document.getElementById('restartButton').style.display = 'block';
 
-                let recordKey = "quizRecord_rbs70";
+                let recordKey = "quizRecord_mistral";
                 const savedRecord = parseInt(localStorage.getItem(recordKey) || "0");
                 if (this.score > savedRecord) {
                     localStorage.setItem(recordKey, this.score);
@@ -528,215 +525,100 @@
                 bgImage.style.backgroundImage = imageUrl ? `url(${imageUrl})` : 'none';
             }
             resetRecord() {
-                localStorage.removeItem("quizRecord_rbs70");
+                localStorage.removeItem("quizRecord_mistral");
                 this.initRecordDisplay();
             }
         }
 
         const questions = [
-
             {
-                question: "Що відбувається в системі, коли оператор встановлює перемикач вибору швидкості вітру в положення, що відповідає вітру більше 5 м/с?",
+                question: "Яка довжина ЗКР 'Mistral'?",
                 options: [
-                    { text: "Активується додаткова стабілізація гіро-платформи для компенсації вібрацій.", correct: false },
-                    { text: "У телескопі з'являється додаткова прицільна марка для упреждення.", correct: false },
-                    { text: "Замикаються мікроперемикачі в стійці, які передають дані про напрямок вітру для внесення поправки кермами ракети.", correct: true },
-                    { text: "Збільшується інтенсивність променя наведення для кращого проходження через повітряні потоки.", correct: false }
-                ]
-            },
-
-            {
-                question: "При яких умовах оператору слід використовувати перемикач автоматичного підйому траєкторії (TRAJ. ELEV.) і коли його необхідно активувати в ході передпускової послідовності?",
-                options: [
-                    { text: "Для ураження низьколітаючих цілей уникнення зіткнення з землею; вмикається після зняття з запобіжника.", correct: true },
-                    { text: "Для збільшення максимальної дальності польоту ракети; вмикається до зняття з запобіжника.", correct: false },
-                    { text: "Для поліпшення захоплення цілі в нічних умовах; вмикається разом із приладом COND.", correct: false },
-                    { text: "Для компенсації сильного бічного вітру; вмикається одночасно з натисканням кнопки спуску.", correct: false }
-                ]
-            },
-
-            {
-                question: "Який основний принцип керування лінією прицілювання та променем наведення за допомогою джойстика для великого пальця після пуску ракети?",
-                options: [
-                    { text: "Рух джойстика безпосередньо змінює кутове положення серво-керованого дзеркала.", correct: false },
-                    { text: "Рух джойстика активує сервоприводи для грубого наведення всієї пускової установки.", correct: false },
-                    { text: "Рух джойстика калібрує гіро-платформу відповідно до руху цілі.", correct: false },
-                    { text: "Рух джойстика викликає зміну швидкості та прискорення лінії прицілювання та променя наведення.", correct: true }
-                ]
-            },
-
-            {
-                question: "Яка функція перемикача День/Сутінки/Ніч активується лише в положенні Ніч при підключеному приладі нічного бачення (COND)?",
-                options: [
-                    { text: "Інтенсивність світлодіодного індикатора залишається нормальною.", correct: false },
-                    { text: "Зменшується інтенсивність світлодіодного індикатора Стрільба дозволена.", correct: true },
-                    { text: "Відключається підсвітка прицільної сітки телескопа.", correct: false },
-                    { text: "Вмикається підсвітка прицільної сітки телескопа.", correct: false }
-                ]
-            },
-
-            {
-                question: "Мигаючий світловий сигнал у телескопі, що вказує напрямок для грубого прицілювання, з’являється, коли кероване дзеркало наближається до свого крайнього положення. Наскільки воно має відхилитися від центру, щоб спрацювала індикація?",
-                options: [
-                    { text: "На 90% від максимального ходу.", correct: false },
-                    { text: "На 12° по горизонталі або 9° по вертикалі.", correct: true },
-                    { text: "На 2° по вертикалі.", correct: false },
-                    { text: "На 7.5° по вертикалі.", correct: false }
-                ]
-            },
-
-            {
-                question: "Яка з перелічених дій є безпосереднім механічним наслідком повороту нижньої частини лівої рукоятки для зняття системи з запобіжника?",
-                options: [
-                    { text: "Замикається запобіжний вимикач для активації електроніки прицілу.", correct: false },
-                    { text: "Подается живлення на батарею ракети.", correct: false },
-                    { text: "Активується лазерний випромінювач променя наведення.", correct: false },
-                    { text: "Тросовий спусковий механізм розблоковує механічну фіксацію гіро-платформи.", correct: true }
-                ]
-            },
-
-            {
-                question: "Для чого використовується перемикач TEST TRANSMISSION і яка тривалість тестової передачі променя наведення?",
-                options: [
-                    { text: "Для тренування або з тактичних міркувань, коли потрібно передати промінь наведення без бойової ракети; тривалість 23 секунди.", correct: true },
-                    { text: "Для синхронізації з іншими пусковими установками; тривалість не обмежена.", correct: false },
-                    { text: "Для перевірки калібрування оптичної системи; тривалість 10 секунд.", correct: false },
-                    { text: "Для прогріву лазерного діода в холодних умовах; тривалість 60 секунд.", correct: false }
+                    { text: "1,5 м", correct: false },
+                    { text: "1,3 м", correct: false },
+                    { text: "1,8 м", correct: true },
+                    { text: "2 м", correct: false }
                 ]
             },
             {
-                question: "Чим принципово відрізняється процес прицілювання до моменту пуску ракети від процесу прицілювання після пуску?",
+                question: "Яка маса бойової частини ЗКР 'Mistral'?",
                 options: [
-                    { text: "До пуску лінія прицілювання телескопа зміщена на 2°, після пуску вона збігається з ціллю.", correct: false },
-                    { text: "До пуску використовується лише діоптричне кільце, після пуску — лише телескоп.", correct: false },
-                    { text: "До пуску прицілювання здійснюється автоматично, після пуску — вручну.", correct: false },
-                    { text: "До пуску використовується грубе прицілювання поворотом всієї установки, після пуску — точне прицілювання серво-керованим дзеркалом.", correct: true }
-                ]
-            },
-
-            {
-                question: "Який стан гіро-платформи з дзеркалом у момент одразу після зняття з запобіжника, але до натискання кнопки спуску?",
-                options: [
-                    { text: "Платформа починає відстежувати ціль автоматично за допомогою гіроскопів.", correct: false },
-                    { text: "Механічна блокування припиняється, і платформа утримується в нульовому положенні за допомогою сервопривода (електрична блокування).", correct: true },
-                    { text: "Платформа залишається механічно заблокованою до моменту вильоту ракети.", correct: false },
-                    { text: "Платформа повністю розблокована і вільно слідує за рухами прицілу.", correct: false }
+                    { text: "2,37 кг", correct: false },
+                    { text: "1,27 кг", correct: false },
+                    { text: "3 кг", correct: true },
+                    { text: "1,53 кг", correct: false }
                 ]
             },
             {
-                question: "Що відбувається з гіроскопами гіро-платформи в режимі грубого прицілювання до моменту пострілу?",
+                question: "Яка максимальна висота ураження цілі для системи 'Mistral'?",
                 options: [
-                    { text: "Вони використовуються для автоматичного супроводження цілі.", correct: false },
-                    { text: "Вони відключені для економії енергії.", correct: false },
-                    { text: "Вони вільно обертаються, щоб стабілізувати платформу.", correct: false },
-                    { text: "Вони заблоковані в нульовому положенні, і на них впливають обертові моменти, пропорційні кутовій швидкості руху прицілу.", correct: true }
-                ]
-            },
-
-            {
-                question: "При тренуванні з прицілювання без бойової ракети (з навчальною ракетою), які умови мають бути дотримані, щоб можна було практикувати точне прицілювання за допомогою джойстика?",
-                options: [
-                    { text: "Тренування точного прицілювання можливе лише за наявності спеціального тренувального модуля, підключеного до роз’єму TEST.", correct: false },
-                    { text: "Перемикач TEST TRANSMISSION має бути в положенні ON.", correct: false },
-                    { text: "Достатньо просто зняти систему з запобіжника.", correct: false },
-                    { text: "Необхідно натиснути кнопку спуску при знятому запобіжнику, при цьому перемикач TEST TRANSMISSION має бути в положенні OFF.", correct: true }
-                ]
-            },
-            {
-                question: "З якою метою лінія прицілювання приціла номінально встановлюється з вертикальною похибкою в 2° відносно напрямку пуску ракети?",
-                options: [
-                    { text: "Щоб компенсувати балістичне зниження ракети на початковому етапі польоту.", correct: false },
-                    { text: "Щоб оператор бачив ціль над ракетою в момент пуску.", correct: false },
-                    { text: "Щоб зменшити вплив віддачі на точність прицілювання.", correct: false },
-                    { text: "Щоб запобігти падінню ракети нижче коридору наведення одразу після пуску.", correct: true }
-                ]
-            },
-
-            {
-                question: "Чому після пуску ракети оператору може знадобитися виконати грубе прицілювання, незважаючи на працюючу систему точного наведення?",
-                options: [
-                    { text: "Тому що джойстик точного наведення працює лише на дальностях до 3 км.", correct: false },
-                    { text: "Тому що дзеркало точного наведення має обмежений діапазон відхилення.", correct: true },
-                    { text: "Тому що після пуску гіро-платформа блокується.", correct: false },
-                    { text: "Тому що система точного наведення вимикається через 23 секунди.", correct: false }
-                ]
-            },
-            {
-                question: "Максимальна висота ураження для ракети Mk-0?",
-                options: [
-                    { text: "5000 м", correct: false },
-                    { text: "4000 м", correct: false },
+                    { text: "5200 м", correct: false },
+                    { text: "4500 м", correct: false },
                     { text: "3000 м", correct: true },
-                    { text: "2000 м", correct: false }
-                ]
-            },
-
-            {
-                question: "Максимальна дальність ураження для ракети Mk-0?",
-                options: [
-                    { text: "3000 м", correct: false },
-                    { text: "4000 м", correct: false },
-                    { text: "5000 м", correct: true },
-                    { text: "2000 м", correct: false }
+                    { text: "3800 м", correct: false }
                 ]
             },
             {
-                question: "Яка модель ЗУР була прийнята на озброєння в 1977 році?",
+                question: "Час роботи блоку EPR перед стрільбою після його активації?",
                 options: [
-                    { text: "Rb-70 Mk2", correct: false },
-                    { text: "Bolide", correct: false },
-                    { text: "Rb-70 Mk0", correct: true },
-                    { text: "Rb-70 Mk1", correct: false },
+                    { text: "30 секунд", correct: false },
+                    { text: "45 секунд", correct: true },
+                    { text: "60 секунд", correct: false },
+                    { text: "90 секунд", correct: false }
                 ]
             },
-
             {
-                question: "Мінімальна дальність ураження для моделей Mk0, Mk1, Mk2?",
+                question: "Самоліквідація ракети 'Mistral'?",
                 options: [
+                    { text: "17 секунд", correct: false },
+                    { text: "14 секунд", correct: true },
+                    { text: "11 секунд", correct: false },
+                    { text: "21 секунд", correct: false }
+                ]
+            },
+            {
+                question: "Яку максимальну швидкість розвиває ракета 'Mistral'?",
+                options: [
+                    { text: "3 Маха", correct: false },
+                    { text: "1,5 Маха", correct: false },
+                    { text: "850 м/с", correct: true },
+                    { text: "570 м/с", correct: false }
+                ]
+            },
+            {
+                question: "Яка мінімальна дальність стрільби для ПЗРК 'Mistral'?",
+                options: [
+                    { text: "400 м", correct: false },
                     { text: "300 м", correct: false },
-                    { text: "250 м", correct: false },
-                    { text: "200 м", correct: true },
-                    { text: "350 м", correct: false }
+                    { text: "500 м", correct: false },
+                    { text: "600 м", correct: true }
                 ]
             },
-
             {
-                question: "Ракета з максимальною швидкістю 525 м/с — це яка модель?",
+                question: "Яка максимальна швидкість цілі, яку може ефективно вражати 'Mistral'?",
                 options: [
-                    { text: "Rb-70 Mk2", correct: false },
-                    { text: "Bolide", correct: false },
-                    { text: "Rb-70 Mk1", correct: false },
-                    { text: "Rb-70 Mk0", correct: true }
+                    { text: "720 м/с", correct: false },
+                    { text: "360 м/с", correct: false },
+                    { text: "270 м/с", correct: false },
+                    { text: "410 м/с", correct: true }
                 ]
             },
-
             {
-                question: "Діаметр Mk-0, Mk-1, Mk-2, Bolide в мм?",
+                question: "Що сигналізує загоряння світлодіода 'BAT' у прицілі під час бойової роботи?",
                 options: [
-                    { text: "70", correct: false },
-                    { text: "75", correct: false },
-                    { text: "86", correct: false },
-                    { text: "106", correct: true }
+                    { text: "Несправність у електричному колі ракети.", correct: false },
+                    { text: "Система успішно пройшла самодіагностику.", correct: false },
+                    { text: "Батарея повністю заряджена і готова до роботи.", correct: false },
+                    { text: "Залишилося 5 секунд до закінчення роботи джерела живлення.", correct: true }
                 ]
             },
-
             {
-                question: "Маса Mk-0?",
+                question: "У разі якої несправності ракета виштовхується з пускової труби, і падає в 15-30 метрах від позиції?",
                 options: [
-                    { text: "15", correct: true },
-                    { text: "17", correct: false },
-                    { text: "12", correct: false },
-                    { text: "21", correct: false }
-                ]
-            },
-
-            {
-                question: "Маса бойової частини Mk-0?",
-                options: [
-                    { text: "1", correct: true },
-                    { text: "1,27", correct: false },
-                    { text: "1,1", correct: false },
-                    { text: "2,1", correct: false }
+                    { text: "Незахват цілі", correct: false },
+                    { text: "Несправність двигуна", correct: true },
+                    { text: "Несправність ГСН", correct: false },
+                    { text: "Зрив захвату цілі", correct: false }
                 ]
             },
         ];
