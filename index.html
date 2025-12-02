@@ -318,8 +318,8 @@
         const callsignInput = document.getElementById('callsign');
         const passwordInput = document.getElementById('password');
 
-        // Check authentication state from Session Storage
-        const authData = sessionStorage.getItem('nato_quiz_auth');
+        // Check authentication state from Local Storage (changed from sessionStorage)
+        const authData = localStorage.getItem('nato_quiz_auth');
         
         if (authData) {
             modal.style.display = 'none';
@@ -334,12 +334,12 @@
             const requiredPass = (typeof USER_PASSWORD !== 'undefined') ? USER_PASSWORD : '111';
 
             if (callsign.length > 0 && password === requiredPass) {
-                // Save session
+                // Save session to Local Storage (changed from sessionStorage)
                 const data = {
                     name: callsign,
                     timestamp: Date.now()
                 };
-                sessionStorage.setItem('nato_quiz_auth', JSON.stringify(data));
+                localStorage.setItem('nato_quiz_auth', JSON.stringify(data));
                 
                 // Animate out
                 modal.style.opacity = '0';
@@ -362,7 +362,7 @@
         const links = document.querySelectorAll('.test-button, .test-button2, .admin-link');
         links.forEach(link => {
             link.addEventListener('click', (e) => {
-                const currentAuth = sessionStorage.getItem('nato_quiz_auth');
+                const currentAuth = localStorage.getItem('nato_quiz_auth');
                 if (!currentAuth) {
                     e.preventDefault();
                     modal.style.display = 'flex';

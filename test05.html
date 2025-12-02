@@ -327,7 +327,8 @@
 
         // === Auth Check ===
         (function () {
-            const authData = sessionStorage.getItem('nato_quiz_auth');
+            // Changed from sessionStorage to localStorage
+            const authData = localStorage.getItem('nato_quiz_auth');
             if (!authData) {
                 alert('ДОСТУП ЗАБОРОНЕНО.');
                 window.location.href = 'index.html';
@@ -337,7 +338,7 @@
                 const data = JSON.parse(authData);
                 currentUser = data.name || "Невідомий";
             } catch (e) {
-                sessionStorage.removeItem('nato_quiz_auth');
+                localStorage.removeItem('nato_quiz_auth');
                 window.location.href = 'index.html';
                 return;
             }
