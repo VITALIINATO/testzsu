@@ -44,14 +44,14 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            overflow: hidden;
+            /* overflow: hidden; Removed to allow pull-to-refresh */
             position: relative;
         }
 
         /* Scanline Effect */
         body::after {
             content: "";
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
